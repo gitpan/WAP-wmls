@@ -1,0 +1,15 @@
+Changes
+Makefile.PL
+MANIFEST
+test.pl
+wmlsc
+wmlsd
+parser.yp
+parser.pm
+lexer.pm
+node.pm
+optim.pm
+gen.pm
+wmlslibs.cfg
+makefile.yapp
+README

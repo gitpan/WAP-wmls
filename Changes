@@ -1,0 +1,9 @@
+Revision history for Perl extension WAP::wmls.
+
+1.0   Thu Feb 14 20:30:00 2002
+	- first release
+
+0.01  Thu Feb 14 19:37:54 2002
+	- original version; created by h2xs 1.20 with options
+		-XA -n WAP::wmls
+
