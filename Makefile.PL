@@ -19,7 +19,7 @@ WriteMakefile(
                         'wmlslibs.cfg'  => '$(INST_LIBDIR)/wmls/wmlslibs.cfg',
     },
     'EXE_FILES'     => ['wmlsc', 'wmlsd'],
-    'AUTHOR'        => "Francois PERRAD (perrad\@besancon.sema.slb.com)",
+    'AUTHOR'        => "Francois PERRAD (francois.perrad\@gadz.org)",
     'dist'          => {
                         'COMPRESS'      => 'gzip',
                         'SUFFIX'        => '.gz',

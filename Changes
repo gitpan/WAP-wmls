@@ -1,5 +1,8 @@
 Revision history for Perl extension WAP::wmls.
 
+1.01  Wed Aug 14 18:30:00 2002
+	- problem with test.pl
+
 1.0   Thu Feb 14 20:30:00 2002
 	- first release
 
