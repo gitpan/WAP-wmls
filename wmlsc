@@ -1,7 +1,6 @@
 #!/usr/bin/perl -w
 
 use strict;
-use POSIX;
 use Getopt::Std;
 use I18N::Charset;
 use Unicode::Map;
@@ -14,94 +13,99 @@ my $flagOutputAsm = $opts{S};
 my $flagOptim = 1;
 my $flagOptimExpr = 1;
 if (exists $opts{O}) {
-	if      ($opts{O} eq '2') {
-	} elsif ($opts{O} eq 'n') {
-		$flagOptim = 0;
-		$flagOptimExpr = 0;
-	} elsif ($opts{O} eq '') {
-		$flagOptim = 1;
-		$flagOptimExpr = 0;
-	}
+    if    ($opts{O} eq '2') {
+    }
+    elsif ($opts{O} eq 'n') {
+        $flagOptim = 0;
+        $flagOptimExpr = 0;
+    }
+    elsif ($opts{O} eq q{}) {
+        $flagOptim = 1;
+        $flagOptimExpr = 0;
+    }
 }
 
 if ($opts{h}) {
-	Usage();
+    Usage();
 }
 
 die "can't access $ARGV[0] ($!).\n"
-		unless (POSIX::access($ARGV[0], &POSIX::R_OK));
+        unless (-r $ARGV[0]);
 
 use WAP::wmls::parser;
 use WAP::wmls::node;
 
 my $parser = new parser;
 if (exists $opts{e}) {
-	my $enc = iana_charset_name($opts{e});
-	die "invalid charset $opts{e}.\n"
-			unless (defined $enc);
-	$parser->YYData->{encoding} = $enc;
-} else {
-	$parser->YYData->{encoding} = "ISO_8859-1:1987";
+    my $enc = iana_charset_name($opts{e});
+    die "invalid charset $opts{e}.\n"
+            unless (defined $enc);
+    $parser->YYData->{encoding} = $enc;
+}
+else {
+    $parser->YYData->{encoding} = "ISO_8859-1:1987";
 }
 my $map_name = umap_charset_name($parser->YYData->{encoding});
 die "no mapping for $opts{e}.\n"
-		unless (defined $map_name);
+        unless (defined $map_name);
 $parser->YYData->{map} = new Unicode::Map($map_name);
-$parser->YYData->{verbose_error} = 1;		# 0, 1
-$parser->YYData->{verbose_warning} = 1;		# 0, 1
-$parser->YYData->{verbose_info} = 1;		# 0, 1
-$parser->YYData->{verbose_debug} = 0;		# 0, 1 (Optim)
+$parser->YYData->{verbose_error} = 1;       # 0, 1
+$parser->YYData->{verbose_warning} = 1;     # 0, 1
+$parser->YYData->{verbose_info} = 1;        # 0, 1
+$parser->YYData->{verbose_debug} = 0;       # 0, 1 (Optim)
 $parser->YYData->{filename} = $ARGV[0];
 if ($flagOutputIntermediaire) {
-	my $filename = $parser->YYData->{filename};
-	$filename =~ s/\.wmls$//;
-	$filename .= '.i';
-	open STDOUT,">$filename"
-			or die "can't open $filename ($!).\n";
-} else {
-	if ($flagOutputAsm) {
-		my $filename = $parser->YYData->{filename};
-		$filename =~ s/\.wmls$//;
-		$filename .= '.s';
-		open STDOUT,">$filename"
-				or die "can't open $filename ($!).\n";
-		$asm::VERBOSE = \*STDOUT;
-	}
+    my $filename = $parser->YYData->{filename};
+    $filename =~ s/\.wmls$//;
+    $filename .= '.i';
+    open STDOUT, '>', $filename
+            or die "can't open $filename ($!).\n";
+}
+else {
+    if ($flagOutputAsm) {
+        my $filename = $parser->YYData->{filename};
+        $filename =~ s/\.wmls$//;
+        $filename .= '.s';
+        open STDOUT, '>', $filename
+                or die "can't open $filename ($!).\n";
+        $asm::VERBOSE = \*STDOUT;
+    }
 }
 $parser->Run();
 
 unless (exists $parser->YYData->{nb_error}) {
-	if ($flagOptim) {
-		use WAP::wmls::optim;
-		$parser->Optimize($flagOptimExpr);
-	}
-	if ($flagOutputIntermediaire) {
-		my $visitor = new printVisitor();
-		$parser->YYData->{PragmaList}->visit($visitor)
-				if (defined $parser->YYData->{PragmaList});
-		$parser->YYData->{FunctionList}->visit($visitor)
-				if (defined $parser->YYData->{FunctionList});
-	} else {
-		use WAP::wmls::gen;
-		if ($flagOutputAsm) {
-			verbose::Init($parser->YYData->{filename});
-		}
-		$parser->generate();
-		if ($flagOutputAsm) {
-			verbose::End();
-		}
-	}
+    if ($flagOptim) {
+        use WAP::wmls::optim;
+        $parser->Optimize($flagOptimExpr);
+    }
+    if ($flagOutputIntermediaire) {
+        my $visitor = new printVisitor();
+        $parser->YYData->{PragmaList}->visit($visitor)
+                if (defined $parser->YYData->{PragmaList});
+        $parser->YYData->{FunctionList}->visit($visitor)
+                if (defined $parser->YYData->{FunctionList});
+    }
+    else {
+        use WAP::wmls::gen;
+        if ($flagOutputAsm) {
+            verbose::Init($parser->YYData->{filename});
+        }
+        $parser->generate();
+        if ($flagOutputAsm) {
+            verbose::End();
+        }
+    }
 }
 
 sub Usage {
-	print "Usage: wmlsc [Options] filename.wmls\n";
-	print "\t-e\tcharset encoding (default ISO-8859-1)\n";
-	print "\t-i\tproduce intermediary format\n";
-	print "\t-S\toutput mixte asm/source\n";
-	print "\t-O\tenable simple optimizations\n";
-	print "\t-O2\tenable expression optimizations (default)\n";
-	print "\t-On\tdisable optimizations\n";
-	exit;
+    print "Usage: wmlsc [Options] filename.wmls\n";
+    print "\t-e\tcharset encoding (default ISO-8859-1)\n";
+    print "\t-i\tproduce intermediary format\n";
+    print "\t-S\toutput mixte asm/source\n";
+    print "\t-O\tenable simple optimizations\n";
+    print "\t-O2\tenable expression optimizations (default)\n";
+    print "\t-On\tdisable optimizations\n";
+    exit;
 }
 
 __END__
@@ -112,7 +116,7 @@ wmlsc - WMLScript Compiler
 
 =head1 SYNOPSYS
 
-wmlsc [options] I<file>.wmls
+ wmlsc [options] I<file>.wmls
 
 =head1 OPTIONS
 
@@ -150,31 +154,30 @@ B<wmlsc> compiles WMLScript file into a binary form.
 
 The parser is generated by Parse::Yapp.
 
-The program needs Getopt::Std, I18N::Charset, Math::BigFloat, Math::BigInt,
-Unicode::Map and Unicode::String modules.
+The program needs I18N::Charset, Unicode::Map and Unicode::String modules.
 
 This compiler could be parametrized by the file 'wmlslibs.cfg'
 what contains all the description of known libraries.
 
-WAP Specifications are available on E<lt>http://www.wapforum.org/E<gt>.
+WAP Specifications are available on L<http://www.wapforum.org/>.
 
 =head1 SEE ALSO
 
- perl, wmlsd
+ wmlsd
 
 =head1 COPYRIGHT
 
-(c) 2002 Francois PERRAD, France. All rights reserved.
+(c) 2002-2006 Francois PERRAD, France.
 
 This program is distributed
 under the terms of the Artistic Licence.
 
 The WAP Specification are copyrighted by the Wireless Application Protocol Forum Ltd.
-See E<lt>http://www.wapforum.org/what/copyright.htmE<gt>.
+See L<http://www.wapforum.org/what/copyright.htm>.
 
 =head1 AUTHOR
 
-Francois PERRAD E<lt>perrad@besancon.sema.slb.comE<gt>
+Francois PERRAD
 
 =cut
 

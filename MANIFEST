@@ -13,3 +13,4 @@ gen.pm
 wmlslibs.cfg
 makefile.yapp
 README
+META.yml                                 Module meta-data (added by MakeMaker)
