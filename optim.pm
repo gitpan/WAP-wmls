@@ -57,7 +57,8 @@ sub optDebug {
 
 sub checkRangeInteger {
     my $parser = shift;
-    my ($opcode, $value) = @_;
+    my ($opcode) = @_;
+    my $value = $opcode->{Value};
     croak "INTERNAL ERROR checkRangeInteger ($value)\n"
             unless (ref $value eq 'Math::BigInt');
     if (       $value->bcmp(new Math::BigInt( '2147483647')) > 0
@@ -65,27 +66,22 @@ sub checkRangeInteger {
         $parser->Error("Integer $value is out of range.\n");
         $opcode->{TypeDef} = 'TYPE_INVALID';
     }
-    else {
-        $opcode->{Value} = $value;
-    }
 }
 
 sub checkRangeFloat {
     my $parser = shift;
-    my ($opcode, $value) = @_;
+    my ($opcode) = @_;
+    my $value = $opcode->{Value};
     croak "INTERNAL ERROR checkRangeFloat ($value)\n"
             unless (ref $value eq 'Math::BigFloat');
-    my $abs_v = new Math::BigFloat($value->fabs());
+    my $abs_v = $value->copy()->fabs();
     if    ($abs_v->fcmp('3.40282347e+38') > 0) {
         $parser->Error("Float $value is out of range.\n");
         $opcode->{TypeDef} = 'TYPE_INVALID';
     }
     elsif ($abs_v->fcmp('1.17549435e-38') < 0) {
         $parser->Warning("Float $value is underflow.\n");
-        $opcode->{Value} = new Math::BigFloat('0.0');
-    }
-    else {
-        $opcode->{Value} = $value;
+        $opcode->{Value} = Math::BigFloat->bzero();
     }
 }
 
@@ -96,25 +92,25 @@ sub evalUnopInteger {
     my $oper = $op->{OpCode}->{Operator};
     if    ($oper eq 'typeof') {
         $opcode->{TypeDef} = 'TYPE_INTEGER';
-        $opcode->{Value} = new Math::BigInt(0);
+        $opcode->{Value} = Math::BigInt->bzero();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq 'isvalid') {
         $opcode->{TypeDef} = 'TYPE_BOOLEAN';
-        $opcode->{Value} = 1;
+        $opcode->{Value} = Math::BigInt->bone();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '-') {
-        my $value = new Math::BigInt($opcode->{Value}->bneg());
-        $parser->checkRangeInteger($opcode, $value);
+        $opcode->{Value}->bneg();
+        $parser->checkRangeInteger($opcode);
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '~') {
-        my $value = new Math::BigInt(~ $opcode->{Value});
-        $parser->checkRangeInteger($opcode, $value);
+        $opcode->{Value}->bnot();
+        $parser->checkRangeInteger($opcode);
         $op->del();
         $OneMoreExpr = 1;
     }
@@ -125,14 +121,14 @@ sub evalUnopInteger {
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '++') {
-        my $value = new Math::BigInt($opcode->{Value}->badd(1));
-        $parser->checkRangeInteger($opcode, $value);
+        $opcode->{Value}->binc();
+        $parser->checkRangeInteger($opcode);
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '--') {
-        my $value = new Math::BigInt($opcode->{Value}->bsub(1));
-        $parser->checkRangeInteger($opcode, $value);
+        $opcode->{Value}->bdec();
+        $parser->checkRangeInteger($opcode);
         $op->del();
         $OneMoreExpr = 1;
     }
@@ -159,8 +155,8 @@ sub evalUnopFloat {
         #     invalid
     }
     elsif ($oper eq '-') {
-        my $value = new Math::BigFloat($opcode->{Value}->fneg());
-        $parser->checkRangeFloat($opcode, $value);
+        $opcode->{Value}->fneg();
+        $parser->checkRangeFloat($opcode);
         $op->del();
         $OneMoreExpr = 1;
     }
@@ -173,14 +169,14 @@ sub evalUnopFloat {
         #     invalid
     }
     elsif ($oper eq '++') {
-        my $value = new Math::BigFloat($opcode->{Value}->fadd(1));
-        $parser->checkRangeFloat($opcode, $value);
+        $opcode->{Value}->binc();
+        $parser->checkRangeFloat($opcode);
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '--') {
-        my $value = new Math::BigFloat($opcode->{Value}->fsub(1));
-        $parser->checkRangeFloat($opcode, $value);
+        $opcode->{Value}->bdec();
+        $parser->checkRangeFloat($opcode);
         $op->del();
         $OneMoreExpr = 1;
     }
@@ -306,22 +302,22 @@ sub evalBinopInteger {
     my ($op, $left, $right) = @_;
     my $oper = $op->{OpCode}->{Operator};
     if    ($oper eq '+') {
-        my $value = $left->{OpCode}->{Value}->badd($right->{OpCode}->{Value});
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->badd($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '-') {
-        my $value = $left->{OpCode}->{Value}->bsub($right->{OpCode}->{Value});
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->bsub($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '*') {
-        my $value = $left->{OpCode}->{Value}->bmul($right->{OpCode}->{Value});
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->bmul($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
@@ -343,8 +339,8 @@ sub evalBinopInteger {
             $parser->optWarning($op, "Integer division by zero.\n");
         }
         else {
-            my ($value) = $left->{OpCode}->{Value}->bdiv($right->{OpCode}->{Value});
-            $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+            $left->{OpCode}->{Value}->bdiv($right->{OpCode}->{Value});
+            $parser->checkRangeInteger($left->{OpCode});
         }
         $right->del();
         $op->del();
@@ -357,32 +353,32 @@ sub evalBinopInteger {
             $parser->optWarning($op, "Reminder by zero.\n");
         }
         else {
-            my $value = $left->{OpCode}->{Value}->bmod($right->{OpCode}->{Value});
-            $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+            $left->{OpCode}->{Value}->bmod($right->{OpCode}->{Value});
+            $parser->checkRangeInteger($left->{OpCode});
         }
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '<<') {
-        my $value = $left->{OpCode}->{Value} << $right->{OpCode}->{Value};
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->blsft($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '>>') {
-        my $value = $left->{OpCode}->{Value} >> $right->{OpCode}->{Value};
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->brsft($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '>>>') {
         my $bit = $left->{OpCode}->{Value} & 0x80000000;
-        my $value = $left->{OpCode}->{Value} >> $right->{OpCode}->{Value};
-        $value |= $bit;
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->brsft($right->{OpCode}->{Value});
+        $left->{OpCode}->{Value}->bior(new Math::BigInt($bit));
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
@@ -430,22 +426,22 @@ sub evalBinopInteger {
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '&') {
-        my $value = $left->{OpCode}->{Value}->band($right->{OpCode}->{Value});
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->band($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '^') {
-        my $value = $left->{OpCode}->{Value}->bxor($right->{OpCode}->{Value});
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->bxor($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '|') {
-        my $value = $left->{OpCode}->{Value}->bior($right->{OpCode}->{Value});
-        $parser->checkRangeInteger($left->{OpCode}, new Math::BigInt($value));
+        $left->{OpCode}->{Value}->bior($right->{OpCode}->{Value});
+        $parser->checkRangeInteger($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
@@ -460,22 +456,22 @@ sub evalBinopFloat {
     my ($op, $left, $right) = @_;
     my $oper = $op->{OpCode}->{Operator};
     if    ($oper eq '+') {
-        my $value = $left->{OpCode}->{Value}->fadd($right->{OpCode}->{Value});
-        $parser->checkRangeFloat($left->{OpCode}, new Math::BigFloat($value));
+        $left->{OpCode}->{Value}->fadd($right->{OpCode}->{Value});
+        $parser->checkRangeFloat($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '-') {
-        my $value = $left->{OpCode}->{Value}->fsub($right->{OpCode}->{Value});
-        $parser->checkRangeFloat($left->{OpCode}, new Math::BigFloat($value));
+        $left->{OpCode}->{Value}->fsub($right->{OpCode}->{Value});
+        $parser->checkRangeFloat($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
     }
     elsif ($oper eq '*') {
-        my $value = $left->{OpCode}->{Value}->fmul($right->{OpCode}->{Value});
-        $parser->checkRangeFloat($left->{OpCode}, new Math::BigFloat($value));
+        $left->{OpCode}->{Value}->fmul($right->{OpCode}->{Value});
+        $parser->checkRangeFloat($left->{OpCode});
         $right->del();
         $op->del();
         $OneMoreExpr = 1;
@@ -487,8 +483,8 @@ sub evalBinopFloat {
             $parser->optWarning($op, "Division by zero.\n");
         }
         else {
-            my $value = $left->{OpCode}->{Value}->fdiv($right->{OpCode}->{Value});
-            $parser->checkRangeFloat($left->{OpCode}, new Math::BigFloat($value));
+            $left->{OpCode}->{Value}->fdiv($right->{OpCode}->{Value});
+            $parser->checkRangeFloat($left->{OpCode});
         }
         $right->del();
         $op->del();
@@ -1170,8 +1166,8 @@ sub optUnopNot {
     my ($func) = @_;
 
     for (my $node = $func->getLastActive(); defined $node; $node = $node->getPrevActive()) {
-        if (        $node->{OpCode}->isa('UnaryOp')
-                and $node->{OpCode}->{Operator} eq '!' ) {
+        if ( $node->{OpCode}->isa('UnaryOp')
+         and $node->{OpCode}->{Operator} eq '!' ) {
             my $prev = $node->getPrevActive();
             croak "INTERNAL ERROR optUnopNot\n"
                     unless (defined $prev);
@@ -1332,7 +1328,7 @@ sub killVar {
 
     for (my $node = $func->getFirstActive(); defined $node; $node = $node->getNextActive()) {
         my $opcode = $node->{OpCode};
-        if (    $opcode->isa('StoreVar')
+        if    ( $opcode->isa('StoreVar')
              or $opcode->isa('AddAsg')
              or $opcode->isa('SubAsg') ) {
                 my $expr = $node->getPrevActive();
@@ -1402,9 +1398,9 @@ sub killDeadCode {
     my ($func) = @_;
 
     for (my $node = $func->getFirstActive(); defined $node; $node = $node->getNextActive()) {
-        if (       $node->{OpCode}->isa('Jump')
-                or $node->{OpCode}->isa('Return')
-                or $node->{OpCode}->isa('ReturnES') ) {
+        if ( $node->{OpCode}->isa('Jump')
+          or $node->{OpCode}->isa('Return')
+          or $node->{OpCode}->isa('ReturnES') ) {
             my $first = 1;
             for (my $next = $node->getNextActive(); defined $next; $next = $next->getNextActive()) {
                 my $opcode = $next->{OpCode};
@@ -1440,25 +1436,25 @@ sub optVar {
 
     for (my $node = $func->getFirstActive(); defined $node; $node = $node->getNextActive()) {
         my $opcode = $node->{OpCode};
-        if (       $opcode->isa('Argument')
-                or $opcode->isa('LoadVar')
-                or $opcode->isa('StoreVar')
-                or $opcode->isa('IncrVar')
-                or $opcode->isa('DecrVar')
-                or $opcode->isa('AddAsg')
-                or $opcode->isa('SubAsg') ) {
+        if ( $opcode->isa('Argument')
+          or $opcode->isa('LoadVar')
+          or $opcode->isa('StoreVar')
+          or $opcode->isa('IncrVar')
+          or $opcode->isa('DecrVar')
+          or $opcode->isa('AddAsg')
+          or $opcode->isa('SubAsg') ) {
             $opcode->{Definition}->{Index} = 0;     # clear flag
         }
     }
     for (my $node = $func->getFirstActive(); defined $node; $node = $node->getNextActive()) {
         my $opcode = $node->{OpCode};
-        if (       $opcode->isa('Argument')
-                or $opcode->isa('LoadVar')
-                or $opcode->isa('StoreVar')
-                or $opcode->isa('IncrVar')
-                or $opcode->isa('DecrVar')
-                or $opcode->isa('AddAsg')
-                or $opcode->isa('SubAsg') ) {
+        if ( $opcode->isa('Argument')
+          or $opcode->isa('LoadVar')
+          or $opcode->isa('StoreVar')
+          or $opcode->isa('IncrVar')
+          or $opcode->isa('DecrVar')
+          or $opcode->isa('AddAsg')
+          or $opcode->isa('SubAsg') ) {
             my $def = $opcode->{Definition};
             if ($def->{Index} == 0 and $def->{NbUse} != 0) {
                 my $load = undef;

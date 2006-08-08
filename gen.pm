@@ -701,14 +701,14 @@ sub visitLoadConst {
     my ($opcode) = @_;
     my $type = $opcode->{TypeDef};
     if    ($type eq 'TYPE_INTEGER') {
-        $self->{parser}->checkRangeInteger($opcode, $opcode->{Value});
+        $self->{parser}->checkRangeInteger($opcode);
     }
     elsif ($type eq 'TYPE_FLOAT') {
-        $self->{parser}->checkRangeFloat($opcode, $opcode->{Value});
+        $self->{parser}->checkRangeFloat($opcode);
     }
     $type = $opcode->{TypeDef};
-    if (       $type eq 'TYPE_BOOLEAN'
-            or $type eq 'TYPE_INVALID' ) {
+    if (   $type eq 'TYPE_BOOLEAN'
+        or $type eq 'TYPE_INVALID' ) {
         return;
     }
     my $value = $opcode->{Value};
@@ -719,9 +719,9 @@ sub visitLoadConst {
             return;
         }
     }
-    if      ($type eq 'TYPE_INTEGER') {
+    if    ($type eq 'TYPE_INTEGER') {
         return if ($value >= -1 and $value <= 1);
-        if ($value >= INT8_MIN and $value <= INT8_MAX) {
+        if    ($value >= INT8_MIN and $value <= INT8_MAX) {
             if ($self->{action}) {
                 asm::asmConstantInteger8($opcode->{Index},$value)
                         unless (exists $opcode->{Doublon});
@@ -1047,12 +1047,12 @@ sub _indexeVariables {
     if (defined $func) {
         for (my $node = $func->getFirstActive(); defined $node; $node = $node->getNextActive()) {
             my $opcode = $node->{OpCode};
-            if (       $opcode->isa('LoadVar')
-                    or $opcode->isa('StoreVar')
-                    or $opcode->isa('IncrVar')
-                    or $opcode->isa('DecrVar')
-                    or $opcode->isa('AddAsg')
-                    or $opcode->isa('SubAsg') ) {
+            if ( $opcode->isa('LoadVar')
+              or $opcode->isa('StoreVar')
+              or $opcode->isa('IncrVar')
+              or $opcode->isa('DecrVar')
+              or $opcode->isa('AddAsg')
+              or $opcode->isa('SubAsg') ) {
                 my $def = $opcode->{Definition};
                 if ($def->{ID} == 0xffff) {
                     $def->{ID} = $idx;
@@ -1643,7 +1643,7 @@ load_const:
         my $cindex = $opcode->{Index};
         croak "INTERNAL ERROR in codeVisitor::visitLoadConst\n"
                 unless ($cindex <= UINT16_MAX);
-        if ($cindex <= UINT4_MAX) {
+        if    ($cindex <= UINT4_MAX) {
             if ($self->{action}) {
                 asm::asmOpcode1s(LOAD_CONST_S, $cindex);
             }
@@ -1792,11 +1792,11 @@ sub generate {
         my $filename = $parser->YYData->{filename};
         $filename =~ s/\.wmls$//;
         $filename .= '.wmlsc';
-        open OUT, '>', $filename
+        open my $OUT, '>', $filename
                 or die "can't open $filename ($!)\n";
-        binmode OUT, ':raw';
+        binmode $OUT, ':raw';
 
-        $asm::OUT = \*OUT;
+        $asm::OUT = $OUT;
         asm::asmComment($filename);
         asm::asmComment("");
         asm::asmComment("Bytecode Header");
@@ -1817,7 +1817,7 @@ sub generate {
         asm::asmMultiByte("NumberOfPragmas", $NumberOfPragmas);
         $pragmaVisitor->{nb} = 0;
         $pragmaVisitor->{action} = 1;
-        $pragmaVisitor->{out} = \*OUT;
+        $pragmaVisitor->{out} = $OUT;
         $parser->YYData->{PragmaList}->visit($pragmaVisitor)
                 if (defined $parser->YYData->{PragmaList});
         asm::asmComment("Function Pool");
@@ -1837,7 +1837,7 @@ sub generate {
         $parser->YYData->{FunctionList}->visitActive($codeVisitor)
                 if (defined $parser->YYData->{FunctionList});
 
-        close OUT;
+        close $OUT;
         unlink($filename) if (exists $parser->YYData->{nb_error});
     }
 }

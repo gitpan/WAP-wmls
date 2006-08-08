@@ -75,7 +75,7 @@ Literal
             else {
                 if ($_[1]->fcmp(new Math::BigFloat('1.17549435e-38')) < 0) {
                     $_[0]->Warning("Float $_[1] is underflow.\n");
-                    $_[1] = new Math::BigFloat('0.0');
+                    $_[1] = Math::BigFloat->bzero();
                 }
                 new LoadConst($_[0],
                         'TypeDef'           =>  'TYPE_FLOAT',
@@ -304,7 +304,7 @@ UnaryExpression
 |   '--'        IDENTIFIER
         {
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[2]);
-            my $decr = new IncrVar($_[0],
+            my $decr = new DecrVar($_[0],
                     'Definition'        =>  $var
             );
             my $load = new LoadVar($_[0],
@@ -1218,7 +1218,7 @@ use WAP::wmls::lexer;
 use WAP::wmls::node;
 
 sub BuildUnop {
-    my($parser,$op,$expr) = @_;
+    my ($parser, $op, $expr) = @_;
     my $unop = new UnaryOp($parser,
             'Operator'                  =>  $op
     );
@@ -1226,7 +1226,7 @@ sub BuildUnop {
 }
 
 sub BuildBinop {
-    my($parser,$expr1,$op,$expr2) = @_;
+    my ($parser, $expr1, $op, $expr2) = @_;
     my $binop = new BinaryOp($parser,
             'Operator'                  =>  $op,
             'Left'                      =>  $expr1->{Last}
@@ -1236,23 +1236,25 @@ sub BuildBinop {
 }
 
 sub BuildLogop {
-    my($parser,$expr1,$logop,$expr2) = @_;
-    my $endif = new Label($parser,
-            'TypeDef'                   =>  'LABEL_ENDIF',
-            'Index'                     =>  0xffffffff
+    my ($parser, $expr1, $logop, $expr2) = @_;
+    my $endif = $parser->YYData->{symbtab_label}->Next();
+    my $label = new Label($parser,
+            'Definition'                =>  $endif
     );
+    $endif->{Node} = $label;
     my $falsejump = new FalseJump($parser,
-            'Value'                     =>  $endif
+            'Definition'                =>  $endif
     );
+    $endif->{NbUse} ++;
     $expr1->concat($logop);
     $expr1->concat($falsejump);
     $expr1->concat($expr2);
     $expr1->concat(new ToBool($parser));
-    return $expr1->concat($endif);
+    return $expr1->concat($label);
 }
 
 sub BuildIf {
-    my($parser, $expr, $stat) = @_;
+    my ($parser, $expr, $stat) = @_;
     my $endif = $parser->YYData->{symbtab_label}->Next();
     my $label = new Label($parser,
             'Definition'                =>  $endif
@@ -1268,7 +1270,7 @@ sub BuildIf {
 }
 
 sub BuildIfElse {
-    my($parser, $expr, $stat1, $stat2) = @_;
+    my ($parser, $expr, $stat1, $stat2) = @_;
     my $else = $parser->YYData->{symbtab_label}->Next();
     my $endif = $parser->YYData->{symbtab_label}->Next();
     my $label1 = new Label($parser,
@@ -1296,7 +1298,7 @@ sub BuildIfElse {
 }
 
 sub BuildFor {
-    my($parser, $init, $cond, $upd, $stat) = @_;
+    my ($parser, $init, $cond, $upd, $stat) = @_;
     my $for;
     my $loop = $parser->YYData->{symbtab_label}->Next();
     my $continue = $parser->YYData->{symbtab_label}->Next();
@@ -1369,7 +1371,7 @@ sub Run {
     my $parser = shift;
 
     my $srcname = $parser->YYData->{filename};
-    open (YYIN, $srcname)
+    open $parser->YYData->{fh}, $srcname
         or die "can't open $srcname ($!).\n";
 
     $parser->_InitLexico();
@@ -1386,7 +1388,10 @@ sub Run {
             yyerror => sub { return; }
     );
 
-    close YYIN;
+    close $parser->YYData->{fh};
+    delete $parser->{RULES};
+    delete $parser->{STATES};
+    delete $parser->{STACK};
 }
 
 

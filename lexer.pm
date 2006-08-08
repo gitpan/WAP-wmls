@@ -314,7 +314,7 @@ sub _CommentLexer {
 
     while (1) {
             $parser->YYData->{INPUT}
-        or  $parser->YYData->{INPUT} = <YYIN>
+        or  $parser->YYData->{INPUT} = readline $parser->YYData->{fh}
         or  return;
 
         for ($parser->YYData->{INPUT}) {
@@ -336,7 +336,7 @@ sub _DocLexer {
     my $flag = 1;
     while (1) {
             $parser->YYData->{INPUT}
-        or  $parser->YYData->{INPUT} = <YYIN>
+        or  $parser->YYData->{INPUT} = readline $parser->YYData->{fh}
         or  return;
 
         for ($parser->YYData->{INPUT}) {
@@ -368,7 +368,7 @@ sub _Lexer {
 
     while (1) {
             $parser->YYData->{INPUT}
-        or  $parser->YYData->{INPUT} = <YYIN>
+        or  $parser->YYData->{INPUT} = readline $parser->YYData->{fh}
         or  return ('', undef);
 
         for ($parser->YYData->{INPUT}) {

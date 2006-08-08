@@ -501,3570 +501,3570 @@ sub new {
 [
 	{#State 0
 		ACTIONS => {
-			'USE' => 6,
-			'FUNCTION' => 7,
-			'EXTERN' => 9
+			'FUNCTION' => 2,
+			'USE' => 3,
+			'EXTERN' => 5
 		},
 		GOTOS => {
-			'CompilationUnit' => 1,
-			'FunctionDeclarations' => 2,
-			'Pragma' => 8,
-			'FunctionDeclaration' => 3,
-			'func_decl' => 5,
-			'Pragmas' => 4
+			'Pragma' => 1,
+			'func_decl' => 7,
+			'FunctionDeclaration' => 4,
+			'FunctionDeclarations' => 6,
+			'Pragmas' => 9,
+			'CompilationUnit' => 8
 		}
 	},
 	{#State 1
-		ACTIONS => {
-			'' => 10
-		}
+		DEFAULT => -175
 	},
 	{#State 2
 		ACTIONS => {
-			'FUNCTION' => 7,
-			'EXTERN' => 9
-		},
-		DEFAULT => -174,
-		GOTOS => {
-			'FunctionDeclaration' => 11,
-			'func_decl' => 5
+			'error' => 11,
+			'IDENTIFIER' => 10
 		}
 	},
 	{#State 3
-		DEFAULT => -200
-	},
-	{#State 4
 		ACTIONS => {
-			'' => -173,
-			'USE' => 6,
-			'error' => 13,
-			'FUNCTION' => 7,
-			'EXTERN' => 9
+			'error' => 19,
+			'META' => 15,
+			'URL' => 17,
+			'ACCESS' => 16
 		},
 		GOTOS => {
-			'FunctionDeclarations' => 12,
-			'Pragma' => 14,
-			'FunctionDeclaration' => 3,
-			'func_decl' => 5
+			'AccessControlPragma' => 18,
+			'MetaPragma' => 12,
+			'PragmaDeclaration' => 13,
+			'ExternalCompilationUnitPragma' => 14
 		}
+	},
+	{#State 4
+		DEFAULT => -200
 	},
 	{#State 5
 		ACTIONS => {
-			'IDENTIFIER' => 16,
-			'error' => 17,
-			")" => 18
-		},
-		GOTOS => {
-			'FormalParameterList' => 15
+			'error' => 21,
+			'FUNCTION' => 20
 		}
 	},
 	{#State 6
 		ACTIONS => {
-			'URL' => 19,
-			'error' => 26,
-			'ACCESS' => 24,
-			'META' => 20
+			'FUNCTION' => 2,
+			'EXTERN' => 5
 		},
+		DEFAULT => -174,
 		GOTOS => {
-			'ExternalCompilationUnitPragma' => 25,
-			'AccessControlPragma' => 21,
-			'PragmaDeclaration' => 23,
-			'MetaPragma' => 22
+			'func_decl' => 7,
+			'FunctionDeclaration' => 22
 		}
 	},
 	{#State 7
 		ACTIONS => {
-			'IDENTIFIER' => 27,
-			'error' => 28
+			'error' => 26,
+			")" => 23,
+			'IDENTIFIER' => 24
+		},
+		GOTOS => {
+			'FormalParameterList' => 25
 		}
 	},
 	{#State 8
-		DEFAULT => -175
+		ACTIONS => {
+			'' => 27
+		}
 	},
 	{#State 9
 		ACTIONS => {
-			'FUNCTION' => 30,
-			'error' => 29
+			'' => -173,
+			'error' => 30,
+			'FUNCTION' => 2,
+			'USE' => 3,
+			'EXTERN' => 5
+		},
+		GOTOS => {
+			'Pragma' => 28,
+			'func_decl' => 7,
+			'FunctionDeclaration' => 4,
+			'FunctionDeclarations' => 29
 		}
 	},
 	{#State 10
-		DEFAULT => 0
-	},
-	{#State 11
-		DEFAULT => -201
-	},
-	{#State 12
 		ACTIONS => {
-			'FUNCTION' => 7,
-			'EXTERN' => 9
-		},
-		DEFAULT => -171,
-		GOTOS => {
-			'FunctionDeclaration' => 11,
-			'func_decl' => 5
+			'error' => 31,
+			"(" => 32
 		}
 	},
+	{#State 11
+		DEFAULT => -159
+	},
+	{#State 12
+		DEFAULT => -182
+	},
 	{#State 13
-		DEFAULT => -172
+		ACTIONS => {
+			'error' => 34,
+			";" => 33
+		}
 	},
 	{#State 14
-		DEFAULT => -176
+		DEFAULT => -180
 	},
 	{#State 15
 		ACTIONS => {
-			'error' => 32,
-			"," => 31,
-			")" => 33
+			'USER' => 36,
+			'NAME' => 37,
+			'HTTP' => 41
+		},
+		GOTOS => {
+			'MetaSpecifier' => 35,
+			'MetaName' => 39,
+			'MetaHttpEquiv' => 40,
+			'MetaUserAgent' => 38
 		}
 	},
 	{#State 16
-		DEFAULT => -169
-	},
-	{#State 17
-		DEFAULT => -165
-	},
-	{#State 18
 		ACTIONS => {
-			'error' => 36,
-			"{" => 35
+			'PATH' => 44,
+			'DOMAIN' => 42
 		},
 		GOTOS => {
-			'Block' => 34
+			'AccessControlSpecifier' => 43
 		}
 	},
-	{#State 19
+	{#State 17
 		ACTIONS => {
-			'IDENTIFIER' => 37
+			'IDENTIFIER' => 45
 		}
+	},
+	{#State 18
+		DEFAULT => -181
+	},
+	{#State 19
+		DEFAULT => -178
 	},
 	{#State 20
 		ACTIONS => {
-			'HTTP' => 38,
-			'NAME' => 40,
-			'USER' => 44
-		},
-		GOTOS => {
-			'MetaSpecifier' => 39,
-			'MetaUserAgent' => 42,
-			'MetaName' => 41,
-			'MetaHttpEquiv' => 43
+			'error' => 47,
+			'IDENTIFIER' => 46
 		}
 	},
 	{#State 21
-		DEFAULT => -181
+		DEFAULT => -156
 	},
 	{#State 22
-		DEFAULT => -182
+		DEFAULT => -201
 	},
 	{#State 23
 		ACTIONS => {
-			";" => 45,
-			'error' => 46
+			'error' => 50,
+			"{" => 49
+		},
+		GOTOS => {
+			'Block' => 48
 		}
 	},
 	{#State 24
-		ACTIONS => {
-			'DOMAIN' => 48,
-			'PATH' => 47
-		},
-		GOTOS => {
-			'AccessControlSpecifier' => 49
-		}
+		DEFAULT => -169
 	},
 	{#State 25
-		DEFAULT => -180
+		ACTIONS => {
+			'error' => 53,
+			")" => 51,
+			"," => 52
+		}
 	},
 	{#State 26
-		DEFAULT => -178
+		DEFAULT => -165
 	},
 	{#State 27
-		ACTIONS => {
-			"(" => 50,
-			'error' => 51
-		}
+		DEFAULT => 0
 	},
 	{#State 28
-		DEFAULT => -159
+		DEFAULT => -176
 	},
 	{#State 29
-		DEFAULT => -156
+		ACTIONS => {
+			'FUNCTION' => 2,
+			'EXTERN' => 5
+		},
+		DEFAULT => -171,
+		GOTOS => {
+			'func_decl' => 7,
+			'FunctionDeclaration' => 22
+		}
 	},
 	{#State 30
-		ACTIONS => {
-			'IDENTIFIER' => 52,
-			'error' => 53
-		}
+		DEFAULT => -172
 	},
 	{#State 31
-		ACTIONS => {
-			'IDENTIFIER' => 54
-		}
+		DEFAULT => -160
 	},
 	{#State 32
-		DEFAULT => -166
+		DEFAULT => -155
 	},
 	{#State 33
-		ACTIONS => {
-			'error' => 56,
-			"{" => 35
-		},
-		GOTOS => {
-			'Block' => 55
-		}
+		DEFAULT => -177
 	},
 	{#State 34
-		ACTIONS => {
-			";" => 57
-		},
-		DEFAULT => -164
+		DEFAULT => -179
 	},
 	{#State 35
-		ACTIONS => {
-			"}" => 59,
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'IF' => 94,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			"--" => 96,
-			'FLOAT_LITERAL' => 95,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 114,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'ExternalScriptFunctionCall' => 118,
-			'Literal' => 117,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AdditiveExpression' => 121,
-			'StatementList' => 90,
-			'ForStatement' => 122
-		}
+		DEFAULT => -188
 	},
 	{#State 36
-		DEFAULT => -168
+		ACTIONS => {
+			'AGENT' => 54
+		}
 	},
 	{#State 37
 		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
 		},
 		GOTOS => {
-			'StringLiteral' => 123
+			'MetaPropertyName' => 55,
+			'StringLiteral' => 58,
+			'MetaBody' => 57
 		}
 	},
 	{#State 38
-		ACTIONS => {
-			'EQUIV' => 124
-		}
-	},
-	{#State 39
-		DEFAULT => -188
-	},
-	{#State 40
-		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
-		},
-		GOTOS => {
-			'MetaPropertyName' => 127,
-			'StringLiteral' => 126,
-			'MetaBody' => 125
-		}
-	},
-	{#State 41
-		DEFAULT => -189
-	},
-	{#State 42
 		DEFAULT => -191
 	},
-	{#State 43
+	{#State 39
+		DEFAULT => -189
+	},
+	{#State 40
 		DEFAULT => -190
+	},
+	{#State 41
+		ACTIONS => {
+			'EQUIV' => 60
+		}
+	},
+	{#State 42
+		ACTIONS => {
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
+		},
+		GOTOS => {
+			'StringLiteral' => 61
+		}
+	},
+	{#State 43
+		DEFAULT => -184
 	},
 	{#State 44
 		ACTIONS => {
-			'AGENT' => 128
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
+		},
+		GOTOS => {
+			'StringLiteral' => 62
 		}
 	},
 	{#State 45
-		DEFAULT => -177
-	},
-	{#State 46
-		DEFAULT => -179
-	},
-	{#State 47
 		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
 		},
 		GOTOS => {
-			'StringLiteral' => 129
+			'StringLiteral' => 63
 		}
+	},
+	{#State 46
+		ACTIONS => {
+			'error' => 64,
+			"(" => 65
+		}
+	},
+	{#State 47
+		DEFAULT => -157
 	},
 	{#State 48
 		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
+			";" => 66
 		},
-		GOTOS => {
-			'StringLiteral' => 130
-		}
+		DEFAULT => -164
 	},
 	{#State 49
-		DEFAULT => -184
+		ACTIONS => {
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'FOR' => 101,
+			'CONTINUE' => 70,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			"}" => 89,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
+		},
+		GOTOS => {
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'StatementList' => 88,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 109,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'LibraryFunctionCall' => 124,
+			'Literal' => 123,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
+		}
 	},
 	{#State 50
-		DEFAULT => -155
+		DEFAULT => -168
 	},
 	{#State 51
-		DEFAULT => -160
+		ACTIONS => {
+			'error' => 131,
+			"{" => 49
+		},
+		GOTOS => {
+			'Block' => 130
+		}
 	},
 	{#State 52
 		ACTIONS => {
-			"(" => 132,
-			'error' => 131
+			'IDENTIFIER' => 132
 		}
 	},
 	{#State 53
-		DEFAULT => -157
+		DEFAULT => -166
 	},
 	{#State 54
-		DEFAULT => -170
+		ACTIONS => {
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
+		},
+		GOTOS => {
+			'MetaPropertyName' => 55,
+			'StringLiteral' => 58,
+			'MetaBody' => 133
+		}
 	},
 	{#State 55
 		ACTIONS => {
-			";" => 133
-		},
-		DEFAULT => -162
-	},
-	{#State 56
-		DEFAULT => -167
-	},
-	{#State 57
-		DEFAULT => -163
-	},
-	{#State 58
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 134,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'MetaContent' => 134,
+			'StringLiteral' => 135
 		}
 	},
+	{#State 56
+		DEFAULT => -7
+	},
+	{#State 57
+		DEFAULT => -192
+	},
+	{#State 58
+		DEFAULT => -197
+	},
 	{#State 59
-		DEFAULT => -103
+		DEFAULT => -8
 	},
 	{#State 60
 		ACTIONS => {
-			"<" => 136,
-			">=" => 137,
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
+		},
+		GOTOS => {
+			'MetaPropertyName' => 55,
+			'StringLiteral' => 58,
+			'MetaBody' => 136
+		}
+	},
+	{#State 61
+		ACTIONS => {
+			'PATH' => 137
+		},
+		DEFAULT => -185
+	},
+	{#State 62
+		DEFAULT => -186
+	},
+	{#State 63
+		DEFAULT => -183
+	},
+	{#State 64
+		DEFAULT => -158
+	},
+	{#State 65
+		DEFAULT => -154
+	},
+	{#State 66
+		DEFAULT => -163
+	},
+	{#State 67
+		DEFAULT => -5
+	},
+	{#State 68
+		DEFAULT => -92
+	},
+	{#State 69
+		ACTIONS => {
 			"<=" => 138,
-			">" => 139
+			"<" => 140,
+			">" => 141,
+			">=" => 139
 		},
 		DEFAULT => -59
 	},
-	{#State 61
-		DEFAULT => -96
-	},
-	{#State 62
-		ACTIONS => {
-			"%" => 140,
-			"*" => 141,
-			'DIV' => 142,
-			"/" => 143
-		},
-		DEFAULT => -47
-	},
-	{#State 63
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 144,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
-	},
-	{#State 64
-		DEFAULT => -100
-	},
-	{#State 65
-		DEFAULT => -30
-	},
-	{#State 66
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 145,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
-	},
-	{#State 67
-		ACTIONS => {
-			"&&" => 146
-		},
-		DEFAULT => -70
-	},
-	{#State 68
-		ACTIONS => {
-			";" => 148,
-			'error' => 147
-		}
-	},
-	{#State 69
-		DEFAULT => -14
-	},
 	{#State 70
-		DEFAULT => -90
+		ACTIONS => {
+			'error' => 143,
+			";" => 142
+		}
 	},
 	{#State 71
-		DEFAULT => -75
+		DEFAULT => -94
 	},
 	{#State 72
-		DEFAULT => -42
-	},
-	{#State 73
 		ACTIONS => {
-			"&" => 149
+			"&" => 144
 		},
 		DEFAULT => -64
 	},
-	{#State 74
+	{#State 73
 		ACTIONS => {
-			"(" => 151,
-			'error' => 150
+			"." => 145
 		}
+	},
+	{#State 74
+		DEFAULT => -100
 	},
 	{#State 75
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			"|" => 146
 		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 152,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -68
 	},
 	{#State 76
-		DEFAULT => -1
-	},
-	{#State 77
 		ACTIONS => {
-			"#" => 153
-		}
-	},
-	{#State 78
-		DEFAULT => -97
-	},
-	{#State 79
-		DEFAULT => -17
-	},
-	{#State 80
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 154,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
-	},
-	{#State 81
-		ACTIONS => {
-			"." => 155
-		}
-	},
-	{#State 82
-		DEFAULT => -99
-	},
-	{#State 83
-		DEFAULT => -3
-	},
-	{#State 84
-		DEFAULT => -122
-	},
-	{#State 85
-		ACTIONS => {
-			">>" => 156,
-			">>>" => 157,
-			"<<" => 158
-		},
-		DEFAULT => -54
-	},
-	{#State 86
-		DEFAULT => -15
-	},
-	{#State 87
-		DEFAULT => -8
-	},
-	{#State 88
-		DEFAULT => -7
-	},
-	{#State 89
-		DEFAULT => -6
-	},
-	{#State 90
-		ACTIONS => {
-			"}" => 159,
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'error' => 160,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 161,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AdditiveExpression' => 121,
-			'ForStatement' => 122
-		}
-	},
-	{#State 91
-		ACTIONS => {
-			";" => 163,
-			'error' => 162
-		}
-	},
-	{#State 92
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 164,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
-	},
-	{#State 93
-		DEFAULT => -4
-	},
-	{#State 94
-		ACTIONS => {
-			"(" => 166,
-			'error' => 165
-		}
-	},
-	{#State 95
-		DEFAULT => -2
-	},
-	{#State 96
-		ACTIONS => {
-			'IDENTIFIER' => 167
-		}
-	},
-	{#State 97
-		ACTIONS => {
-			"-" => 58,
-			";" => 169,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 168,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 170,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
-	},
-	{#State 98
-		ACTIONS => {
-			"*=" => 171,
-			"div=" => 178,
-			"|=" => 172,
-			"&=" => 179,
-			"--" => 180,
-			"-=" => 181,
-			"/=" => 182,
-			"<<=" => 174,
-			"(" => -21,
-			"." => -23,
-			"%=" => 183,
-			"^=" => 175,
-			">>=" => 176,
-			"++" => 184,
-			"=" => 186,
-			"+=" => 185,
-			">>>=" => 177,
-			"#" => -22
-		},
-		DEFAULT => -9,
-		GOTOS => {
-			'AssignmentOperator' => 173
-		}
-	},
-	{#State 99
-		DEFAULT => -5
-	},
-	{#State 100
-		DEFAULT => -95
-	},
-	{#State 101
-		ACTIONS => {
-			"^" => 187
-		},
-		DEFAULT => -66
-	},
-	{#State 102
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 188,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 189,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
-	},
-	{#State 103
-		DEFAULT => -93
-	},
-	{#State 104
-		ACTIONS => {
-			'IDENTIFIER' => 192,
-			'error' => 191
-		},
-		GOTOS => {
-			'VariableDeclaration' => 193,
-			'VariableDeclarationList' => 190
-		}
-	},
-	{#State 105
-		ACTIONS => {
-			"||" => 195,
-			"?" => 194
-		},
-		DEFAULT => -72
-	},
-	{#State 106
-		DEFAULT => -92
-	},
-	{#State 107
-		ACTIONS => {
-			"(" => 197
-		},
-		GOTOS => {
-			'Arguments' => 196
-		}
-	},
-	{#State 108
-		DEFAULT => -114
-	},
-	{#State 109
-		ACTIONS => {
-			"!=" => 199,
-			"==" => 198
+			"!=" => 147,
+			"==" => 148
 		},
 		DEFAULT => -62
 	},
+	{#State 77
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 149,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
+		}
+	},
+	{#State 78
+		DEFAULT => -122
+	},
+	{#State 79
+		ACTIONS => {
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'TYPEOF' => 116,
+			'error' => 151,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 152,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
+	},
+	{#State 80
+		DEFAULT => -30
+	},
+	{#State 81
+		DEFAULT => -75
+	},
+	{#State 82
+		DEFAULT => -14
+	},
+	{#State 83
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			";" => 153,
+			'INVALID_LITERAL' => 85,
+			'error' => 154,
+			"-" => 119,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			"~" => 129,
+			'UTF8_STRING_LITERAL' => 59,
+			'FLOAT_LITERAL' => 92,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 155,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
+	},
+	{#State 84
+		DEFAULT => -114
+	},
+	{#State 85
+		DEFAULT => -6
+	},
+	{#State 86
+		DEFAULT => -93
+	},
+	{#State 87
+		ACTIONS => {
+			'error' => 158,
+			";" => 156,
+			"," => 157
+		}
+	},
+	{#State 88
+		ACTIONS => {
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'FOR' => 101,
+			'CONTINUE' => 70,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'error' => 159,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			"}" => 160,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
+		},
+		GOTOS => {
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 161,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
+		}
+	},
+	{#State 89
+		DEFAULT => -103
+	},
+	{#State 90
+		DEFAULT => -123
+	},
+	{#State 91
+		ACTIONS => {
+			"#" => 162
+		}
+	},
+	{#State 92
+		DEFAULT => -2
+	},
+	{#State 93
+		ACTIONS => {
+			"^" => 163
+		},
+		DEFAULT => -66
+	},
+	{#State 94
+		ACTIONS => {
+			'IDENTIFIER' => 164
+		}
+	},
+	{#State 95
+		DEFAULT => -42
+	},
+	{#State 96
+		ACTIONS => {
+			"&&" => 165
+		},
+		DEFAULT => -70
+	},
+	{#State 97
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 166,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
+		}
+	},
+	{#State 98
+		DEFAULT => -90
+	},
+	{#State 99
+		DEFAULT => -16
+	},
+	{#State 100
+		DEFAULT => -33
+	},
+	{#State 101
+		ACTIONS => {
+			'error' => 168,
+			"(" => 167
+		}
+	},
+	{#State 102
+		ACTIONS => {
+			'IDENTIFIER' => 169
+		}
+	},
+	{#State 103
+		DEFAULT => -1
+	},
+	{#State 104
+		DEFAULT => -3
+	},
+	{#State 105
+		ACTIONS => {
+			"%" => 172,
+			"*" => 170,
+			'DIV' => 171,
+			"/" => 173
+		},
+		DEFAULT => -47
+	},
+	{#State 106
+		ACTIONS => {
+			">>>" => 174,
+			"<<" => 175,
+			">>" => 176
+		},
+		DEFAULT => -54
+	},
+	{#State 107
+		DEFAULT => -98
+	},
+	{#State 108
+		DEFAULT => -4
+	},
+	{#State 109
+		DEFAULT => -104
+	},
 	{#State 110
 		ACTIONS => {
-			'IDENTIFIER' => 200
+			"+=" => 177,
+			"-=" => 178,
+			"(" => -21,
+			"/=" => 179,
+			"div=" => 180,
+			"&=" => 181,
+			"|=" => 182,
+			"=" => 183,
+			"." => -23,
+			"++" => 184,
+			"*=" => 185,
+			"#" => -22,
+			"--" => 187,
+			"<<=" => 188,
+			"%=" => 189,
+			">>>=" => 190,
+			">>=" => 192,
+			"^=" => 191
+		},
+		DEFAULT => -9,
+		GOTOS => {
+			'AssignmentOperator' => 186
 		}
 	},
 	{#State 111
-		DEFAULT => -94
+		DEFAULT => -97
 	},
 	{#State 112
 		ACTIONS => {
-			"-" => 58,
-			";" => 202,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 201,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			";" => 193,
+			'INVALID_LITERAL' => 85,
+			'error' => 194,
+			"-" => 119,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			"~" => 129,
+			'UTF8_STRING_LITERAL' => 59,
+			'FLOAT_LITERAL' => 92,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 203,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 195,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 113
 		ACTIONS => {
-			"|" => 204
+			"(" => 196
 		},
-		DEFAULT => -68
+		GOTOS => {
+			'Arguments' => 197
+		}
 	},
 	{#State 114
-		DEFAULT => -104
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 198,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
+		}
 	},
 	{#State 115
 		ACTIONS => {
-			"(" => 206,
-			'error' => 205
+			'error' => 200,
+			"(" => 199
 		}
 	},
 	{#State 116
 		ACTIONS => {
-			";" => 209,
-			'error' => 208,
-			"," => 207
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 201,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
 		}
 	},
 	{#State 117
-		DEFAULT => -10
+		DEFAULT => -96
 	},
 	{#State 118
-		DEFAULT => -16
+		ACTIONS => {
+			'error' => 203,
+			";" => 202
+		}
 	},
 	{#State 119
-		DEFAULT => -33
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 204,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
+		}
 	},
 	{#State 120
-		DEFAULT => -98
+		DEFAULT => -15
 	},
 	{#State 121
 		ACTIONS => {
-			"-" => 210,
-			"+" => 211
+			"+" => 205,
+			"-" => 206
 		},
 		DEFAULT => -50
 	},
 	{#State 122
-		DEFAULT => -123
+		ACTIONS => {
+			'error' => 208,
+			"(" => 207
+		}
 	},
 	{#State 123
-		DEFAULT => -183
+		DEFAULT => -10
 	},
 	{#State 124
-		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
-		},
-		GOTOS => {
-			'MetaPropertyName' => 127,
-			'StringLiteral' => 126,
-			'MetaBody' => 212
-		}
+		DEFAULT => -17
 	},
 	{#State 125
-		DEFAULT => -192
-	},
-	{#State 126
-		DEFAULT => -197
-	},
-	{#State 127
 		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
+			'error' => 209,
+			'IDENTIFIER' => 212
 		},
 		GOTOS => {
-			'MetaContent' => 214,
-			'StringLiteral' => 213
+			'VariableDeclaration' => 210,
+			'VariableDeclarationList' => 211
 		}
+	},
+	{#State 126
+		DEFAULT => -99
+	},
+	{#State 127
+		DEFAULT => -95
 	},
 	{#State 128
 		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
+			"||" => 214,
+			"?" => 213
 		},
-		GOTOS => {
-			'MetaPropertyName' => 127,
-			'StringLiteral' => 126,
-			'MetaBody' => 215
-		}
+		DEFAULT => -72
 	},
 	{#State 129
-		DEFAULT => -186
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 215,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
+		}
 	},
 	{#State 130
 		ACTIONS => {
-			'PATH' => 216
+			";" => 216
 		},
-		DEFAULT => -185
+		DEFAULT => -162
 	},
 	{#State 131
-		DEFAULT => -158
+		DEFAULT => -167
 	},
 	{#State 132
-		DEFAULT => -154
+		DEFAULT => -170
 	},
 	{#State 133
-		DEFAULT => -161
+		DEFAULT => -194
 	},
 	{#State 134
-		DEFAULT => -39
+		ACTIONS => {
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
+		},
+		DEFAULT => -196,
+		GOTOS => {
+			'MetaScheme' => 217,
+			'StringLiteral' => 218
+		}
 	},
 	{#State 135
-		ACTIONS => {
-			"--" => 180,
-			"(" => -21,
-			"." => -23,
-			"++" => 184,
-			"#" => -22
-		},
-		DEFAULT => -9
+		DEFAULT => -198
 	},
 	{#State 136
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'ShiftExpression' => 217,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -193
 	},
 	{#State 137
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'STRING_LITERAL' => 56,
+			'UTF8_STRING_LITERAL' => 59
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'ShiftExpression' => 218,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'StringLiteral' => 219
 		}
 	},
 	{#State 138
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'ShiftExpression' => 219,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 220
 		}
 	},
 	{#State 139
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'ShiftExpression' => 220,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 221
 		}
 	},
 	{#State 140
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 221,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 222
 		}
 	},
 	{#State 141
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 222,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 223
 		}
 	},
 	{#State 142
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 223,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -146
 	},
 	{#State 143
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 224,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -147
 	},
 	{#State 144
-		DEFAULT => -41
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'EqualityExpression' => 224,
+			'MultiplicativeExpression' => 105,
+			'ExternalScriptName' => 91,
+			'ShiftExpression' => 106
+		}
 	},
 	{#State 145
-		DEFAULT => -34
+		ACTIONS => {
+			'IDENTIFIER' => 225
+		},
+		GOTOS => {
+			'FunctionName' => 226
+		}
 	},
 	{#State 146
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 225,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121
+			'UnaryExpression' => 95,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 227
 		}
 	},
 	{#State 147
-		DEFAULT => -147
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 228,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ExternalScriptName' => 91,
+			'ShiftExpression' => 106
+		}
 	},
 	{#State 148
-		DEFAULT => -146
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 229,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ExternalScriptName' => 91,
+			'ShiftExpression' => 106
+		}
 	},
 	{#State 149
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 226,
-			'LibraryFunctionCall' => 79,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'ExternalScriptFunctionCall' => 118,
-			'Literal' => 117,
-			'StringLiteral' => 83,
-			'PostfixExpression' => 119,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121
-		}
+		DEFAULT => -35
 	},
 	{#State 150
-		DEFAULT => -131
+		ACTIONS => {
+			"#" => -22,
+			"--" => 187,
+			"(" => -21,
+			"." => -23,
+			"++" => 184
+		},
+		DEFAULT => -9
 	},
 	{#State 151
-		ACTIONS => {
-			"-" => 58,
-			";" => 229,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 227,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 228,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 230,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
+		DEFAULT => -12
 	},
 	{#State 152
-		DEFAULT => -38
+		ACTIONS => {
+			'error' => 230,
+			")" => 231,
+			"," => 157
+		}
 	},
 	{#State 153
 		ACTIONS => {
-			'IDENTIFIER' => 231
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			")" => 234,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'TYPEOF' => 116,
+			'error' => 232,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
 		GOTOS => {
-			'FunctionName' => 232
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 233,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 154
-		DEFAULT => -35
+		DEFAULT => -140
 	},
 	{#State 155
 		ACTIONS => {
-			'IDENTIFIER' => 231
-		},
-		GOTOS => {
-			'FunctionName' => 233
+			'error' => 236,
+			";" => 235,
+			"," => 157
 		}
 	},
 	{#State 156
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 234,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -115
 	},
 	{#State 157
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 235,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 237,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 158
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 236,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -116
 	},
 	{#State 159
-		DEFAULT => -101
+		DEFAULT => -102
 	},
 	{#State 160
-		DEFAULT => -102
+		DEFAULT => -101
 	},
 	{#State 161
 		DEFAULT => -105
 	},
 	{#State 162
-		DEFAULT => -149
+		ACTIONS => {
+			'IDENTIFIER' => 225
+		},
+		GOTOS => {
+			'FunctionName' => 238
+		}
 	},
 	{#State 163
-		DEFAULT => -148
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'LibraryName' => 73,
+			'BitwiseANDExpression' => 239,
+			'StringLiteral' => 104,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExternalScriptName' => 91
+		}
 	},
 	{#State 164
-		DEFAULT => -40
+		DEFAULT => -36
 	},
 	{#State 165
-		DEFAULT => -119
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'EqualityExpression' => 76,
+			'BitwiseORExpression' => 240,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
 	},
 	{#State 166
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 237,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 238,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
+		DEFAULT => -41
 	},
 	{#State 167
-		DEFAULT => -37
-	},
-	{#State 168
-		DEFAULT => -140
-	},
-	{#State 169
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 239,
-			")" => 240,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			";" => 241,
+			'INVALID_LITERAL' => 85,
+			'error' => 242,
+			"-" => 119,
+			"--" => 102,
+			'VAR' => 244,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			"~" => 129,
+			'UTF8_STRING_LITERAL' => 59,
+			'FLOAT_LITERAL' => 92,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 241,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 243,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
+	},
+	{#State 168
+		DEFAULT => -131
+	},
+	{#State 169
+		DEFAULT => -37
 	},
 	{#State 170
 		ACTIONS => {
-			";" => 243,
-			'error' => 242,
-			"," => 207
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 245,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
 		}
 	},
 	{#State 171
-		DEFAULT => -78
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 246,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
+		}
 	},
 	{#State 172
-		DEFAULT => -88
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 247,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
+		}
 	},
 	{#State 173
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AssignmentExpression' => 244,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
+			'UnaryExpression' => 248,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91
 		}
 	},
 	{#State 174
-		DEFAULT => -83
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 249,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 105
+		}
 	},
 	{#State 175
-		DEFAULT => -87
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 250,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 105
+		}
 	},
 	{#State 176
-		DEFAULT => -84
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 251,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 105
+		}
 	},
 	{#State 177
-		DEFAULT => -85
+		DEFAULT => -81
 	},
 	{#State 178
-		DEFAULT => -89
-	},
-	{#State 179
-		DEFAULT => -86
-	},
-	{#State 180
-		DEFAULT => -32
-	},
-	{#State 181
 		DEFAULT => -82
 	},
-	{#State 182
+	{#State 179
 		DEFAULT => -79
 	},
+	{#State 180
+		DEFAULT => -89
+	},
+	{#State 181
+		DEFAULT => -86
+	},
+	{#State 182
+		DEFAULT => -88
+	},
 	{#State 183
-		DEFAULT => -80
+		DEFAULT => -77
 	},
 	{#State 184
 		DEFAULT => -31
 	},
 	{#State 185
-		DEFAULT => -81
+		DEFAULT => -78
 	},
 	{#State 186
-		DEFAULT => -77
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 252,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
 	},
 	{#State 187
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 245,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'ExternalScriptFunctionCall' => 118,
-			'Literal' => 117,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121
-		}
+		DEFAULT => -32
 	},
 	{#State 188
-		DEFAULT => -12
+		DEFAULT => -83
 	},
 	{#State 189
-		ACTIONS => {
-			'error' => 246,
-			"," => 207,
-			")" => 247
-		}
+		DEFAULT => -80
 	},
 	{#State 190
-		ACTIONS => {
-			";" => 250,
-			'error' => 249,
-			"," => 248
-		}
+		DEFAULT => -85
 	},
 	{#State 191
-		DEFAULT => -107
+		DEFAULT => -87
 	},
 	{#State 192
-		ACTIONS => {
-			"=" => 252
-		},
-		DEFAULT => -112,
-		GOTOS => {
-			'VariableInitializer' => 251
-		}
+		DEFAULT => -84
 	},
 	{#State 193
-		DEFAULT => -109
+		DEFAULT => -150
 	},
 	{#State 194
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AssignmentExpression' => 253,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
+		DEFAULT => -152
 	},
 	{#State 195
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 254,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121
+			'error' => 254,
+			";" => 253,
+			"," => 157
 		}
 	},
 	{#State 196
-		DEFAULT => -18
+		ACTIONS => {
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			")" => 257,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 256,
+			'ArgumentList' => 255,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
 	},
 	{#State 197
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			")" => 256,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'ArgumentList' => 257,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AssignmentExpression' => 255,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
+		DEFAULT => -18
 	},
 	{#State 198
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'RelationalExpression' => 258,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'ShiftExpression' => 85,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -38
 	},
 	{#State 199
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'TYPEOF' => 116,
+			'error' => 258,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
 		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'RelationalExpression' => 259,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'ShiftExpression' => 85,
-			'UnaryExpression' => 72,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 259,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 200
-		DEFAULT => -36
+		DEFAULT => -125
 	},
 	{#State 201
-		DEFAULT => -152
+		DEFAULT => -34
 	},
 	{#State 202
-		DEFAULT => -150
+		DEFAULT => -148
 	},
 	{#State 203
-		ACTIONS => {
-			";" => 261,
-			'error' => 260,
-			"," => 207
-		}
+		DEFAULT => -149
 	},
 	{#State 204
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 262,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121
-		}
+		DEFAULT => -39
 	},
 	{#State 205
-		DEFAULT => -125
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 260
+		}
 	},
 	{#State 206
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 263,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 264,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
+			'UnaryExpression' => 95,
+			'CallExpression' => 80,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'LocalScriptFunctionCall' => 120,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'ExternalScriptName' => 91,
+			'MultiplicativeExpression' => 261
 		}
 	},
 	{#State 207
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'TYPEOF' => 116,
+			'error' => 262,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AssignmentExpression' => 265,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 263,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 208
-		DEFAULT => -116
+		DEFAULT => -119
 	},
 	{#State 209
-		DEFAULT => -115
+		DEFAULT => -107
 	},
 	{#State 210
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 266,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'LibraryName' => 81,
-			'CallExpression' => 65
-		}
+		DEFAULT => -109
 	},
 	{#State 211
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'FunctionName' => 107,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 267,
-			'PrimaryExpression' => 69,
-			'LibraryFunctionCall' => 79,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'LibraryName' => 81,
-			'CallExpression' => 65
+			'error' => 266,
+			";" => 264,
+			"," => 265
 		}
 	},
 	{#State 212
-		DEFAULT => -193
+		ACTIONS => {
+			"=" => 267
+		},
+		DEFAULT => -112,
+		GOTOS => {
+			'VariableInitializer' => 268
+		}
 	},
 	{#State 213
-		DEFAULT => -198
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 269,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
 	},
 	{#State 214
 		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
-		DEFAULT => -196,
 		GOTOS => {
-			'MetaScheme' => 268,
-			'StringLiteral' => 269
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 270,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 215
-		DEFAULT => -194
+		DEFAULT => -40
 	},
 	{#State 216
-		ACTIONS => {
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88
-		},
-		GOTOS => {
-			'StringLiteral' => 270
-		}
+		DEFAULT => -161
 	},
 	{#State 217
-		ACTIONS => {
-			">>" => 156,
-			">>>" => 157,
-			"<<" => 158
-		},
-		DEFAULT => -55
+		DEFAULT => -195
 	},
 	{#State 218
-		ACTIONS => {
-			">>" => 156,
-			">>>" => 157,
-			"<<" => 158
-		},
-		DEFAULT => -58
+		DEFAULT => -199
 	},
 	{#State 219
-		ACTIONS => {
-			">>" => 156,
-			">>>" => 157,
-			"<<" => 158
-		},
-		DEFAULT => -57
+		DEFAULT => -187
 	},
 	{#State 220
 		ACTIONS => {
-			">>" => 156,
-			">>>" => 157,
-			"<<" => 158
+			">>>" => 174,
+			"<<" => 175,
+			">>" => 176
+		},
+		DEFAULT => -57
+	},
+	{#State 221
+		ACTIONS => {
+			">>>" => 174,
+			"<<" => 175,
+			">>" => 176
+		},
+		DEFAULT => -58
+	},
+	{#State 222
+		ACTIONS => {
+			">>>" => 174,
+			"<<" => 175,
+			">>" => 176
+		},
+		DEFAULT => -55
+	},
+	{#State 223
+		ACTIONS => {
+			">>>" => 174,
+			"<<" => 175,
+			">>" => 176
 		},
 		DEFAULT => -56
 	},
-	{#State 221
-		DEFAULT => -46
-	},
-	{#State 222
-		DEFAULT => -43
-	},
-	{#State 223
-		DEFAULT => -45
-	},
 	{#State 224
-		DEFAULT => -44
-	},
-	{#State 225
 		ACTIONS => {
-			"|" => 204
-		},
-		DEFAULT => -69
-	},
-	{#State 226
-		ACTIONS => {
-			"!=" => 199,
-			"==" => 198
+			"!=" => 147,
+			"==" => 148
 		},
 		DEFAULT => -63
 	},
+	{#State 225
+		DEFAULT => -21
+	},
+	{#State 226
+		ACTIONS => {
+			"(" => 196
+		},
+		GOTOS => {
+			'Arguments' => 271
+		}
+	},
 	{#State 227
-		DEFAULT => -132
+		ACTIONS => {
+			"^" => 163
+		},
+		DEFAULT => -67
 	},
 	{#State 228
 		ACTIONS => {
-			'IDENTIFIER' => 192,
-			'error' => 272
+			"<=" => 138,
+			"<" => 140,
+			">" => 141,
+			">=" => 139
 		},
-		GOTOS => {
-			'VariableDeclaration' => 193,
-			'VariableDeclarationList' => 271
-		}
+		DEFAULT => -61
 	},
 	{#State 229
-		DEFAULT => -129
+		ACTIONS => {
+			"<=" => 138,
+			"<" => 140,
+			">" => 141,
+			">=" => 139
+		},
+		DEFAULT => -60
 	},
 	{#State 230
-		ACTIONS => {
-			";" => 274,
-			'error' => 273,
-			"," => 207
-		}
+		DEFAULT => -13
 	},
 	{#State 231
-		DEFAULT => -21
+		DEFAULT => -11
 	},
 	{#State 232
-		ACTIONS => {
-			"(" => 197
-		},
-		GOTOS => {
-			'Arguments' => 275
-		}
+		DEFAULT => -144
 	},
 	{#State 233
 		ACTIONS => {
-			"(" => 197
-		},
-		GOTOS => {
-			'Arguments' => 276
+			'error' => 272,
+			")" => 273,
+			"," => 157
 		}
 	},
 	{#State 234
 		ACTIONS => {
-			"-" => 210,
-			"+" => 211
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			'CONTINUE' => 70,
+			'FOR' => 101,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
-		DEFAULT => -52
+		GOTOS => {
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 274,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
+		}
 	},
 	{#State 235
 		ACTIONS => {
-			"-" => 210,
-			"+" => 211
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			")" => 277,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'TYPEOF' => 116,
+			'error' => 275,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
-		DEFAULT => -53
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'FunctionName' => 113,
+			'PrimaryExpression' => 82,
+			'Expression' => 276,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
 	},
 	{#State 236
-		ACTIONS => {
-			"-" => 210,
-			"+" => 211
-		},
-		DEFAULT => -51
+		DEFAULT => -141
 	},
 	{#State 237
-		DEFAULT => -120
+		DEFAULT => -91
 	},
 	{#State 238
 		ACTIONS => {
-			'error' => 277,
-			"," => 207,
-			")" => 278
+			"(" => 196
+		},
+		GOTOS => {
+			'Arguments' => 278
 		}
 	},
 	{#State 239
-		DEFAULT => -144
-	},
-	{#State 240
 		ACTIONS => {
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 279,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AdditiveExpression' => 121,
-			'ForStatement' => 122
-		}
-	},
-	{#State 241
-		ACTIONS => {
-			'error' => 280,
-			"," => 207,
-			")" => 281
-		}
-	},
-	{#State 242
-		DEFAULT => -141
-	},
-	{#State 243
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 282,
-			")" => 283,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Expression' => 284,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
-			'AssignmentExpression' => 70,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
-	},
-	{#State 244
-		DEFAULT => -76
-	},
-	{#State 245
-		ACTIONS => {
-			"&" => 149
+			"&" => 144
 		},
 		DEFAULT => -65
 	},
+	{#State 240
+		ACTIONS => {
+			"|" => 146
+		},
+		DEFAULT => -69
+	},
+	{#State 241
+		DEFAULT => -129
+	},
+	{#State 242
+		DEFAULT => -132
+	},
+	{#State 243
+		ACTIONS => {
+			'error' => 280,
+			";" => 279,
+			"," => 157
+		}
+	},
+	{#State 244
+		ACTIONS => {
+			'error' => 281,
+			'IDENTIFIER' => 212
+		},
+		GOTOS => {
+			'VariableDeclaration' => 210,
+			'VariableDeclarationList' => 282
+		}
+	},
+	{#State 245
+		DEFAULT => -43
+	},
 	{#State 246
-		DEFAULT => -13
+		DEFAULT => -45
 	},
 	{#State 247
-		DEFAULT => -11
+		DEFAULT => -46
 	},
 	{#State 248
-		ACTIONS => {
-			'IDENTIFIER' => 192
-		},
-		GOTOS => {
-			'VariableDeclaration' => 285
-		}
+		DEFAULT => -44
 	},
 	{#State 249
-		DEFAULT => -108
+		ACTIONS => {
+			"+" => 205,
+			"-" => 206
+		},
+		DEFAULT => -53
 	},
 	{#State 250
-		DEFAULT => -106
+		ACTIONS => {
+			"+" => 205,
+			"-" => 206
+		},
+		DEFAULT => -51
 	},
 	{#State 251
-		DEFAULT => -111
+		ACTIONS => {
+			"+" => 205,
+			"-" => 206
+		},
+		DEFAULT => -52
 	},
 	{#State 252
-		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 135,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'ConditionalExpression' => 286,
-			'UnaryExpression' => 72,
-			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
-		}
+		DEFAULT => -76
 	},
 	{#State 253
-		ACTIONS => {
-			":" => 287,
-			'error' => 288
-		}
+		DEFAULT => -151
 	},
 	{#State 254
-		ACTIONS => {
-			"&&" => 146
-		},
-		DEFAULT => -71
+		DEFAULT => -153
 	},
 	{#State 255
-		DEFAULT => -27
-	},
-	{#State 256
-		DEFAULT => -24
-	},
-	{#State 257
 		ACTIONS => {
-			'error' => 290,
-			"," => 289,
-			")" => 291
+			'error' => 284,
+			")" => 285,
+			"," => 283
 		}
 	},
+	{#State 256
+		DEFAULT => -27
+	},
+	{#State 257
+		DEFAULT => -24
+	},
 	{#State 258
-		ACTIONS => {
-			"<" => 136,
-			">=" => 137,
-			"<=" => 138,
-			">" => 139
-		},
-		DEFAULT => -60
+		DEFAULT => -126
 	},
 	{#State 259
 		ACTIONS => {
-			"<" => 136,
-			">=" => 137,
-			"<=" => 138,
-			">" => 139
-		},
-		DEFAULT => -61
-	},
-	{#State 260
-		DEFAULT => -153
-	},
-	{#State 261
-		DEFAULT => -151
-	},
-	{#State 262
-		ACTIONS => {
-			"^" => 187
-		},
-		DEFAULT => -67
-	},
-	{#State 263
-		DEFAULT => -126
-	},
-	{#State 264
-		ACTIONS => {
-			'error' => 292,
-			"," => 207,
-			")" => 293
+			'error' => 286,
+			")" => 287,
+			"," => 157
 		}
 	},
-	{#State 265
-		DEFAULT => -91
-	},
-	{#State 266
+	{#State 260
 		ACTIONS => {
-			"%" => 140,
-			"*" => 141,
-			'DIV' => 142,
-			"/" => 143
-		},
-		DEFAULT => -49
-	},
-	{#State 267
-		ACTIONS => {
-			"%" => 140,
-			"*" => 141,
-			'DIV' => 142,
-			"/" => 143
+			"%" => 172,
+			"*" => 170,
+			'DIV' => 171,
+			"/" => 173
 		},
 		DEFAULT => -48
 	},
+	{#State 261
+		ACTIONS => {
+			"%" => 172,
+			"*" => 170,
+			'DIV' => 171,
+			"/" => 173
+		},
+		DEFAULT => -49
+	},
+	{#State 262
+		DEFAULT => -120
+	},
+	{#State 263
+		ACTIONS => {
+			'error' => 288,
+			")" => 289,
+			"," => 157
+		}
+	},
+	{#State 264
+		DEFAULT => -106
+	},
+	{#State 265
+		ACTIONS => {
+			'IDENTIFIER' => 212
+		},
+		GOTOS => {
+			'VariableDeclaration' => 290
+		}
+	},
+	{#State 266
+		DEFAULT => -108
+	},
+	{#State 267
+		ACTIONS => {
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 150,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
+		},
+		GOTOS => {
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 291,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
+		}
+	},
 	{#State 268
-		DEFAULT => -195
+		DEFAULT => -111
 	},
 	{#State 269
-		DEFAULT => -199
+		ACTIONS => {
+			'error' => 292,
+			":" => 293
+		}
 	},
 	{#State 270
-		DEFAULT => -187
+		ACTIONS => {
+			"&&" => 165
+		},
+		DEFAULT => -71
 	},
 	{#State 271
-		ACTIONS => {
-			";" => 295,
-			'error' => 294,
-			"," => 248
-		}
-	},
-	{#State 272
-		DEFAULT => -134
-	},
-	{#State 273
-		DEFAULT => -133
-	},
-	{#State 274
-		DEFAULT => -128
-	},
-	{#State 275
-		DEFAULT => -19
-	},
-	{#State 276
 		DEFAULT => -20
 	},
-	{#State 277
-		DEFAULT => -121
-	},
-	{#State 278
-		ACTIONS => {
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 296,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AdditiveExpression' => 121,
-			'ForStatement' => 122
-		}
-	},
-	{#State 279
-		DEFAULT => -139
-	},
-	{#State 280
+	{#State 272
 		DEFAULT => -145
 	},
-	{#State 281
+	{#State 273
 		ACTIONS => {
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			'CONTINUE' => 70,
+			'FOR' => 101,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
 			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'ISVALID' => 80,
+			'TYPEOF' => 116,
 			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
 		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 297,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 294,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'ForStatement' => 122
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
 		}
 	},
-	{#State 282
+	{#State 274
+		DEFAULT => -139
+	},
+	{#State 275
 		DEFAULT => -142
+	},
+	{#State 276
+		ACTIONS => {
+			'error' => 295,
+			")" => 296,
+			"," => 157
+		}
+	},
+	{#State 277
+		ACTIONS => {
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			'CONTINUE' => 70,
+			'FOR' => 101,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
+		},
+		GOTOS => {
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 297,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
+		}
+	},
+	{#State 278
+		DEFAULT => -19
+	},
+	{#State 279
+		DEFAULT => -128
+	},
+	{#State 280
+		DEFAULT => -133
+	},
+	{#State 281
+		DEFAULT => -134
+	},
+	{#State 282
+		ACTIONS => {
+			'error' => 299,
+			";" => 298,
+			"," => 265
+		}
 	},
 	{#State 283
 		ACTIONS => {
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			"--" => 102,
+			'INTEGER_LITERAL' => 103,
+			'ISVALID' => 77,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'TYPEOF' => 116,
+			'error' => 300,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
 		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 298,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 301,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'ForStatement' => 122
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 284
-		ACTIONS => {
-			'error' => 299,
-			"," => 207,
-			")" => 300
-		}
+		DEFAULT => -26
 	},
 	{#State 285
-		DEFAULT => -110
+		DEFAULT => -25
 	},
 	{#State 286
-		DEFAULT => -113
+		DEFAULT => -127
 	},
 	{#State 287
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			'CONTINUE' => 70,
+			'FOR' => 101,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AssignmentExpression' => 301,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 302,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
 		}
 	},
 	{#State 288
-		DEFAULT => -74
+		DEFAULT => -121
 	},
 	{#State 289
 		ACTIONS => {
-			"-" => 58,
-			"~" => 92,
-			"+" => 75,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'TRUE_LITERAL' => 93,
-			'ISVALID' => 80,
-			'error' => 303,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'IDENTIFIER' => 98,
-			'FALSE_LITERAL' => 99,
-			'TYPEOF' => 66,
-			"(" => 102,
-			'UTF8_STRING_LITERAL' => 87,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			'CONTINUE' => 70,
+			'FOR' => 101,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
 		},
 		GOTOS => {
-			'BitwiseANDExpression' => 73,
-			'RelationalExpression' => 60,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'MultiplicativeExpression' => 62,
-			'EqualityExpression' => 109,
-			'LibraryFunctionCall' => 79,
-			'BitwiseORExpression' => 113,
-			'LibraryName' => 81,
-			'CallExpression' => 65,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'BitwiseXORExpression' => 101,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AssignmentExpression' => 302,
-			'UnaryExpression' => 72,
-			'ConditionalExpression' => 71,
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 303,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'LogicalORExpression' => 105
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
 		}
 	},
 	{#State 290
-		DEFAULT => -26
+		DEFAULT => -110
 	},
 	{#State 291
-		DEFAULT => -25
+		DEFAULT => -113
 	},
 	{#State 292
-		DEFAULT => -127
+		DEFAULT => -74
 	},
 	{#State 293
 		ACTIONS => {
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
+			'TRUE_LITERAL' => 108,
+			"!" => 97,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'FALSE_LITERAL' => 67,
+			'TYPEOF' => 116,
+			'INVALID_LITERAL' => 85,
+			"-" => 119,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			"++" => 94
 		},
 		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 304,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 304,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'RelationalExpression' => 69,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'StringLiteral' => 104,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'FunctionName' => 113,
+			'LocalScriptFunctionCall' => 120,
 			'AdditiveExpression' => 121,
-			'ForStatement' => 122
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'LogicalORExpression' => 128,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93
 		}
 	},
 	{#State 294
-		DEFAULT => -135
+		DEFAULT => -138
 	},
 	{#State 295
-		DEFAULT => -130
+		DEFAULT => -143
 	},
 	{#State 296
 		ACTIONS => {
-			'ELSE' => 305
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			'CONTINUE' => 70,
+			'FOR' => 101,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
+		},
+		GOTOS => {
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 305,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
+		}
+	},
+	{#State 297
+		DEFAULT => -137
+	},
+	{#State 298
+		DEFAULT => -130
+	},
+	{#State 299
+		DEFAULT => -135
+	},
+	{#State 300
+		DEFAULT => -29
+	},
+	{#State 301
+		DEFAULT => -28
+	},
+	{#State 302
+		DEFAULT => -124
+	},
+	{#State 303
+		ACTIONS => {
+			'ELSE' => 306
 		},
 		DEFAULT => -118
 	},
-	{#State 297
-		DEFAULT => -138
-	},
-	{#State 298
-		DEFAULT => -137
-	},
-	{#State 299
-		DEFAULT => -143
-	},
-	{#State 300
-		ACTIONS => {
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 306,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AdditiveExpression' => 121,
-			'ForStatement' => 122
-		}
-	},
-	{#State 301
+	{#State 304
 		DEFAULT => -73
 	},
-	{#State 302
-		DEFAULT => -28
-	},
-	{#State 303
-		DEFAULT => -29
-	},
-	{#State 304
-		DEFAULT => -124
-	},
 	{#State 305
-		ACTIONS => {
-			"-" => 58,
-			'BREAK' => 91,
-			";" => 108,
-			"~" => 92,
-			"+" => 75,
-			'FOR' => 74,
-			'INTEGER_LITERAL' => 76,
-			"++" => 110,
-			"!" => 63,
-			'RETURN' => 112,
-			'TRUE_LITERAL' => 93,
-			'IF' => 94,
-			'ISVALID' => 80,
-			'WHILE' => 115,
-			'FLOAT_LITERAL' => 95,
-			"--" => 96,
-			'FALSE_LITERAL' => 99,
-			'IDENTIFIER' => 98,
-			'TYPEOF' => 66,
-			"{" => 35,
-			"(" => 102,
-			'CONTINUE' => 68,
-			'UTF8_STRING_LITERAL' => 87,
-			'VAR' => 104,
-			'STRING_LITERAL' => 88,
-			'INVALID_LITERAL' => 89
-		},
-		GOTOS => {
-			'RelationalExpression' => 60,
-			'IfStatement' => 61,
-			'MultiplicativeExpression' => 62,
-			'ReturnStatement' => 64,
-			'CallExpression' => 65,
-			'for_begin' => 97,
-			'ExpressionStatement' => 100,
-			'BitwiseXORExpression' => 101,
-			'LogicalANDExpression' => 67,
-			'PrimaryExpression' => 69,
-			'VariableStatement' => 103,
-			'AssignmentExpression' => 70,
-			'ConditionalExpression' => 71,
-			'UnaryExpression' => 72,
-			'LogicalORExpression' => 105,
-			'BitwiseANDExpression' => 73,
-			'Block' => 106,
-			'FunctionName' => 107,
-			'ExternalScriptName' => 77,
-			'EqualityExpression' => 109,
-			'IterationStatement' => 78,
-			'LibraryFunctionCall' => 79,
-			'EmptyStatement' => 111,
-			'LibraryName' => 81,
-			'BitwiseORExpression' => 113,
-			'Statement' => 307,
-			'BreakStatement' => 82,
-			'Expression' => 116,
-			'Literal' => 117,
-			'ExternalScriptFunctionCall' => 118,
-			'PostfixExpression' => 119,
-			'StringLiteral' => 83,
-			'ContinueStatement' => 120,
-			'WhileStatement' => 84,
-			'ShiftExpression' => 85,
-			'LocalScriptFunctionCall' => 86,
-			'AdditiveExpression' => 121,
-			'ForStatement' => 122
-		}
+		DEFAULT => -136
 	},
 	{#State 306
-		DEFAULT => -136
+		ACTIONS => {
+			"!" => 97,
+			'FALSE_LITERAL' => 67,
+			'CONTINUE' => 70,
+			'FOR' => 101,
+			"--" => 102,
+			'ISVALID' => 77,
+			'INTEGER_LITERAL' => 103,
+			'UTF8_STRING_LITERAL' => 59,
+			"(" => 79,
+			'TRUE_LITERAL' => 108,
+			'IDENTIFIER' => 110,
+			'STRING_LITERAL' => 56,
+			"+" => 114,
+			'RETURN' => 112,
+			'TYPEOF' => 116,
+			'WHILE' => 115,
+			";" => 84,
+			'INVALID_LITERAL' => 85,
+			"{" => 49,
+			"-" => 119,
+			'BREAK' => 118,
+			'IF' => 122,
+			'VAR' => 125,
+			"~" => 129,
+			'FLOAT_LITERAL' => 92,
+			"++" => 94
+		},
+		GOTOS => {
+			'Block' => 68,
+			'RelationalExpression' => 69,
+			'EmptyStatement' => 71,
+			'BitwiseANDExpression' => 72,
+			'LibraryName' => 73,
+			'ReturnStatement' => 74,
+			'BitwiseORExpression' => 75,
+			'EqualityExpression' => 76,
+			'WhileStatement' => 78,
+			'CallExpression' => 80,
+			'ConditionalExpression' => 81,
+			'PrimaryExpression' => 82,
+			'for_begin' => 83,
+			'VariableStatement' => 86,
+			'Expression' => 87,
+			'ForStatement' => 90,
+			'ExternalScriptName' => 91,
+			'BitwiseXORExpression' => 93,
+			'UnaryExpression' => 95,
+			'LogicalANDExpression' => 96,
+			'AssignmentExpression' => 98,
+			'ExternalScriptFunctionCall' => 99,
+			'PostfixExpression' => 100,
+			'StringLiteral' => 104,
+			'MultiplicativeExpression' => 105,
+			'ShiftExpression' => 106,
+			'ContinueStatement' => 107,
+			'Statement' => 307,
+			'IterationStatement' => 111,
+			'FunctionName' => 113,
+			'IfStatement' => 117,
+			'LocalScriptFunctionCall' => 120,
+			'AdditiveExpression' => 121,
+			'Literal' => 123,
+			'LibraryFunctionCall' => 124,
+			'ExpressionStatement' => 127,
+			'BreakStatement' => 126,
+			'LogicalORExpression' => 128
+		}
 	},
 	{#State 307
 		DEFAULT => -117
@@ -4112,7 +4112,7 @@ sub
             else {
                 if ($_[1]->fcmp(new Math::BigFloat('1.17549435e-38')) < 0) {
                     $_[0]->Warning("Float $_[1] is underflow.\n");
-                    $_[1] = new Math::BigFloat('0.0');
+                    $_[1] = Math::BigFloat->bzero();
                 }
                 new LoadConst($_[0],
                         'TypeDef'           =>  'TYPE_FLOAT',
@@ -4409,7 +4409,7 @@ sub
 #line 305 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[2]);
-            my $decr = new IncrVar($_[0],
+            my $decr = new DecrVar($_[0],
                     'Definition'        =>  $var
             );
             my $load = new LoadVar($_[0],
@@ -5714,7 +5714,7 @@ use WAP::wmls::lexer;
 use WAP::wmls::node;
 
 sub BuildUnop {
-    my($parser,$op,$expr) = @_;
+    my ($parser, $op, $expr) = @_;
     my $unop = new UnaryOp($parser,
             'Operator'                  =>  $op
     );
@@ -5722,7 +5722,7 @@ sub BuildUnop {
 }
 
 sub BuildBinop {
-    my($parser,$expr1,$op,$expr2) = @_;
+    my ($parser, $expr1, $op, $expr2) = @_;
     my $binop = new BinaryOp($parser,
             'Operator'                  =>  $op,
             'Left'                      =>  $expr1->{Last}
@@ -5732,23 +5732,25 @@ sub BuildBinop {
 }
 
 sub BuildLogop {
-    my($parser,$expr1,$logop,$expr2) = @_;
-    my $endif = new Label($parser,
-            'TypeDef'                   =>  'LABEL_ENDIF',
-            'Index'                     =>  0xffffffff
+    my ($parser, $expr1, $logop, $expr2) = @_;
+    my $endif = $parser->YYData->{symbtab_label}->Next();
+    my $label = new Label($parser,
+            'Definition'                =>  $endif
     );
+    $endif->{Node} = $label;
     my $falsejump = new FalseJump($parser,
-            'Value'                     =>  $endif
+            'Definition'                =>  $endif
     );
+    $endif->{NbUse} ++;
     $expr1->concat($logop);
     $expr1->concat($falsejump);
     $expr1->concat($expr2);
     $expr1->concat(new ToBool($parser));
-    return $expr1->concat($endif);
+    return $expr1->concat($label);
 }
 
 sub BuildIf {
-    my($parser, $expr, $stat) = @_;
+    my ($parser, $expr, $stat) = @_;
     my $endif = $parser->YYData->{symbtab_label}->Next();
     my $label = new Label($parser,
             'Definition'                =>  $endif
@@ -5764,7 +5766,7 @@ sub BuildIf {
 }
 
 sub BuildIfElse {
-    my($parser, $expr, $stat1, $stat2) = @_;
+    my ($parser, $expr, $stat1, $stat2) = @_;
     my $else = $parser->YYData->{symbtab_label}->Next();
     my $endif = $parser->YYData->{symbtab_label}->Next();
     my $label1 = new Label($parser,
@@ -5792,7 +5794,7 @@ sub BuildIfElse {
 }
 
 sub BuildFor {
-    my($parser, $init, $cond, $upd, $stat) = @_;
+    my ($parser, $init, $cond, $upd, $stat) = @_;
     my $for;
     my $loop = $parser->YYData->{symbtab_label}->Next();
     my $continue = $parser->YYData->{symbtab_label}->Next();
@@ -5865,7 +5867,7 @@ sub Run {
     my $parser = shift;
 
     my $srcname = $parser->YYData->{filename};
-    open (YYIN, $srcname)
+    open $parser->YYData->{fh}, $srcname
         or die "can't open $srcname ($!).\n";
 
     $parser->_InitLexico();
@@ -5882,7 +5884,10 @@ sub Run {
             yyerror => sub { return; }
     );
 
-    close YYIN;
+    close $parser->YYData->{fh};
+    delete $parser->{RULES};
+    delete $parser->{STATES};
+    delete $parser->{STACK};
 }
 
 

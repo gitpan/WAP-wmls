@@ -1,5 +1,10 @@
 Revision history for Perl extension WAP::wmls.
 
+1.03  Tue Aug  8 18:30:00 2006
+	- fix sue of Math::Big*
+	- fix generation for pre-decrement
+	- fix generation for logical op
+
 1.02  Sun Jul 16 22:30:00 2006
 	- Perl 5.8
 	- best practices
