@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 
 package multibyte;
 
@@ -15,6 +16,8 @@ sub size {
 
 package asm;
 
+use Encode;
+
 use constant INTEGER_8      => 0;
 use constant INTEGER_16     => 1;
 use constant INTEGER_32     => 2;
@@ -23,7 +26,7 @@ use constant UTF8_STRING    => 4;
 use constant EMPTY_STRING   => 5;
 use constant STRING         => 6;
 
-use vars qw($OUT $VERBOSE);
+our ($OUT, $VERBOSE);
 
 sub _put_mb {
     my ($value) = @_;
@@ -32,314 +35,324 @@ sub _put_mb {
         $tmp = chr(0x80 | ($value & 0x7f)) . $tmp;
     }
     print $OUT $tmp;
+    return;
 }
 
 sub _put_uint8 {
     my ($value) = @_;
     print $OUT chr $value;
+    return;
 }
 
 sub _put_int8 {
     my ($value) = @_;
-    print $OUT pack "c", $value;
+    print $OUT pack 'c', $value;
+    return;
 }
 
 sub _put_uint16 {
     my ($value) = @_;
-    print $OUT pack "n", $value;
+    print $OUT pack 'n', $value;
+    return;
 }
 
 sub _put_int16 {
     my ($value) = @_;
-    print $OUT pack "n", unpack "v", pack "s", $value;
+    print $OUT pack 'n', unpack 'v', pack 's', $value;
+    return;
 }
 
 sub _put_int32 {
     my ($value) = @_;
-    print $OUT pack "N", unpack "V", pack "l", $value;
+    print $OUT pack 'N', unpack 'V', pack 'l', $value;
+    return;
 }
 
 sub _put_float32 {
     my ($value) = @_;
-    print $OUT pack "f", $value;
+    print $OUT pack 'f', $value;
+    return;
 }
 
 sub _put_string {
     my ($value) = @_;
     print $OUT $value;
+    return;
 }
 
 my @mnemo = (
-    "?",
-    "JUMP_FW",
-    "JUMP_FW_W",
-    "JUMP_BW",
-    "JUMP_BW_W",
-    "TJUMP_FW",
-    "TJUMP_FW_W",
-    "TJUMP_BW",
-    "TJUMP_BW_W",
-    "CALL",
-    "CALL_LIB",
-    "CALL_LIB_W",
-    "CALL_URL",
-    "CALL_URL_W",
-    "LOAD_VAR",
-    "STORE_VAR",
-    "INCR_VAR",
-    "DECR_VAR",
-    "LOAD_CONST",
-    "LOAD_CONST_W",
-    "CONST_0",
-    "CONST_1",
-    "CONST_M1",
-    "CONST_ES",
-    "CONST_INVALID",
-    "CONST_TRUE",
-    "CONST_FALSE",
-    "INCR",
-    "DECR",
-    "ADD_ASG",
-    "SUB_ASG",
-    "UMINUS",
-    "ADD",
-    "SUB",
-    "MUL",
-    "DIV",
-    "IDIV",
-    "REM",
-    "B_AND",
-    "B_OR",
-    "B_XOR",
-    "B_NOT",
-    "B_LSHIFT",
-    "B_RSSHIFT",
-    "B_RSZSHIFT",
-    "EQ",
-    "LE",
-    "LT",
-    "GE",
-    "GT",
-    "NE",
-    "NOT",
-    "SCAND",
-    "SCOR",
-    "TOBOOL",
-    "POP",
-    "TYPEOF",
-    "ISVALID",
-    "RETURN",
-    "RETURN_ES",
-    "DEBUG",
-    "?",
-    "?",
-    "?",
-    "STORE_VAR_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "LOAD_CONST_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "CALL_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "CALL_LIB_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "INCR_VAR_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "JUMP_FW_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "JUMP_BW_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "TJUMP_FW_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "LOAD_VAR_S",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
-    "?",
+    '?',
+    'JUMP_FW',
+    'JUMP_FW_W',
+    'JUMP_BW',
+    'JUMP_BW_W',
+    'TJUMP_FW',
+    'TJUMP_FW_W',
+    'TJUMP_BW',
+    'TJUMP_BW_W',
+    'CALL',
+    'CALL_LIB',
+    'CALL_LIB_W',
+    'CALL_URL',
+    'CALL_URL_W',
+    'LOAD_VAR',
+    'STORE_VAR',
+    'INCR_VAR',
+    'DECR_VAR',
+    'LOAD_CONST',
+    'LOAD_CONST_W',
+    'CONST_0',
+    'CONST_1',
+    'CONST_M1',
+    'CONST_ES',
+    'CONST_INVALID',
+    'CONST_TRUE',
+    'CONST_FALSE',
+    'INCR',
+    'DECR',
+    'ADD_ASG',
+    'SUB_ASG',
+    'UMINUS',
+    'ADD',
+    'SUB',
+    'MUL',
+    'DIV',
+    'IDIV',
+    'REM',
+    'B_AND',
+    'B_OR',
+    'B_XOR',
+    'B_NOT',
+    'B_LSHIFT',
+    'B_RSSHIFT',
+    'B_RSZSHIFT',
+    'EQ',
+    'LE',
+    'LT',
+    'GE',
+    'GT',
+    'NE',
+    'NOT',
+    'SCAND',
+    'SCOR',
+    'TOBOOL',
+    'POP',
+    'TYPEOF',
+    'ISVALID',
+    'RETURN',
+    'RETURN_ES',
+    'DEBUG',
+    '?',
+    '?',
+    '?',
+    'STORE_VAR_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'LOAD_CONST_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'CALL_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'CALL_LIB_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'INCR_VAR_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'JUMP_FW_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'JUMP_BW_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'TJUMP_FW_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    'LOAD_VAR_S',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
+    '?',
 );
 
 sub asmOpcode1 {
-    my($bytecode) = @_;
+    my ($bytecode) = @_;
     print $VERBOSE sprintf("%-14s\t", $mnemo[$bytecode])
             if (defined $VERBOSE);
     _put_uint8($bytecode);
+    return;
 }
 
 sub asmOpcode1s {
-    my($bytecode,$offset) = @_;
+    my ($bytecode, $offset) = @_;
     print $VERBOSE sprintf("%-14s%7u\t", $mnemo[$bytecode], $offset)
             if (defined $VERBOSE);
     _put_uint8(($bytecode | $offset));
+    return;
 }
 
 sub asmOpcode2 {
@@ -349,6 +362,7 @@ sub asmOpcode2 {
             if (defined $VERBOSE);
     _put_uint8($bytecode);
     _put_uint8($offset);
+    return;
 }
 
 sub asmOpcode2s {
@@ -358,6 +372,7 @@ sub asmOpcode2s {
             if (defined $VERBOSE);
     _put_uint8($bytecode | $idx1);
     _put_uint8($idx2);
+    return;
 }
 
 sub asmOpcode3 {
@@ -368,6 +383,7 @@ sub asmOpcode3 {
     _put_uint8($bytecode);
     _put_uint8($idx1);
     _put_uint8($idx2);
+    return;
 }
 
 sub asmOpcode3w {
@@ -377,6 +393,7 @@ sub asmOpcode3w {
             if (defined $VERBOSE);
     _put_uint8($bytecode);
     _put_uint16($offset);
+    return;
 }
 
 sub asmOpcode4 {
@@ -388,6 +405,7 @@ sub asmOpcode4 {
     _put_uint8($idx1);
     _put_uint8($idx2);
     _put_uint8($idx3);
+    return;
 }
 
 sub asmOpcode4w {
@@ -398,6 +416,7 @@ sub asmOpcode4w {
     _put_uint8($bytecode);
     _put_uint8($idx1);
     _put_uint16($idx2);
+    return;
 }
 
 sub asmOpcode6 {
@@ -409,6 +428,7 @@ sub asmOpcode6 {
     _put_uint16($idx1);
     _put_uint16($idx2);
     _put_uint8($idx3);
+    return;
 }
 
 sub asmByte {
@@ -416,6 +436,7 @@ sub asmByte {
     print $VERBOSE "$str $value\n"
             if (defined $VERBOSE);
     _put_uint8($value);
+    return;
 }
 
 sub asmMultiByte {
@@ -423,6 +444,7 @@ sub asmMultiByte {
     print $VERBOSE "$str $value\n"
             if (defined $VERBOSE);
     _put_mb($value);
+    return;
 }
 
 sub asmFunctionName {
@@ -433,6 +455,7 @@ sub asmFunctionName {
     _put_uint8($idx);
     _put_uint8($len);
     _put_string($name);
+    return;
 }
 
 sub asmPragma1 {
@@ -441,6 +464,7 @@ sub asmPragma1 {
             if (defined $VERBOSE);
     _put_uint8($type);
     _put_mb($value1);
+    return;
 }
 
 sub asmPragma2 {
@@ -450,6 +474,7 @@ sub asmPragma2 {
     _put_uint8($type);
     _put_mb($value1);
     _put_mb($value2);
+    return;
 }
 
 sub asmPragma3 {
@@ -460,6 +485,7 @@ sub asmPragma3 {
     _put_mb($value1);
     _put_mb($value2);
     _put_mb($value3);
+    return;
 }
 
 sub asmConstantInteger8 {
@@ -468,6 +494,7 @@ sub asmConstantInteger8 {
             if (defined $VERBOSE);
     _put_uint8(INTEGER_8);
     _put_int8($value);
+    return;
 }
 
 sub asmConstantInteger16 {
@@ -476,6 +503,7 @@ sub asmConstantInteger16 {
             if (defined $VERBOSE);
     _put_uint8(INTEGER_16);
     _put_int16($value);
+    return;
 }
 
 sub asmConstantInteger32 {
@@ -484,6 +512,7 @@ sub asmConstantInteger32 {
             if (defined $VERBOSE);
     _put_uint8(INTEGER_32);
     _put_int32($value);
+    return;
 }
 
 sub asmConstantFloat32 {
@@ -492,16 +521,19 @@ sub asmConstantFloat32 {
             if (defined $VERBOSE);
     _put_uint8(FLOAT_32);
     _put_float32($value);
+    return;
 }
 
 sub asmConstantStringUTF8 {
     my ($idx, $value) = @_;
-    my $len = length $value;
+    my $octets = encode('utf8', $value);
+    my $len = length $octets;
     print $VERBOSE sprintf("cst%-7u%7u\t[%u]\t%s\n", $idx, UTF8_STRING, $len, $value)
             if (defined $VERBOSE);
     _put_uint8(UTF8_STRING);
     _put_mb($len);
-    _put_string($value);
+    _put_string($octets);
+    return;
 }
 
 sub asmConstantString {
@@ -512,6 +544,7 @@ sub asmConstantString {
     _put_uint8(STRING);
     _put_mb($len);
     _put_string($value);
+    return;
 }
 
 sub asmComment {
@@ -524,36 +557,40 @@ sub asmComment {
         print $VERBOSE "\n"
                 if (defined $VERBOSE);
     }
+    return;
 }
 
 ###############################################################################
 
 package verbose;
 
-use vars qw($_Lineno);
+my $_Lineno = 0;
+my $IN;
 
 sub Init {
     my ($filename) = @_;
-    $_Lineno = 0;
-    open IN, '<', $filename
+    open $IN, '<', $filename
         or die "can't open $filename ($!).\n";
+    return;
 }
 
 sub Source {
-    my($opcode) = @_;
+    my ($opcode) = @_;
     if (defined $asm::VERBOSE) {
         my $lineno = $opcode->{Lineno};
         while ($lineno > $_Lineno) {
-            my $line = <IN>;
+            my $line = <$IN>;
             print $asm::VERBOSE sprintf(";line:%5d;\t", $_Lineno + 1);
             print $asm::VERBOSE $line if ($line);
             $_Lineno ++;
         }
     }
+    return;
 }
 
 sub End {
-    close IN;
+    close $IN;
+    return;
 }
 
 ###############################################################################
@@ -561,6 +598,8 @@ sub End {
 package constantVisitor;
 
 use Carp;
+
+use Encode;
 
 use constant INT8_MIN   =>   -128;
 use constant INT8_MAX   =>    127;
@@ -592,7 +631,7 @@ sub visitUrl {
     my $def = $opcode->{Definition};
     if ($def->{NbUse} == 0) {
         unless ($self->{action}) {
-            $self->{parser}->genWarning($opcode,"Unreferenced url - $def->{Symbol}.\n");
+            $self->{parser}->genWarning($opcode, "Unreferenced url - $def->{Symbol}.\n");
         }
     }
     else {
@@ -601,18 +640,21 @@ sub visitUrl {
         }
         $opcode->{Value}->visit($self);     # LOAD_CONST
     }
+    return;
 }
 
 sub visitAccessDomain {
     my $self = shift;
     my ($opcode) = @_;
     $opcode->{Value}->visit($self);         # LOAD_CONST
+    return;
 }
 
 sub visitAccessPath {
     my $self = shift;
     my ($opcode) = @_;
     $opcode->{Value}->visit($self);         # LOAD_CONST
+    return;
 }
 
 sub visitMetaName {}
@@ -623,6 +665,7 @@ sub visitMetaUserAgent {
     my $self = shift;
     my ($opcode) = @_;
     $opcode->{Value}->visit($self);         # LOAD_CONST
+    return;
 }
 
 sub visitFunction {
@@ -630,6 +673,7 @@ sub visitFunction {
     my ($opcode) = @_;
     $opcode->{Value}->visitActive($self)
             if (defined $opcode->{Value});
+    return;
 }
 
 sub visitLoadVar {}
@@ -675,7 +719,7 @@ sub visitCallUrl {
         }
     }
     if ($self->{action}) {
-        asm::asmConstantString($opcode->{Index},$value)
+        asm::asmConstantString($opcode->{Index}, $value)
                 unless (exists $opcode->{Doublon});
     }
     else {
@@ -686,6 +730,7 @@ sub visitCallUrl {
         $self->{size} += length $value;
         $self->{nb} += 1;
     }
+    return;
 }
 
 sub visitJump {}
@@ -723,7 +768,7 @@ sub visitLoadConst {
         return if ($value >= -1 and $value <= 1);
         if    ($value >= INT8_MIN and $value <= INT8_MAX) {
             if ($self->{action}) {
-                asm::asmConstantInteger8($opcode->{Index},$value)
+                asm::asmConstantInteger8($opcode->{Index}, $value)
                         unless (exists $opcode->{Doublon});
             }
             else {
@@ -735,7 +780,7 @@ sub visitLoadConst {
         }
         elsif ($value >= INT16_MIN and $value <= INT16_MAX) {
             if ($self->{action}) {
-                asm::asmConstantInteger16($opcode->{Index},$value)
+                asm::asmConstantInteger16($opcode->{Index}, $value)
                         unless (exists $opcode->{Doublon});
             }
             else {
@@ -747,7 +792,7 @@ sub visitLoadConst {
         }
         else {
             if ($self->{action}) {
-                asm::asmConstantInteger32($opcode->{Index},$value)
+                asm::asmConstantInteger32($opcode->{Index}, $value)
                         unless (exists $opcode->{Doublon});
             }
             else {
@@ -760,7 +805,7 @@ sub visitLoadConst {
     }
     elsif ($type eq 'TYPE_FLOAT') {
         if ($self->{action}) {
-            asm::asmConstantFloat32($opcode->{Index},$value)
+            asm::asmConstantFloat32($opcode->{Index}, $value)
                     unless (exists $opcode->{Doublon});
         }
         else {
@@ -773,22 +818,23 @@ sub visitLoadConst {
     elsif ($type eq 'TYPE_UTF8_STRING') {
         return unless (length $value);
         if ($self->{action}) {
-            asm::asmConstantStringUTF8($opcode->{Index},$value)
+            asm::asmConstantStringUTF8($opcode->{Index}, $value)
                     unless (exists $opcode->{Doublon});
         }
         else {
+            my $octets = encode('utf8', $value);
             $opcode->{Index} = $self->{nb};
             $self->{cst}->{TYPE_UTF8_STRING}{$value} = $self->{nb};
             $self->{size} += 1;
-            $self->{size} += multibyte::size(length $value);
-            $self->{size} += length $value;
+            $self->{size} += multibyte::size(length $octets);
+            $self->{size} += length $octets;
             $self->{nb} += 1;
         }
     }
     elsif ($type eq 'TYPE_STRING') {
         return unless (length $value);
         if ($self->{action}) {
-            asm::asmConstantString($opcode->{Index},$value)
+            asm::asmConstantString($opcode->{Index}, $value)
                     unless (exists $opcode->{Doublon});
         }
         else {
@@ -803,6 +849,7 @@ sub visitLoadConst {
     else {
         croak "INTERNAL ERROR in constantVisitor::visitLoadConst $type $value\n";
     }
+    return;
 }
 
 ###############################################################################
@@ -836,13 +883,14 @@ sub visitAccessDomain {
     my $value = $pragma->{OpCode}->{Index};
     if ($self->{action}) {
         verbose::Source($opcode);
-        asm::asmPragma1(ACCESS_DOMAIN,$value);
+        asm::asmPragma1(ACCESS_DOMAIN, $value);
     }
     else {
         $self->{size} += 1;
         $self->{size} += multibyte::size($value);
         $self->{nb} += 1;
     }
+    return;
 }
 
 sub visitAccessPath {
@@ -852,13 +900,14 @@ sub visitAccessPath {
     my $value = $pragma->{OpCode}->{Index};
     if ($self->{action}) {
         verbose::Source($opcode);
-        asm::asmPragma1(ACCESS_PATH,$value);
+        asm::asmPragma1(ACCESS_PATH, $value);
     }
     else {
         $self->{size} += 1;
         $self->{size} += multibyte::size($value);
         $self->{nb} += 1;
     }
+    return;
 }
 
 sub visitMetaName {}
@@ -877,7 +926,7 @@ sub visitMetaUserAgent {
         my $value3 = $pragma3->{OpCode}->{Index};
         if ($self->{action}) {
             verbose::Source($opcode);
-            asm::asmPragma3(USER_AGENT_PROPERTY_AND_SCHEME,$value1,$value2,$value3);
+            asm::asmPragma3(USER_AGENT_PROPERTY_AND_SCHEME, $value1, $value2, $value3);
         }
         else {
             $self->{size} += 1;
@@ -890,7 +939,7 @@ sub visitMetaUserAgent {
     else {
         if ($self->{action}) {
             verbose::Source($opcode);
-            asm::asmPragma2(USER_AGENT_PROPERTY,$value1,$value2);
+            asm::asmPragma2(USER_AGENT_PROPERTY, $value1, $value2);
         }
         else {
             $self->{size} += 1;
@@ -899,6 +948,7 @@ sub visitMetaUserAgent {
             $self->{nb} += 1;
         }
     }
+    return;
 }
 
 ###############################################################################
@@ -1015,7 +1065,7 @@ sub visitFunction {
         verbose::Source($opcode);
     }
     else {
-        my $nb = $self->_indexeVariables($func,$def->{NumberOfArguments});
+        my $nb = $self->_indexeVariables($func, $def->{NumberOfArguments});
         if ($nb > UINT8_MAX) {
             $self->{parser}->genError($opcode, "too many variables");
         }
@@ -1038,6 +1088,7 @@ sub visitFunction {
     $self->{size} += 2;
     $self->{size} += multibyte::size($opcode->{Index});
     $self->{size} += $opcode->{Index};
+    return;
 }
 
 sub _indexeVariables {
@@ -1089,6 +1140,7 @@ sub visitLoadVar {
     if ($self->{action}) {
         asm::asmComment($def->{Symbol});
     }
+    return;
 }
 
 sub visitStoreVar {
@@ -1116,6 +1168,7 @@ sub visitStoreVar {
     if ($self->{action}) {
         asm::asmComment($def->{Symbol});
     }
+    return;
 }
 
 sub visitIncrVar {
@@ -1143,6 +1196,7 @@ sub visitIncrVar {
     if ($self->{action}) {
         asm::asmComment($def->{Symbol});
     }
+    return;
 }
 
 sub visitDecrVar {
@@ -1158,6 +1212,7 @@ sub visitDecrVar {
         asm::asmComment($def->{Symbol});
     }
     $self->{size} += 2;
+    return;
 }
 
 sub visitAddAsg {
@@ -1173,6 +1228,7 @@ sub visitAddAsg {
         asm::asmComment($def->{Symbol});
     }
     $self->{size} += 2;
+    return;
 }
 
 sub visitSubAsg {
@@ -1188,6 +1244,7 @@ sub visitSubAsg {
         asm::asmComment($def->{Symbol});
     }
     $self->{size} += 2;
+    return;
 }
 
 sub visitLabel {
@@ -1198,6 +1255,7 @@ sub visitLabel {
         asm::asmComment($opcode->{Definition}->{Symbol});
     }
     $opcode->{Definition}->{Index} = $self->{size};
+    return;
 }
 
 sub visitPop {
@@ -1209,6 +1267,7 @@ sub visitPop {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitToBool {
@@ -1220,6 +1279,7 @@ sub visitToBool {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitScOr {
@@ -1231,6 +1291,7 @@ sub visitScOr {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitScAnd {
@@ -1242,6 +1303,7 @@ sub visitScAnd {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitReturn {
@@ -1253,6 +1315,7 @@ sub visitReturn {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitReturnES {
@@ -1264,6 +1327,7 @@ sub visitReturnES {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitCall {
@@ -1282,7 +1346,7 @@ sub visitCall {
         croak "INTERNAL ERROR in codeVisitor::visitCall\n"
                 unless ($findex <= UINT8_MAX);
         if ($nb_args != $opcode->{Index}) {
-            $self->{parser}->genError($opcode,"Wrong argument number for local function - $symb.\n");
+            $self->{parser}->genError($opcode, "Wrong argument number for local function - $symb.\n");
         }
         elsif ($findex <= UINT3_MAX) {
             if ($self->{action}) {
@@ -1301,8 +1365,9 @@ sub visitCall {
         }
     }
     else {
-        $self->{parser}->genError($opcode,"Undefined function - $symb.\n");
+        $self->{parser}->genError($opcode, "Undefined function - $symb.\n");
     }
+    return;
 }
 
 sub visitCallLib {
@@ -1337,6 +1402,7 @@ sub visitCallLib {
     if ($self->{action}) {
         asm::asmComment($def->{Symbol});
     }
+    return;
 }
 
 sub visitCallUrl {
@@ -1368,6 +1434,7 @@ sub visitCallUrl {
     if ($self->{action}) {
         asm::asmComment($def->{Symbol});
     }
+    return;
 }
 
 sub visitJump {
@@ -1433,6 +1500,7 @@ sub visitJump {
     if ($self->{action}) {
         asm::asmComment($def->{Symbol});
     }
+    return;
 }
 
 sub visitFalseJump {
@@ -1492,6 +1560,7 @@ sub visitFalseJump {
     if ($self->{action}) {
         asm::asmComment($def->{Symbol});
     }
+    return;
 }
 
 sub visitUnaryOp {
@@ -1527,6 +1596,7 @@ sub visitUnaryOp {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitBinaryOp {
@@ -1595,6 +1665,7 @@ sub visitBinaryOp {
         asm::asmComment();
     }
     $self->{size} += 1;
+    return;
 }
 
 sub visitLoadConst {
@@ -1694,13 +1765,12 @@ load_const:
     else {
         croak "INTERNAL ERROR in codeVisitor::visitLoadConst (type:$type)\n";
     }
+    return;
 }
 
 ###############################################################################
 
 package parser;
-
-use I18N::Charset;
 
 use constant WMLS_MAJOR_VERSION     => 1;
 use constant WMLS_MINOR_VERSION     => 1;
@@ -1719,6 +1789,7 @@ sub genError {
     print STDOUT '#',$parser->YYData->{filename},':',$opcode->{Lineno},'#Error: ',$msg
             if (        exists $parser->YYData->{verbose_error}
                     and $parser->YYData->{verbose_error});
+    return;
 }
 
 sub genWarning {
@@ -1735,12 +1806,13 @@ sub genWarning {
     print STDOUT '#',$parser->YYData->{filename},':',$opcode->{Lineno},'#Warning: ',$msg
             if (        exists $parser->YYData->{verbose_warning}
                     and $parser->YYData->{verbose_warning});
+    return;
 }
 
 sub generate {
     my $parser = shift;
 
-    my $CharacterSet = charset_name_to_mib($parser->YYData->{encoding});
+    my $CharacterSet = 4;   # iso-8859-1
     # ConstantPool
     my $CodeSize = 0;
     my $constantVisitor = new constantVisitor($parser);
@@ -1749,7 +1821,7 @@ sub generate {
     $parser->YYData->{FunctionList}->visitActive($constantVisitor)
             if (defined $parser->YYData->{FunctionList});
     my $NumberOfConstants = $constantVisitor->{nb};
-    $parser->genError($parser->YYData->{FunctionList},"Too many constants ($NumberOfConstants)")
+    $parser->genError($parser->YYData->{FunctionList}, "Too many constants ($NumberOfConstants)")
             if ($NumberOfConstants > 65535);
     $CodeSize += multibyte::size($NumberOfConstants);
     $CodeSize += multibyte::size($CharacterSet);
@@ -1759,7 +1831,7 @@ sub generate {
     $parser->YYData->{PragmaList}->visit($pragmaVisitor)
             if (defined $parser->YYData->{PragmaList});
     my $NumberOfPragmas = $pragmaVisitor->{nb};
-    $parser->genError($parser->YYData->{PragmaList},"Too many pragmas ($NumberOfPragmas)")
+    $parser->genError($parser->YYData->{PragmaList}, "Too many pragmas ($NumberOfPragmas)")
             if ($NumberOfPragmas > 65535);
     $CodeSize += multibyte::size($NumberOfPragmas);
     $CodeSize += $pragmaVisitor->{size};
@@ -1768,7 +1840,7 @@ sub generate {
     for (my $func = $parser->YYData->{FunctionList}; defined $func; $func = $func->{Next}) {
         $NumberOfFunctions ++;
     }
-    $parser->genError($parser->YYData->{FunctionList},"Too many functions ($NumberOfFunctions).\n")
+    $parser->genError($parser->YYData->{FunctionList}, "Too many functions ($NumberOfFunctions).\n")
             if ($NumberOfFunctions > 255);
     $CodeSize += 1;         # NumberOfFunctions
     my $NumberOfFunctionNames = 0;
@@ -1780,7 +1852,7 @@ sub generate {
         $CodeSize += 1;     # length
         $CodeSize += length $def->{Symbol};
     }
-    $parser->genError($parser->YYData->{FunctionList}->{OpCode},"No external function defined.\n")
+    $parser->genError($parser->YYData->{FunctionList}->{OpCode}, "No external function defined.\n")
             unless ($NumberOfFunctionNames);
     $CodeSize += 1;         # NumberOfFunctionNames
     my $codeVisitor = new codeVisitor($parser);
@@ -1792,11 +1864,10 @@ sub generate {
         my $filename = $parser->YYData->{filename};
         $filename =~ s/\.wmls$//;
         $filename .= '.wmlsc';
-        open my $OUT, '>', $filename
+        open $asm::OUT, '>', $filename
                 or die "can't open $filename ($!)\n";
-        binmode $OUT, ':raw';
+        binmode $asm::OUT, ':raw';
 
-        $asm::OUT = $OUT;
         asm::asmComment($filename);
         asm::asmComment("");
         asm::asmComment("Bytecode Header");
@@ -1817,7 +1888,6 @@ sub generate {
         asm::asmMultiByte("NumberOfPragmas", $NumberOfPragmas);
         $pragmaVisitor->{nb} = 0;
         $pragmaVisitor->{action} = 1;
-        $pragmaVisitor->{out} = $OUT;
         $parser->YYData->{PragmaList}->visit($pragmaVisitor)
                 if (defined $parser->YYData->{PragmaList});
         asm::asmComment("Function Pool");
@@ -1829,7 +1899,7 @@ sub generate {
         for (my $func = $parser->YYData->{FunctionList}; defined $func; $func = $func->{Next}) {
             my $def = $func->{OpCode}->{Definition};
             next if ($def->{Type} ne 'PUBLIC_FUNC');
-            asm::asmFunctionName($def->{ID},$def->{Symbol});
+            asm::asmFunctionName($def->{ID}, $def->{Symbol});
         }
         asm::asmComment("Functions");
         asm::asmComment("");
@@ -1837,9 +1907,10 @@ sub generate {
         $parser->YYData->{FunctionList}->visitActive($codeVisitor)
                 if (defined $parser->YYData->{FunctionList});
 
-        close $OUT;
+        close $asm::OUT;
         unlink($filename) if (exists $parser->YYData->{nb_error});
     }
+    return;
 }
 
 1;

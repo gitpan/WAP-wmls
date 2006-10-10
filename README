@@ -14,7 +14,7 @@ Description:
 
 Prerequisites:
 --------------
-    This module needs I18N::Charset, Unicode::Map and Unicode::String modules.
+    This module needs Perl 5.8.
 
 
 Build/Installation:

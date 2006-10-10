@@ -5,11 +5,7 @@ WriteMakefile(
     'NAME'          => 'WAP::wmls',
     'VERSION_FROM'  => 'node.pm',
     'ABSTRACT'      => 'WAP WMLScript compiler',
-    'PREREQ_PM'     => {
-                        'I18N::Charset'     => '1.15',
-                        'Unicode::Map'      => 0,
-                        'Unicode::String'   => 0,
-    },
+    'PREREQ_PM'     => {},
     'PM'            => {
                         'lexer.pm'      => '$(INST_LIBDIR)/wmls/lexer.pm',
                         'node.pm'       => '$(INST_LIBDIR)/wmls/node.pm',

@@ -1,13 +1,18 @@
 #!/usr/bin/perl
 
+use 5.008;
 use strict;
 use warnings;
 use Getopt::Std;
-use I18N::Charset;
-use Unicode::Map;
+use Pod::Usage;
+
+use WAP::wmls::node;
+use WAP::wmls::parser;
+use WAP::wmls::optim;
+use WAP::wmls::gen;
 
 my %opts;
-getopts('hiSO:e:', \%opts);
+getopts('hivSO:e:', \%opts);
 
 my $flagOutputIntermediaire = $opts{i};
 my $flagOutputAsm = $opts{S};
@@ -26,57 +31,43 @@ if (exists $opts{O}) {
     }
 }
 
-if ($opts{h}) {
-    Usage();
+if ($opts{v}) {
+    print "WAP::wmls $node::VERSION\n";
+    print "$0\n";
+    print "Perl $] on $^O\n";
+    exit;
+}
+if ($opts{h} or !scalar(@ARGV)) {
+    pod2usage(-verbose => 1);
 }
 
-die "can't access $ARGV[0] ($!).\n"
-        unless (-r $ARGV[0]);
-
-use WAP::wmls::parser;
-use WAP::wmls::node;
+my $srcname = $ARGV[0];
+die "can't access '$srcname' ($!).\n"
+        unless (-r $srcname);
 
 my $parser = new parser;
 if (exists $opts{e}) {
-    my $enc = iana_charset_name($opts{e});
-    die "invalid charset $opts{e}.\n"
-            unless (defined $enc);
-    $parser->YYData->{encoding} = $enc;
+    $parser->YYData->{encoding} = $opts{e};
 }
 else {
-    $parser->YYData->{encoding} = "ISO_8859-1:1987";
+    $parser->YYData->{encoding} = 'iso-8859-1';
 }
-my $map_name = umap_charset_name($parser->YYData->{encoding});
-die "no mapping for $opts{e}.\n"
-        unless (defined $map_name);
-$parser->YYData->{map} = new Unicode::Map($map_name);
 $parser->YYData->{verbose_error} = 1;       # 0, 1
 $parser->YYData->{verbose_warning} = 1;     # 0, 1
 $parser->YYData->{verbose_info} = 1;        # 0, 1
 $parser->YYData->{verbose_debug} = 0;       # 0, 1 (Optim)
-$parser->YYData->{filename} = $ARGV[0];
+$parser->YYData->{filename} = $srcname;
 if ($flagOutputIntermediaire) {
-    my $filename = $parser->YYData->{filename};
+    my $filename = $srcname;
     $filename =~ s/\.wmls$//;
     $filename .= '.i';
     open STDOUT, '>', $filename
             or die "can't open $filename ($!).\n";
 }
-else {
-    if ($flagOutputAsm) {
-        my $filename = $parser->YYData->{filename};
-        $filename =~ s/\.wmls$//;
-        $filename .= '.s';
-        open STDOUT, '>', $filename
-                or die "can't open $filename ($!).\n";
-        $asm::VERBOSE = \*STDOUT;
-    }
-}
 $parser->Run();
 
 unless (exists $parser->YYData->{nb_error}) {
     if ($flagOptim) {
-        use WAP::wmls::optim;
         $parser->Optimize($flagOptimExpr);
     }
     if ($flagOutputIntermediaire) {
@@ -87,26 +78,20 @@ unless (exists $parser->YYData->{nb_error}) {
                 if (defined $parser->YYData->{FunctionList});
     }
     else {
-        use WAP::wmls::gen;
         if ($flagOutputAsm) {
+            my $filename = $srcname;
+            $filename =~ s/\.wmls$//;
+            $filename .= '.s';
+            open $asm::VERBOSE, '>', $filename
+                    or die "can't open $filename ($!).\n";
             verbose::Init($parser->YYData->{filename});
         }
         $parser->generate();
         if ($flagOutputAsm) {
+            close $asm::VERBOSE;
             verbose::End();
         }
     }
-}
-
-sub Usage {
-    print "Usage: wmlsc [Options] filename.wmls\n";
-    print "\t-e\tcharset encoding (default ISO-8859-1)\n";
-    print "\t-i\tproduce intermediary format\n";
-    print "\t-S\toutput mixte asm/source\n";
-    print "\t-O\tenable simple optimizations\n";
-    print "\t-O2\tenable expression optimizations (default)\n";
-    print "\t-On\tdisable optimizations\n";
-    exit;
 }
 
 __END__
@@ -115,9 +100,9 @@ __END__
 
 wmlsc - WMLScript Compiler
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
- wmlsc [options] I<file>.wmls
+wmlsc [options] I<file>.wmls
 
 =head1 OPTIONS
 
@@ -146,6 +131,10 @@ enable expression optimizations (default)
 =item -On
 
 disable all optimizations
+
+=item -v
+
+display version
 
 =back
 

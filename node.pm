@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 use UNIVERSAL;
 
 #
@@ -6,8 +7,8 @@ use UNIVERSAL;
 #
 
 package node;
-use vars qw($VERSION);
-$VERSION = '1.03';
+
+our $VERSION = '1.10';
 
 
 sub new {
@@ -55,6 +56,7 @@ sub insert {
         $node1->{Next}->{Prev} = $node2;
     }
     $node1->{Next} = $node2;
+    return;
 }
 
 sub visit {
@@ -64,8 +66,9 @@ sub visit {
         my $opcode = $node->{OpCode};
         my $class = ref $opcode;
         my $func = 'visit' . $class;
-        $visitor->$func($opcode,@_);
+        $visitor->$func($opcode, @_);
     }
+    return;
 }
 
 sub visitActive {
@@ -76,8 +79,9 @@ sub visitActive {
         my $opcode = $node->{OpCode};
         my $class = ref $opcode;
         my $func = 'visit' . $class;
-        $visitor->$func($opcode,@_);
+        $visitor->$func($opcode, @_);
     }
+    return;
 }
 
 sub getFirstActive {
@@ -263,6 +267,7 @@ sub _SetNbArg {
     else {
         $def->{NumberOfArguments} = 0;
     }
+    return;
 }
 
 sub _CheckBreakContinue {
@@ -284,6 +289,7 @@ sub _CheckBreakContinue {
             }
         }
     }
+    return;
 }
 
 package Argument;
@@ -572,10 +578,11 @@ sub printLabel {
         print "\t";
     }
     print $label;
+    return;
 }
 
 sub printDefn {
-    my($def) = @_;
+    my ($def) = @_;
 
     if (defined $def) {
         print " $def->{Symbol}\n";
@@ -583,16 +590,18 @@ sub printDefn {
     else {
         print " null\n";
     }
+    return;
 }
 
 sub printOp {
-    my($op) = @_;
+    my ($op) = @_;
 
     print " $op\n";
+    return;
 }
 
 sub printConst {
-    my($typedef,$value) = @_;
+    my ($typedef, $value) = @_;
 
     if    ($typedef eq 'TYPE_INTEGER') {
         print " $value\n";
@@ -620,6 +629,7 @@ sub printConst {
     else {
         print "type incompatible of CONST\n";
     }
+    return;
 }
 
 sub visitUrl {
@@ -630,6 +640,7 @@ sub visitUrl {
     $self->{level} ++;
     $opcode->{Value}->visit($self);
     $self->{level} --;
+    return;
 }
 
 sub visitAccessDomain {
@@ -639,6 +650,7 @@ sub visitAccessDomain {
     $self->{level} ++;
     $opcode->{Value}->visit($self);
     $self->{level} --;
+    return;
 }
 
 sub visitAccessPath {
@@ -648,6 +660,7 @@ sub visitAccessPath {
     $self->{level} ++;
     $opcode->{Value}->visit($self);
     $self->{level} --;
+    return;
 }
 
 sub visitMetaName {
@@ -657,6 +670,7 @@ sub visitMetaName {
     $self->{level} ++;
     $opcode->{Value}->visit($self);
     $self->{level} --;
+    return;
 }
 
 sub visitMetaHttpEquiv {
@@ -666,6 +680,7 @@ sub visitMetaHttpEquiv {
     $self->{level} ++;
     $opcode->{Value}->visit($self);
     $self->{level} --;
+    return;
 }
 
 sub visitMetaUserAgent {
@@ -675,6 +690,7 @@ sub visitMetaUserAgent {
     $self->{level} ++;
     $opcode->{Value}->visit($self);
     $self->{level} --;
+    return;
 }
 
 sub visitFunction {
@@ -698,6 +714,7 @@ sub visitFunction {
     $opcode->{Value}->visit($self)
             if (defined $opcode->{Value});
     $self->{level} --;
+    return;
 }
 
 sub visitArgument {
@@ -705,6 +722,7 @@ sub visitArgument {
     my ($opcode) = @_;
     printLabel($self->{level}, 0, "ARG");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitLoadVar {
@@ -712,6 +730,7 @@ sub visitLoadVar {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "LOAD_VAR");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitStoreVar {
@@ -719,6 +738,7 @@ sub visitStoreVar {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "STORE_VAR");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitIncrVar {
@@ -726,6 +746,7 @@ sub visitIncrVar {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "INCR_VAR");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitDecrVar {
@@ -733,6 +754,7 @@ sub visitDecrVar {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "DECR_VAR");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitAddAsg {
@@ -740,6 +762,7 @@ sub visitAddAsg {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "ADD_ASG");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitSubAsg {
@@ -747,6 +770,7 @@ sub visitSubAsg {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "SUB_ASG");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitLabel {
@@ -754,42 +778,49 @@ sub visitLabel {
     my ($opcode) = @_;
     printLabel(0, $opcode->{Deleted}, "LABEL\t");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitPop {
     my $self = shift;
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "POP\n");
+    return;
 }
 
 sub visitToBool {
     my $self = shift;
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "TOBOOL\n");
+    return;
 }
 
 sub visitScOr {
     my $self = shift;
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "SCOR\n");
+    return;
 }
 
 sub visitScAnd {
     my $self = shift;
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "SCAND\n");
+    return;
 }
 
 sub visitReturn {
     my $self = shift;
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "RETURN\n");
+    return;
 }
 
 sub visitReturnES {
     my $self = shift;
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "RETURN_ES\n");
+    return;
 }
 
 sub visitCall {
@@ -797,6 +828,7 @@ sub visitCall {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "CALL");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitCallLib {
@@ -804,6 +836,7 @@ sub visitCallLib {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "CALL_LIB");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitCallUrl {
@@ -811,6 +844,7 @@ sub visitCallUrl {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "CALL_URL");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitJump {
@@ -818,6 +852,7 @@ sub visitJump {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "JUMP\t\t");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitFalseJump {
@@ -825,6 +860,7 @@ sub visitFalseJump {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "FALSE_JUMP\t");
     printDefn($opcode->{Definition});
+    return;
 }
 
 sub visitUnaryOp {
@@ -832,6 +868,7 @@ sub visitUnaryOp {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "UNOP");
     printOp($opcode->{Operator});
+    return;
 }
 
 sub visitBinaryOp {
@@ -839,6 +876,7 @@ sub visitBinaryOp {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "BINOP");
     printOp($opcode->{Operator});
+    return;
 }
 
 sub visitLoadConst {
@@ -846,6 +884,7 @@ sub visitLoadConst {
     my ($opcode) = @_;
     printLabel($self->{level}, $opcode->{Deleted}, "LOAD_CONST");
     printConst($opcode->{TypeDef}, $opcode->{Value});
+    return;
 }
 
 ###############################################################################
@@ -889,6 +928,7 @@ sub Insert {
     else {
         $self->{tab}{$symb} = $def;
     }
+    return;
 }
 
 ###############################################################################
@@ -933,7 +973,7 @@ sub Lookup {
     }
     else {
         $self->{parser}->Error("Variable undefined - $symb.\n");
-        return undef;
+        return;
     }
 }
 
@@ -946,6 +986,7 @@ sub Check {
         }
     }
     $self->{tab} = {};
+    return;
 }
 
 ###############################################################################
@@ -967,7 +1008,7 @@ sub Lookup {
     my ($library) = @_;
     unless (exists $self->{tab}{$library}) {
         $self->{parser}->Error("Library unknown - $library.\n");
-        return undef;
+        return;
     }
     return 1;
 }
@@ -1044,7 +1085,7 @@ sub LookupExternal {
         $def = new defn($symb, 'EXTERN_FUNC');
         $def->{FunctionName} = $func;
         $def->{NumberOfArguments} = $nbargs;
-        $self->SUPER::Insert($symb,$def);
+        $self->SUPER::Insert($symb, $def);
     }
     return $def;
 }
@@ -1062,7 +1103,7 @@ sub LookupLibrary {
     }
     else {
         $self->{parser}->Error("Library function unknown - $func.\n");
-        return undef;
+        return;
     }
 }
 
@@ -1109,7 +1150,7 @@ sub Lookup {
     }
     else {
         $self->{parser}->Error("ScriptName undefined - $script.\n");
-        return undef;
+        return;
     }
 }
 

@@ -4,72 +4,74 @@ use strict;
 use warnings;
 use Carp;
 
+my $IN;
+
 my %OpCode = (
 #   0x00
-    0x01 => [ "JUMP_FW",        0, 1, 0, 0 ],
-    0x02 => [ "JUMP_FW_W",      0, 2, 0, 0 ],
-    0x03 => [ "JUMP_BW",        0, 1, 0, 0 ],
-    0x04 => [ "JUMP_BW_W",      0, 2, 0, 0 ],
-    0x05 => [ "TJUMP_FW",       0, 1, 0, 0 ],
-    0x06 => [ "TJUMP_FW_W",     0, 2, 0, 0 ],
-    0x07 => [ "TJUMP_BW",       0, 1, 0, 0 ],
-    0x08 => [ "TJUMP_BW_W",     0, 2, 0, 0 ],
-    0x09 => [ "CALL",           0, 1, 0, 0 ],
-    0x0A => [ "CALL_LIB",       0, 1, 1, 0 ],
-    0x0B => [ "CALL_LIB_W",     0, 1, 2, 0 ],
-    0x0C => [ "CALL_URL",       0, 1, 1, 1 ],
-    0x0D => [ "CALL_URL_W",     0, 2, 2, 1 ],
-    0x0E => [ "LOAD_VAR",       0, 1, 0, 0 ],
-    0x0F => [ "STORE_VAR",      0, 1, 0, 0 ],
-    0x10 => [ "INCR_VAR",       0, 1, 0, 0 ],
-    0x11 => [ "DECR_VAR",       0, 1, 0, 0 ],
-    0x12 => [ "LOAD_CONST",     0, 1, 0, 0 ],
-    0x13 => [ "LOAD_CONST_W",   0, 2, 0, 0 ],
-    0x14 => [ "CONST_0",        0, 0, 0, 0 ],
-    0x15 => [ "CONST_1",        0, 0, 0, 0 ],
-    0x16 => [ "CONST_M1",       0, 0, 0, 0 ],
-    0x17 => [ "CONST_ES",       0, 0, 0, 0 ],
-    0x18 => [ "CONST_INVALID",  0, 0, 0, 0 ],
-    0x19 => [ "CONST_TRUE",     0, 0, 0, 0 ],
-    0x1A => [ "CONST_FALSE",    0, 0, 0, 0 ],
-    0x1B => [ "INCR",           0, 0, 0, 0 ],
-    0x1C => [ "DECR",           0, 0, 0, 0 ],
-    0x1D => [ "ADD_ASG",        0, 1, 0, 0 ],
-    0x1E => [ "SUB_ASG",        0, 1, 0, 0 ],
-    0x1F => [ "UMINUS",         0, 0, 0, 0 ],
-    0x20 => [ "ADD",            0, 0, 0, 0 ],
-    0x21 => [ "SUB",            0, 0, 0, 0 ],
-    0x22 => [ "MUL",            0, 0, 0, 0 ],
-    0x23 => [ "DIV",            0, 0, 0, 0 ],
-    0x24 => [ "IDIV",           0, 0, 0, 0 ],
-    0x25 => [ "REM",            0, 0, 0, 0 ],
-    0x26 => [ "B_AND",          0, 0, 0, 0 ],
-    0x27 => [ "B_OR",           0, 0, 0, 0 ],
-    0x28 => [ "B_XOR",          0, 0, 0, 0 ],
-    0x29 => [ "B_NOT",          0, 0, 0, 0 ],
-    0x2A => [ "B_LSHIFT",       0, 0, 0, 0 ],
-    0x2B => [ "B_RSSHIFT",      0, 0, 0, 0 ],
-    0x2C => [ "B_RSZSHIFT",     0, 0, 0, 0 ],
-    0x2D => [ "EQ",             0, 0, 0, 0 ],
-    0x2E => [ "LE",             0, 0, 0, 0 ],
-    0x2F => [ "LT",             0, 0, 0, 0 ],
-    0x30 => [ "GE",             0, 0, 0, 0 ],
-    0x31 => [ "GT",             0, 0, 0, 0 ],
-    0x32 => [ "NE",             0, 0, 0, 0 ],
-    0x33 => [ "NOT",            0, 0, 0, 0 ],
-    0x34 => [ "SCAND",          0, 0, 0, 0 ],
-    0x35 => [ "SCOR",           0, 0, 0, 0 ],
-    0x36 => [ "TOBOOL",         0, 0, 0, 0 ],
-    0x37 => [ "POP",            0, 0, 0, 0 ],
-    0x38 => [ "TYPEOF",         0, 0, 0, 0 ],
-    0x39 => [ "ISVALID",        0, 0, 0, 0 ],
-    0x3A => [ "RETURN",         0, 0, 0, 0 ],
-    0x3B => [ "RETURN_ES",      0, 0, 0, 0 ],
-    0x3C => [ "DEBUG",          0, 0, 0, 0 ],
+    0x01 => [ 'JUMP_FW',        0, 1, 0, 0 ],
+    0x02 => [ 'JUMP_FW_W',      0, 2, 0, 0 ],
+    0x03 => [ 'JUMP_BW',        0, 1, 0, 0 ],
+    0x04 => [ 'JUMP_BW_W',      0, 2, 0, 0 ],
+    0x05 => [ 'TJUMP_FW',       0, 1, 0, 0 ],
+    0x06 => [ 'TJUMP_FW_W',     0, 2, 0, 0 ],
+    0x07 => [ 'TJUMP_BW',       0, 1, 0, 0 ],
+    0x08 => [ 'TJUMP_BW_W',     0, 2, 0, 0 ],
+    0x09 => [ 'CALL',           0, 1, 0, 0 ],
+    0x0A => [ 'CALL_LIB',       0, 1, 1, 0 ],
+    0x0B => [ 'CALL_LIB_W',     0, 1, 2, 0 ],
+    0x0C => [ 'CALL_URL',       0, 1, 1, 1 ],
+    0x0D => [ 'CALL_URL_W',     0, 2, 2, 1 ],
+    0x0E => [ 'LOAD_VAR',       0, 1, 0, 0 ],
+    0x0F => [ 'STORE_VAR',      0, 1, 0, 0 ],
+    0x10 => [ 'INCR_VAR',       0, 1, 0, 0 ],
+    0x11 => [ 'DECR_VAR',       0, 1, 0, 0 ],
+    0x12 => [ 'LOAD_CONST',     0, 1, 0, 0 ],
+    0x13 => [ 'LOAD_CONST_W',   0, 2, 0, 0 ],
+    0x14 => [ 'CONST_0',        0, 0, 0, 0 ],
+    0x15 => [ 'CONST_1',        0, 0, 0, 0 ],
+    0x16 => [ 'CONST_M1',       0, 0, 0, 0 ],
+    0x17 => [ 'CONST_ES',       0, 0, 0, 0 ],
+    0x18 => [ 'CONST_INVALID',  0, 0, 0, 0 ],
+    0x19 => [ 'CONST_TRUE',     0, 0, 0, 0 ],
+    0x1A => [ 'CONST_FALSE',    0, 0, 0, 0 ],
+    0x1B => [ 'INCR',           0, 0, 0, 0 ],
+    0x1C => [ 'DECR',           0, 0, 0, 0 ],
+    0x1D => [ 'ADD_ASG',        0, 1, 0, 0 ],
+    0x1E => [ 'SUB_ASG',        0, 1, 0, 0 ],
+    0x1F => [ 'UMINUS',         0, 0, 0, 0 ],
+    0x20 => [ 'ADD',            0, 0, 0, 0 ],
+    0x21 => [ 'SUB',            0, 0, 0, 0 ],
+    0x22 => [ 'MUL',            0, 0, 0, 0 ],
+    0x23 => [ 'DIV',            0, 0, 0, 0 ],
+    0x24 => [ 'IDIV',           0, 0, 0, 0 ],
+    0x25 => [ 'REM',            0, 0, 0, 0 ],
+    0x26 => [ 'B_AND',          0, 0, 0, 0 ],
+    0x27 => [ 'B_OR',           0, 0, 0, 0 ],
+    0x28 => [ 'B_XOR',          0, 0, 0, 0 ],
+    0x29 => [ 'B_NOT',          0, 0, 0, 0 ],
+    0x2A => [ 'B_LSHIFT',       0, 0, 0, 0 ],
+    0x2B => [ 'B_RSSHIFT',      0, 0, 0, 0 ],
+    0x2C => [ 'B_RSZSHIFT',     0, 0, 0, 0 ],
+    0x2D => [ 'EQ',             0, 0, 0, 0 ],
+    0x2E => [ 'LE',             0, 0, 0, 0 ],
+    0x2F => [ 'LT',             0, 0, 0, 0 ],
+    0x30 => [ 'GE',             0, 0, 0, 0 ],
+    0x31 => [ 'GT',             0, 0, 0, 0 ],
+    0x32 => [ 'NE',             0, 0, 0, 0 ],
+    0x33 => [ 'NOT',            0, 0, 0, 0 ],
+    0x34 => [ 'SCAND',          0, 0, 0, 0 ],
+    0x35 => [ 'SCOR',           0, 0, 0, 0 ],
+    0x36 => [ 'TOBOOL',         0, 0, 0, 0 ],
+    0x37 => [ 'POP',            0, 0, 0, 0 ],
+    0x38 => [ 'TYPEOF',         0, 0, 0, 0 ],
+    0x39 => [ 'ISVALID',        0, 0, 0, 0 ],
+    0x3A => [ 'RETURN',         0, 0, 0, 0 ],
+    0x3B => [ 'RETURN_ES',      0, 0, 0, 0 ],
+    0x3C => [ 'DEBUG',          0, 0, 0, 0 ],
 #   0x3D
 #   0x3E
 #   0x3F
-    0x40 => [ "STORE_VAR_S",    4, 0, 0, 0 ],
+    0x40 => [ 'STORE_VAR_S',    4, 0, 0, 0 ],
     0x41 => 0x40,
     0x42 => 0x40,
     0x43 => 0x40,
@@ -85,7 +87,7 @@ my %OpCode = (
     0x4D => 0x40,
     0x4E => 0x40,
     0x4F => 0x40,
-    0x50 => [ "LOAD_CONST_S",   4, 0, 0, 0 ],
+    0x50 => [ 'LOAD_CONST_S',   4, 0, 0, 0 ],
     0x51 => 0x50,
     0x52 => 0x50,
     0x53 => 0x50,
@@ -101,7 +103,7 @@ my %OpCode = (
     0x5D => 0x50,
     0x5E => 0x50,
     0x5F => 0x50,
-    0x60 => [ "CALL_S",         3, 0, 0, 0 ],
+    0x60 => [ 'CALL_S',         3, 0, 0, 0 ],
     0x61 => 0x60,
     0x62 => 0x60,
     0x63 => 0x60,
@@ -109,7 +111,7 @@ my %OpCode = (
     0x65 => 0x60,
     0x66 => 0x60,
     0x67 => 0x60,
-    0x68 => [ "CALL_LIB_S",     3, 1, 0, 0 ],
+    0x68 => [ 'CALL_LIB_S',     3, 1, 0, 0 ],
     0x69 => 0x68,
     0x6A => 0x68,
     0x6B => 0x68,
@@ -117,7 +119,7 @@ my %OpCode = (
     0x6D => 0x68,
     0x6E => 0x68,
     0x6F => 0x68,
-    0x70 => [ "INCR_VAR_S",     3, 0, 0, 0 ],
+    0x70 => [ 'INCR_VAR_S',     3, 0, 0, 0 ],
     0x71 => 0x70,
     0x72 => 0x70,
     0x73 => 0x70,
@@ -133,7 +135,7 @@ my %OpCode = (
 #   0x7D
 #   0x7E
 #   0x7F
-    0x80 => [ "JUMP_FW_S",      5, 0, 0, 0 ],
+    0x80 => [ 'JUMP_FW_S',      5, 0, 0, 0 ],
     0x81 => 0x80,
     0x82 => 0x80,
     0x83 => 0x80,
@@ -165,7 +167,7 @@ my %OpCode = (
     0x9D => 0x80,
     0x9E => 0x80,
     0x9F => 0x80,
-    0xA0 => [ "JUMP_BW_S",      5, 0, 0, 0 ],
+    0xA0 => [ 'JUMP_BW_S',      5, 0, 0, 0 ],
     0xA1 => 0xA0,
     0xA2 => 0xA0,
     0xA3 => 0xA0,
@@ -197,7 +199,7 @@ my %OpCode = (
     0xBD => 0xA0,
     0xBE => 0xA0,
     0xBF => 0xA0,
-    0xC0 => [ "TJUMP_FW_S",     5, 0, 0, 0 ],
+    0xC0 => [ 'TJUMP_FW_S',     5, 0, 0, 0 ],
     0xC1 => 0xC0,
     0xC2 => 0xC0,
     0xC3 => 0xC0,
@@ -229,7 +231,7 @@ my %OpCode = (
     0xDD => 0xC0,
     0xDE => 0xC0,
     0xDF => 0xC0,
-    0xE0 => [ "LOAD_VAR_S",     5, 0, 0, 0 ],
+    0xE0 => [ 'LOAD_VAR_S',     5, 0, 0, 0 ],
     0xE1 => 0xE0,
     0xE2 => 0xE0,
     0xE3 => 0xE0,
@@ -271,19 +273,19 @@ sub CodeArray {
                 unless (exists $OpCode{$opcode});
         my $desc = $OpCode{$opcode};
         $desc = $OpCode{$desc} unless (ref $desc);
-        my $nmemo = sprintf("%-12s",${$desc}[0]);
+        my $nmemo = sprintf('%-12s', ${$desc}[0]);
         print $nmemo;
         my $arg = ${$desc}[1];
         if    ($arg == 0) {
         }
         elsif ($arg == 3) {
-            print sprintf("%7u",$opcode % 0x08);
+            print sprintf('%7u', $opcode % 0x08);
         }
         elsif ($arg == 4) {
-            print sprintf("%7u",$opcode % 0x10);
+            print sprintf('%7u', $opcode % 0x10);
         }
         elsif ($arg == 5) {
-            print sprintf("%7u",$opcode % 0x20);
+            print sprintf('%7u', $opcode % 0x20);
         }
         else {
             croak "INTERNAL ERROR in CodeArray ($arg).\n";
@@ -293,12 +295,12 @@ sub CodeArray {
                 last;
             }
             elsif ($_ == 1) {
-                print sprintf("%7u",get_uint8());
+                print sprintf('%7u', get_uint8());
                 $size -= 1;
             }
             elsif ($_ == 2) {
                 $size -= 2;
-                print sprintf("%7u",get_uint16());
+                print sprintf('%7u', get_uint16());
             }
             else {
                 croak "INTERNAL ERROR in CodeArray ($_).\n";
@@ -306,108 +308,112 @@ sub CodeArray {
         }
         print "\n";
     }
+    return;
 }
 
 sub ConstantPool {
     print "## Constant Pool\n";
     print "##\n";
     my $NumberOfConstants = get_mb();
-    print "NumberOfConstants ",$NumberOfConstants,"\n";
+    print "NumberOfConstants ", $NumberOfConstants, "\n";
     my $CharacterSet = get_mb();
-    print "CharacterSet ",$CharacterSet,"\n";
+    print "CharacterSet ", $CharacterSet, "\n";
     for (my $idx = 0; $idx < $NumberOfConstants; $idx++) {
         my $ConstantType = get_uint8();
         if    ($ConstantType == 0) {
             my $value = get_int8();
-            print "cst",$idx," int8 ",$value,"\n";
+            print "cst", $idx, " int8 ", $value, "\n";
         }
         elsif ($ConstantType == 1) {
             my $value = get_int16();
-            print "cst",$idx," int16 ",$value,"\n";
+            print "cst", $idx, " int16 ", $value, "\n";
         }
         elsif ($ConstantType == 2) {
             my $value = get_int32();
-            print "cst",$idx," int32 ",$value,"\n";
+            print "cst", $idx, " int32 ", $value, "\n";
         }
         elsif ($ConstantType == 3) {
             my $value = get_float32();
-            print "cst",$idx," float32 ",$value,"\n";
+            print "cst", $idx, " float32 ", $value, "\n";
         }
         elsif ($ConstantType == 4) {
             my $size = get_mb();
             my $str = get_string($size);
-            print "cst",$idx," UTF8 string [",$size,"] ",$str,"\n";
+            print "cst", $idx, " UTF8 string [", $size, "] ", $str, "\n";
         }
         elsif ($ConstantType == 5) {
-            print "cst",$idx," Empty String\n";
+            print "cst", $idx, " Empty String\n";
         }
         elsif ($ConstantType == 6) {
             my $size = get_mb();
             my $str = get_string($size);
-            print "cst",$idx," string [",$size,"] ",$str,"\n";
+            print "cst", $idx, " string [", $size, "] ", $str, "\n";
         }
         else {
             croak "Invalid ConstantType $ConstantType.\n";
         }
     }
+    return;
 }
 
 sub PragmaPool {
     print "## Pragma Pool\n";
     print "##\n";
     my $NumberOfPragmas = get_mb();
-    print "NumberOfPragmas ",$NumberOfPragmas,"\n";
+    print "NumberOfPragmas ", $NumberOfPragmas, "\n";
     while ($NumberOfPragmas --) {
         my $PragmaType = get_uint8();
         if    ($PragmaType == 0) {
             my $AccessDomainIndex = get_mb();
-            print "Acces Domain ",$AccessDomainIndex,"\n";
+            print "Acces Domain ", $AccessDomainIndex, "\n";
         }
         elsif ($PragmaType == 1) {
             my $AccessPathIndex = get_mb();
-            print "Acces Path ",$AccessPathIndex,"\n";
+            print "Acces Path ", $AccessPathIndex, "\n";
         }
         elsif ($PragmaType == 2) {
             my $PropertyNameIndex = get_mb();
             my $ContentIndex = get_mb();
-            print "User Agent Property ",$PropertyNameIndex," ",$ContentIndex,"\n";
+            print "User Agent Property ", $PropertyNameIndex, " ", $ContentIndex, "\n";
         }
         elsif ($PragmaType == 3) {
             my $PropertyNameIndex = get_mb();
             my $ContentIndex = get_mb();
             my $SchemeIndex = get_mb();
-            print "User Agent Property and Scheme ",$PropertyNameIndex," ",$ContentIndex," ",$SchemeIndex,"\n";
+            print "User Agent Property and Scheme ", $PropertyNameIndex, " ", $ContentIndex, " ", $SchemeIndex, "\n";
         }
         else {
             croak "Invalid PragmaType $PragmaType.\n";
         }
     }
+    return;
 }
 
 sub FunctionPool {
     print "## Function Pool\n";
     print "##\n";
     my $NumberOfFunctions = get_uint8();
-    print "NumberOfFunctions ",$NumberOfFunctions,"\n";
+    print "NumberOfFunctions ", $NumberOfFunctions, "\n";
     print "## Function Name Table\n";
     my $NumberOfFunctionNames = get_uint8();
-    print "NumberOfFunctionNames ",$NumberOfFunctionNames,"\n";
+    print "NumberOfFunctionNames ", $NumberOfFunctionNames, "\n";
     for (my $idx = 0; $idx < $NumberOfFunctionNames; $idx ++) {
         my $FunctionIndex = get_uint8();
         my $FunctionNameSize = get_uint8();
         my $str = get_string($FunctionNameSize);
-        print $FunctionIndex," ",$FunctionNameSize," ",$str,"\n";
+        print $FunctionIndex, " ", $FunctionNameSize, " ", $str, "\n";
     }
     for (my $idx = 0; $idx < $NumberOfFunctions; $idx++) {
-        print "## function ",$idx,"\n";
+        print "## function ", $idx, "\n";
         my $NumberOfArguments = get_uint8();
-        print "NumberOfArgument ",$NumberOfArguments,"\n";
+        print "NumberOfArgument ", $NumberOfArguments, "\n";
         my $NumberOfLocalVariables = get_uint8();
-        print "NumberOfLocalVariables ",$NumberOfLocalVariables,"\n";
+        print "NumberOfLocalVariables ", $NumberOfLocalVariables, "\n";
         my $FunctionSize = get_mb();
-        print "FunctionSize ",$FunctionSize,"\n";
+        print "FunctionSize ", $FunctionSize, "\n";
         CodeArray($FunctionSize);
     }
+    return;
 }
 
 sub disassembler {
@@ -417,56 +423,57 @@ sub disassembler {
     my $VersionNumber = get_uint8();
     my $major = 1 + $VersionNumber / 16;
     my $minor = $VersionNumber % 16;
-    print "VersionNumber ",$major,".",$minor,"\n";
+    print "VersionNumber ", $major, ".", $minor, "\n";
     my $CodeSize = get_mb();
-    print "CodeSize ",$CodeSize,"\n";
+    print "CodeSize ", $CodeSize, "\n";
     ConstantPool();
     PragmaPool();
     FunctionPool();
+    return;
 }
 
 ###############################################################################
 
 sub get_int8 {
     my $str;
-    read IN, $str, 1;
-    return unpack "c", $str;
+    read $IN, $str, 1;
+    return unpack 'c', $str;
 }
 
 sub get_uint8 {
     my $str;
-    read IN, $str, 1;
-    return unpack "C", $str;
+    read $IN, $str, 1;
+    return unpack 'C', $str;
 }
 
 sub get_int16 {
     my $str;
-    read IN, $str, 2;
-    return unpack "s", pack "v", unpack "n", $str;
+    read $IN, $str, 2;
+    return unpack 's', pack 'v', unpack 'n', $str;
 }
 
 sub get_uint16 {
     my $str;
-    read IN, $str, 2;
-    return unpack "n", $str;
+    read $IN, $str, 2;
+    return unpack 'n', $str;
 }
 
 sub get_int32 {
     my $str;
-    read IN, $str, 4;
-    return unpack "l", pack "V", unpack "N", $str;
+    read $IN, $str, 4;
+    return unpack 'l', pack 'V', unpack 'N', $str;
 }
 
 sub get_float32 {
     my $str;
-    read IN, $str, 4;
-    return unpack "f", $str;
+    read $IN, $str, 4;
+    return unpack 'f', $str;
 }
 
 sub get_string {
     my ($len) = @_;
     my $str;
-    read IN, $str, $len;
+    read $IN, $str, $len;
     return $str;
 }
 
@@ -477,7 +484,7 @@ sub get_mb {
     do {
         $nb ++;
 #       return undef unless ($nb < 6);
-#       my $ch = getc(IN);
+#       my $ch = getc($IN);
 #       return undef unless (defined $ch);
 #       $byte = ord $ch;
         $byte = get_uint8();
@@ -493,13 +500,13 @@ sub get_mb {
 my $filename = $ARGV[0];
 die "Usage: wmlsd file.wmlsc\n"
         unless (defined $filename);
-open IN, '<', $filename
+open $IN, '<', $filename
         or die "can't open $filename ($!).\n";
-binmode IN, ':raw';
-print "## file:",$filename,"\n";
+binmode $IN, ':raw';
+print "## file:", $filename, "\n";
 print "##\n";
 disassembler();
-close IN;
+close $IN;
 
 __END__
 
@@ -507,9 +514,9 @@ __END__
 
 wmlsd - WMLScript Disassembler
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
- wmlsd I<file>
+wmlsd I<file>
 
 =head1 DESCRIPTION
 

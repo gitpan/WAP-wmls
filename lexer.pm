@@ -5,10 +5,9 @@
 #
 
 use strict;
-
-use Math::BigInt;
-use Math::BigFloat;
-use Unicode::String qw(latin1 utf8 ucs2);
+use warnings;
+use bigint;
+use bignum;
 
 sub Error {
     my $parser = shift;
@@ -26,6 +25,7 @@ sub Error {
     print STDOUT '#',$parser->YYData->{filename},':',$parser->YYData->{lineno},'#Error: ',$msg
             if (        exists $parser->YYData->{verbose_error}
                     and $parser->YYData->{verbose_error});
+    return;
 }
 
 sub Warning {
@@ -44,6 +44,7 @@ sub Warning {
     print STDOUT '#',$parser->YYData->{filename},':',$parser->YYData->{lineno},'#Warning: ',$msg
             if (        exists $parser->YYData->{verbose_warning}
                     and $parser->YYData->{verbose_warning});
+    return;
 }
 
 sub Info {
@@ -62,6 +63,7 @@ sub Info {
     print STDOUT '#',$parser->YYData->{filename},':',$parser->YYData->{lineno},'#Info: ',$msg
             if (        exists $parser->YYData->{verbose_info}
                     and $parser->YYData->{verbose_info});
+    return;
 }
 
 sub _DoubleStringLexer {
@@ -74,11 +76,11 @@ sub _DoubleStringLexer {
         for ($parser->YYData->{INPUT}) {
 
             s/^\"//
-                and return($type,$str);
+                and return($type, $str);
 
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^([^"\\]+)//
-                    and $str .= ucs2($parser->YYData->{map}->to16($1))->utf8(),
+                    and $str .= $1,
                         last;
             }
             else {
@@ -107,17 +109,17 @@ sub _DoubleStringLexer {
                     last;
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^\\([0-7]{1,2})//
-                    and $str .= latin1(chr oct $1)->utf8(),
+                    and $str .= chr oct $1,
                         last;
                 s/^\\([0-3][0-7]{2})//
-                    and $str .= latin1(chr oct $1)->utf8(),
+                    and $str .= chr oct $1,
                         last;
                 s/^\\x([0-9A-Fa-f]{2})//
-                    and $str .= latin1(chr hex $1)->utf8(),
+                    and $str .= chr hex $1,
                         last;
             }
             else {
-                if ($parser->YYData->{encoding} eq "ISO_8859-1:1987") {
+                if ($parser->YYData->{encoding} eq 'iso-8859-1') {
                     s/^\\([0-7]{1,2})//
                         and $str .= chr oct $1,
                             last;
@@ -131,31 +133,27 @@ sub _DoubleStringLexer {
                 else {
                     s/^\\([0-7]{1,2})//
                         and $type = 'UTF8_STRING_LITERAL',
-                        and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                        and $str .= latin1(chr oct $1)->utf8(),
+                        and $str .= chr oct $1,
                             last;
                     s/^\\([0-3][0-7]{2})//
                         and $type = 'UTF8_STRING_LITERAL',
-                        and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                        and $str .= latin1(chr oct $1)->utf8(),
+                        and $str .= chr oct $1,
                             last;
                     s/^\\x([0-9A-Fa-f]{2})//
                         and $type = 'UTF8_STRING_LITERAL',
-                        and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                        and $str .= latin1(chr hex $1)->utf8(),
+                        and $str .= chr hex $1,
                             last;
                 }
             }
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^\\u([0-9A-Fa-f]{4})//
-                    and $str .= Unicode::String->new("")->chr(hex $1)->utf8(),
+                    and $str .= chr hex $1,
                         last;
             }
             else {
                 s/^\\u([0-9A-Fa-f]{4})//
                     and $type = 'UTF8_STRING_LITERAL',
-                    and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                    and $str .= Unicode::String->new("")->chr(hex $1)->utf8(),
+                    and $str .= chr hex $1,
                         last;
             }
             s/^\\//
@@ -179,7 +177,7 @@ sub _SingleStringLexer {
         for ($parser->YYData->{INPUT}) {
 
             s/^'//
-                and return($type,$str);
+                and return($type, $str);
 
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^([^'\\]+)//
@@ -212,17 +210,17 @@ sub _SingleStringLexer {
                     last;
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^\\([0-7]{1,2})//
-                    and $str .= latin1(chr oct $1)->utf8(),
+                    and $str .= chr oct $1,
                         last;
                 s/^\\([0-3][0-7]{2})//
-                    and $str .= latin1(chr oct $1)->utf8(),
+                    and $str .= chr oct $1,
                         last;
                 s/^\\x([0-9A-Fa-f]{2})//
-                    and $str .= latin1(chr hex $1)->utf8(),
+                    and $str .= chr hex $1,
                         last;
             }
             else {
-                if ($parser->YYData->{encoding} eq "ISO_8859-1:1987") {
+                if ($parser->YYData->{encoding} eq 'iso-8859-1') {
                     s/^\\([0-7]{1,2})//
                         and $str .= chr oct $1,
                             last;
@@ -236,31 +234,27 @@ sub _SingleStringLexer {
                 else {
                     s/^\\([0-7]{1,2})//
                         and $type = 'UTF8_STRING_LITERAL',
-                        and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                        and $str .= latin1(chr oct $1)->utf8(),
+                        and $str .= chr oct $1,
                             last;
                     s/^\\([0-3][0-7]{2})//
                         and $type = 'UTF8_STRING_LITERAL',
-                        and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                        and $str .= latin1(chr oct $1)->utf8(),
+                        and $str .= chr oct $1,
                             last;
                     s/^\\x([0-9A-Fa-f]{2})//
                         and $type = 'UTF8_STRING_LITERAL',
-                        and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                        and $str .= latin1(chr hex $1)->utf8(),
+                        and $str .= chr hex $1,
                             last;
                 }
             }
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^\\u([0-9A-Fa-f]{4})//
-                    and $str .= Unicode::String->new("")->chr(hex $1)->utf8(),
+                    and $str .= chr hex $1,
                         last;
             }
             else {
                 s/^\\u([0-9A-Fa-f]{4})//
                     and $type = 'UTF8_STRING_LITERAL',
-                    and $str = ucs2($parser->YYData->{map}->to16($str))->utf8(),
-                    and $str .= Unicode::String->new("")->chr(hex $1)->utf8(),
+                    and $str .= chr hex $1,
                         last;
             }
             s/^\\//
@@ -279,7 +273,7 @@ sub _Identifier {
     my ($ident) = @_;
 
     if (exists $parser->YYData->{keyword}{$ident}) {
-        return ($parser->YYData->{keyword}{$ident},$ident);
+        return ($parser->YYData->{keyword}{$ident}, $ident);
     }
     elsif (exists $parser->YYData->{invalid_keyword}{$ident}) {
         $parser->Error("Invalid keyword '$ident'.\n");
@@ -291,9 +285,9 @@ sub _OctInteger {
     my $parser = shift;
     my ($str) = @_;
 
-    my $val = new Math::BigInt(0);
+    my $val = 0;
     foreach (split //, $str) {
-        $val = $val * new Math::BigInt(8) + new Math::BigInt(oct $_);
+        $val = $val * 8 + oct $_;
     }
     return ('INTEGER_LITERAL', $val);
 }
@@ -302,9 +296,9 @@ sub _HexInteger {
     my $parser = shift;
     my ($str) = @_;
 
-    my $val = new Math::BigInt(0);
+    my $val = 0;
     foreach (split //, $str) {
-        $val = $val * new Math::BigInt(16) + new Math::BigInt(hex $_);
+        $val = $val * 16 + hex $_;
     }
     return ('INTEGER_LITERAL', $val);
 }
@@ -390,26 +384,26 @@ sub _Lexer {
                         last;
 
             s/^([0-9]+\.[0-9]+[Ee][+\-]?[0-9]+)//
-                    and return ('FLOAT_LITERAL', new Math::BigFloat($1));
+                    and return ('FLOAT_LITERAL', $1);
             s/^([0-9]+[Ee][+\-]?[0-9]+)//
-                    and return ('FLOAT_LITERAL', new Math::BigFloat($1));
+                    and return ('FLOAT_LITERAL', $1);
             s/^(\.[0-9]+[Ee][+\-]?[0-9]+)//
-                    and return ('FLOAT_LITERAL', new Math::BigFloat($1));
+                    and return ('FLOAT_LITERAL', $1);
             s/^([0-9]+\.[0-9]+)//
-                    and return ('FLOAT_LITERAL', new Math::BigFloat($1));
+                    and return ('FLOAT_LITERAL', $1);
             s/^([0-9]+\.)//
-                    and return ('FLOAT_LITERAL', new Math::BigFloat($1));
+                    and return ('FLOAT_LITERAL', $1);
             s/^(\.[0-9]+)//
-                    and return ('FLOAT_LITERAL', new Math::BigFloat($1));
+                    and return ('FLOAT_LITERAL', $1);
 
             s/^0([0-7]+)//
                     and return $parser->_OctInteger($1);
             s/^0[Xx]([A-Fa-f0-9]+)//
                     and return $parser->_HexInteger($1);
             s/^(0)//
-                    and return ('INTEGER_LITERAL', new Math::BigInt($1));
+                    and return ('INTEGER_LITERAL', $1);
             s/^([1-9][0-9]*)//
-                    and return ('INTEGER_LITERAL', new Math::BigInt($1));
+                    and return ('INTEGER_LITERAL', $1);
 
             s/^\"//
                     and return $parser->_DoubleStringLexer();
@@ -547,6 +541,7 @@ sub _InitLexico {
 
     $parser->YYData->{keyword} = \%keywords;
     $parser->YYData->{invalid_keyword} = \%invalid_keywords;
+    return;
 }
 
 sub _InitStandardLibrary {
@@ -554,7 +549,7 @@ sub _InitStandardLibrary {
     my $cfg = $INC{'WAP/wmls/lexer.pm'};
     $cfg =~ s/lexer\.pm$//;
     $cfg .= 'wmlslibs.cfg';
-     open (my $IN, '<', $cfg)
+    open my $IN, '<', $cfg
         or warn "can't open $cfg.\n";
 
     my $lib = undef;
@@ -580,6 +575,7 @@ sub _InitStandardLibrary {
         }
     }
     close $IN;
+    return;
 }
 
 1;
