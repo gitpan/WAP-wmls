@@ -3,18 +3,15 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 WriteMakefile(
     'NAME'          => 'WAP::wmls',
-    'VERSION_FROM'  => 'node.pm',
+    'VERSION_FROM'  => 'lib/WAP/wmls.pm',
     'ABSTRACT'      => 'WAP WMLScript compiler',
-    'PREREQ_PM'     => {},
-    'PM'            => {
-                        'lexer.pm'      => '$(INST_LIBDIR)/wmls/lexer.pm',
-                        'node.pm'       => '$(INST_LIBDIR)/wmls/node.pm',
-                        'parser.pm'     => '$(INST_LIBDIR)/wmls/parser.pm',
-                        'gen.pm'        => '$(INST_LIBDIR)/wmls/gen.pm',
-                        'optim.pm'      => '$(INST_LIBDIR)/wmls/optim.pm',
-                        'wmlslibs.cfg'  => '$(INST_LIBDIR)/wmls/wmlslibs.cfg',
+    'PREREQ_PM'     => {
+                        'Parse::Yapp'   => 0,
     },
-    'EXE_FILES'     => ['wmlsc', 'wmlsd'],
+    'EXE_FILES'     => [ 
+                        'bin/wmlsc', 
+                        'bin/wmlsd',
+    ],
     'AUTHOR'        => "Francois PERRAD (francois.perrad\@gadz.org)",
     'dist'          => {
                         'COMPRESS'      => 'gzip',

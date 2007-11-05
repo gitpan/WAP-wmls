@@ -7,487 +7,12 @@
 #             ANY CHANGE MADE HERE WILL BE LOST !
 #
 ####################################################################
-package parser;
+package WAP::wmls::parser;
 use vars qw ( @ISA );
 use strict;
 
 @ISA= qw ( Parse::Yapp::Driver );
-#Included Parse/Yapp/Driver.pm file----------------------------------------
-{
-#
-# Module Parse::Yapp::Driver
-#
-# This module is part of the Parse::Yapp package available on your
-# nearest CPAN
-#
-# Any use of this module in a standalone parser make the included
-# text under the same copyright as the Parse::Yapp module itself.
-#
-# This notice should remain unchanged.
-#
-# (c) Copyright 1998-2001 Francois Desarmenien, all rights reserved.
-# (see the pod text in Parse::Yapp module for use and distribution rights)
-#
-
-package Parse::Yapp::Driver;
-
-require 5.004;
-
-use strict;
-
-use vars qw ( $VERSION $COMPATIBLE $FILENAME );
-
-$VERSION = '1.05';
-$COMPATIBLE = '0.07';
-$FILENAME=__FILE__;
-
-use Carp;
-
-#Known parameters, all starting with YY (leading YY will be discarded)
-my(%params)=(YYLEX => 'CODE', 'YYERROR' => 'CODE', YYVERSION => '',
-			 YYRULES => 'ARRAY', YYSTATES => 'ARRAY', YYDEBUG => '');
-#Mandatory parameters
-my(@params)=('LEX','RULES','STATES');
-
-sub new {
-    my($class)=shift;
-	my($errst,$nberr,$token,$value,$check,$dotpos);
-    my($self)={ ERROR => \&_Error,
-				ERRST => \$errst,
-                NBERR => \$nberr,
-				TOKEN => \$token,
-				VALUE => \$value,
-				DOTPOS => \$dotpos,
-				STACK => [],
-				DEBUG => 0,
-				CHECK => \$check };
-
-	_CheckParams( [], \%params, \@_, $self );
-
-		exists($$self{VERSION})
-	and	$$self{VERSION} < $COMPATIBLE
-	and	croak "Yapp driver version $VERSION ".
-			  "incompatible with version $$self{VERSION}:\n".
-			  "Please recompile parser module.";
-
-        ref($class)
-    and $class=ref($class);
-
-    bless($self,$class);
-}
-
-sub YYParse {
-    my($self)=shift;
-    my($retval);
-
-	_CheckParams( \@params, \%params, \@_, $self );
-
-	if($$self{DEBUG}) {
-		_DBLoad();
-		$retval = eval '$self->_DBParse()';#Do not create stab entry on compile
-        $@ and die $@;
-	}
-	else {
-		$retval = $self->_Parse();
-	}
-    $retval
-}
-
-sub YYData {
-	my($self)=shift;
-
-		exists($$self{USER})
-	or	$$self{USER}={};
-
-	$$self{USER};
-	
-}
-
-sub YYErrok {
-	my($self)=shift;
-
-	${$$self{ERRST}}=0;
-    undef;
-}
-
-sub YYNberr {
-	my($self)=shift;
-
-	${$$self{NBERR}};
-}
-
-sub YYRecovering {
-	my($self)=shift;
-
-	${$$self{ERRST}} != 0;
-}
-
-sub YYAbort {
-	my($self)=shift;
-
-	${$$self{CHECK}}='ABORT';
-    undef;
-}
-
-sub YYAccept {
-	my($self)=shift;
-
-	${$$self{CHECK}}='ACCEPT';
-    undef;
-}
-
-sub YYError {
-	my($self)=shift;
-
-	${$$self{CHECK}}='ERROR';
-    undef;
-}
-
-sub YYSemval {
-	my($self)=shift;
-	my($index)= $_[0] - ${$$self{DOTPOS}} - 1;
-
-		$index < 0
-	and	-$index <= @{$$self{STACK}}
-	and	return $$self{STACK}[$index][1];
-
-	undef;	#Invalid index
-}
-
-sub YYCurtok {
-	my($self)=shift;
-
-        @_
-    and ${$$self{TOKEN}}=$_[0];
-    ${$$self{TOKEN}};
-}
-
-sub YYCurval {
-	my($self)=shift;
-
-        @_
-    and ${$$self{VALUE}}=$_[0];
-    ${$$self{VALUE}};
-}
-
-sub YYExpect {
-    my($self)=shift;
-
-    keys %{$self->{STATES}[$self->{STACK}[-1][0]]{ACTIONS}}
-}
-
-sub YYLexer {
-    my($self)=shift;
-
-	$$self{LEX};
-}
-
-
-#################
-# Private stuff #
-#################
-
-
-sub _CheckParams {
-	my($mandatory,$checklist,$inarray,$outhash)=@_;
-	my($prm,$value);
-	my($prmlst)={};
-
-	while(($prm,$value)=splice(@$inarray,0,2)) {
-        $prm=uc($prm);
-			exists($$checklist{$prm})
-		or	croak("Unknow parameter '$prm'");
-			ref($value) eq $$checklist{$prm}
-		or	croak("Invalid value for parameter '$prm'");
-        $prm=unpack('@2A*',$prm);
-		$$outhash{$prm}=$value;
-	}
-	for (@$mandatory) {
-			exists($$outhash{$_})
-		or	croak("Missing mandatory parameter '".lc($_)."'");
-	}
-}
-
-sub _Error {
-	print "Parse error.\n";
-}
-
-sub _DBLoad {
-	{
-		no strict 'refs';
-
-			exists(${__PACKAGE__.'::'}{_DBParse})#Already loaded ?
-		and	return;
-	}
-	my($fname)=__FILE__;
-	my(@drv);
-	open(DRV,"<$fname") or die "Report this as a BUG: Cannot open $fname";
-	while(<DRV>) {
-                	/^\s*sub\s+_Parse\s*{\s*$/ .. /^\s*}\s*#\s*_Parse\s*$/
-        	and     do {
-                	s/^#DBG>//;
-                	push(@drv,$_);
-        	}
-	}
-	close(DRV);
-
-	$drv[0]=~s/_P/_DBP/;
-	eval join('',@drv);
-}
-
-#Note that for loading debugging version of the driver,
-#this file will be parsed from 'sub _Parse' up to '}#_Parse' inclusive.
-#So, DO NOT remove comment at end of sub !!!
-sub _Parse {
-    my($self)=shift;
-
-	my($rules,$states,$lex,$error)
-     = @$self{ 'RULES', 'STATES', 'LEX', 'ERROR' };
-	my($errstatus,$nberror,$token,$value,$stack,$check,$dotpos)
-     = @$self{ 'ERRST', 'NBERR', 'TOKEN', 'VALUE', 'STACK', 'CHECK', 'DOTPOS' };
-
-#DBG>	my($debug)=$$self{DEBUG};
-#DBG>	my($dbgerror)=0;
-
-#DBG>	my($ShowCurToken) = sub {
-#DBG>		my($tok)='>';
-#DBG>		for (split('',$$token)) {
-#DBG>			$tok.=		(ord($_) < 32 or ord($_) > 126)
-#DBG>					?	sprintf('<%02X>',ord($_))
-#DBG>					:	$_;
-#DBG>		}
-#DBG>		$tok.='<';
-#DBG>	};
-
-	$$errstatus=0;
-	$$nberror=0;
-	($$token,$$value)=(undef,undef);
-	@$stack=( [ 0, undef ] );
-	$$check='';
-
-    while(1) {
-        my($actions,$act,$stateno);
-
-        $stateno=$$stack[-1][0];
-        $actions=$$states[$stateno];
-
-#DBG>	print STDERR ('-' x 40),"\n";
-#DBG>		$debug & 0x2
-#DBG>	and	print STDERR "In state $stateno:\n";
-#DBG>		$debug & 0x08
-#DBG>	and	print STDERR "Stack:[".
-#DBG>					 join(',',map { $$_[0] } @$stack).
-#DBG>					 "]\n";
-
-
-        if  (exists($$actions{ACTIONS})) {
-
-				defined($$token)
-            or	do {
-				($$token,$$value)=&$lex($self);
-#DBG>				$debug & 0x01
-#DBG>			and	print STDERR "Need token. Got ".&$ShowCurToken."\n";
-			};
-
-            $act=   exists($$actions{ACTIONS}{$$token})
-                    ?   $$actions{ACTIONS}{$$token}
-                    :   exists($$actions{DEFAULT})
-                        ?   $$actions{DEFAULT}
-                        :   undef;
-        }
-        else {
-            $act=$$actions{DEFAULT};
-#DBG>			$debug & 0x01
-#DBG>		and	print STDERR "Don't need token.\n";
-        }
-
-            defined($act)
-        and do {
-
-                $act > 0
-            and do {        #shift
-
-#DBG>				$debug & 0x04
-#DBG>			and	print STDERR "Shift and go to state $act.\n";
-
-					$$errstatus
-				and	do {
-					--$$errstatus;
-
-#DBG>					$debug & 0x10
-#DBG>				and	$dbgerror
-#DBG>				and	$$errstatus == 0
-#DBG>				and	do {
-#DBG>					print STDERR "**End of Error recovery.\n";
-#DBG>					$dbgerror=0;
-#DBG>				};
-				};
-
-
-                push(@$stack,[ $act, $$value ]);
-
-					$$token ne ''	#Don't eat the eof
-				and	$$token=$$value=undef;
-                next;
-            };
-
-            #reduce
-            my($lhs,$len,$code,@sempar,$semval);
-            ($lhs,$len,$code)=@{$$rules[-$act]};
-
-#DBG>			$debug & 0x04
-#DBG>		and	$act
-#DBG>		and	print STDERR "Reduce using rule ".-$act." ($lhs,$len): ";
-
-                $act
-            or  $self->YYAccept();
-
-            $$dotpos=$len;
-
-                unpack('A1',$lhs) eq '@'    #In line rule
-            and do {
-                    $lhs =~ /^\@[0-9]+\-([0-9]+)$/
-                or  die "In line rule name '$lhs' ill formed: ".
-                        "report it as a BUG.\n";
-                $$dotpos = $1;
-            };
-
-            @sempar =       $$dotpos
-                        ?   map { $$_[1] } @$stack[ -$$dotpos .. -1 ]
-                        :   ();
-
-            $semval = $code ? &$code( $self, @sempar )
-                            : @sempar ? $sempar[0] : undef;
-
-            splice(@$stack,-$len,$len);
-
-                $$check eq 'ACCEPT'
-            and do {
-
-#DBG>			$debug & 0x04
-#DBG>		and	print STDERR "Accept.\n";
-
-				return($semval);
-			};
-
-                $$check eq 'ABORT'
-            and	do {
-
-#DBG>			$debug & 0x04
-#DBG>		and	print STDERR "Abort.\n";
-
-				return(undef);
-
-			};
-
-#DBG>			$debug & 0x04
-#DBG>		and	print STDERR "Back to state $$stack[-1][0], then ";
-
-                $$check eq 'ERROR'
-            or  do {
-#DBG>				$debug & 0x04
-#DBG>			and	print STDERR 
-#DBG>				    "go to state $$states[$$stack[-1][0]]{GOTOS}{$lhs}.\n";
-
-#DBG>				$debug & 0x10
-#DBG>			and	$dbgerror
-#DBG>			and	$$errstatus == 0
-#DBG>			and	do {
-#DBG>				print STDERR "**End of Error recovery.\n";
-#DBG>				$dbgerror=0;
-#DBG>			};
-
-			    push(@$stack,
-                     [ $$states[$$stack[-1][0]]{GOTOS}{$lhs}, $semval ]);
-                $$check='';
-                next;
-            };
-
-#DBG>			$debug & 0x04
-#DBG>		and	print STDERR "Forced Error recovery.\n";
-
-            $$check='';
-
-        };
-
-        #Error
-            $$errstatus
-        or   do {
-
-            $$errstatus = 1;
-            &$error($self);
-                $$errstatus # if 0, then YYErrok has been called
-            or  next;       # so continue parsing
-
-#DBG>			$debug & 0x10
-#DBG>		and	do {
-#DBG>			print STDERR "**Entering Error recovery.\n";
-#DBG>			++$dbgerror;
-#DBG>		};
-
-            ++$$nberror;
-
-        };
-
-			$$errstatus == 3	#The next token is not valid: discard it
-		and	do {
-				$$token eq ''	# End of input: no hope
-			and	do {
-#DBG>				$debug & 0x10
-#DBG>			and	print STDERR "**At eof: aborting.\n";
-				return(undef);
-			};
-
-#DBG>			$debug & 0x10
-#DBG>		and	print STDERR "**Dicard invalid token ".&$ShowCurToken.".\n";
-
-			$$token=$$value=undef;
-		};
-
-        $$errstatus=3;
-
-		while(	  @$stack
-			  and (		not exists($$states[$$stack[-1][0]]{ACTIONS})
-			        or  not exists($$states[$$stack[-1][0]]{ACTIONS}{error})
-					or	$$states[$$stack[-1][0]]{ACTIONS}{error} <= 0)) {
-
-#DBG>			$debug & 0x10
-#DBG>		and	print STDERR "**Pop state $$stack[-1][0].\n";
-
-			pop(@$stack);
-		}
-
-			@$stack
-		or	do {
-
-#DBG>			$debug & 0x10
-#DBG>		and	print STDERR "**No state left on stack: aborting.\n";
-
-			return(undef);
-		};
-
-		#shift the error token
-
-#DBG>			$debug & 0x10
-#DBG>		and	print STDERR "**Shift \$error token and go to state ".
-#DBG>						 $$states[$$stack[-1][0]]{ACTIONS}{error}.
-#DBG>						 ".\n";
-
-		push(@$stack, [ $$states[$$stack[-1][0]]{ACTIONS}{error}, undef ]);
-
-    }
-
-    #never reached
-	croak("Error in driver logic. Please, report it as a BUG");
-
-}#_Parse
-#DO NOT remove comment
-
-1;
-
-}
-#End of include--------------------------------------------------
-
+use Parse::Yapp::Driver;
 
 
 
@@ -4084,12 +3609,12 @@ sub
             use bigint;
             if ($_[1] > 2147483648) {
                 $_[0]->Error("Integer $_[1] is out of range.\n");
-                new LoadConst($_[0],
+                new WAP::wmls::LoadConst($_[0],
                         'TypeDef'           =>  'TYPE_INVALID',
                 );
             }
             else {
-                new LoadConst($_[0],
+                new WAP::wmls::LoadConst($_[0],
                         'TypeDef'           =>  'TYPE_INTEGER',
                         'Value'             =>  $_[1]
                 );
@@ -4105,7 +3630,7 @@ sub
             use bignum;
             if ($_[1] > 3.40282347e+38) {
                 $_[0]->Error("Float $_[1] is out of range.\n");
-                new LoadConst($_[0],
+                new WAP::wmls::LoadConst($_[0],
                         'TypeDef'           =>  'TYPE_INVALID',
                 );
             }
@@ -4114,7 +3639,7 @@ sub
                     $_[0]->Warning("Float $_[1] is underflow.\n");
                     $_[1] = 0.0;
                 }
-                new LoadConst($_[0],
+                new WAP::wmls::LoadConst($_[0],
                         'TypeDef'           =>  'TYPE_FLOAT',
                         'Value'             =>  $_[1]
                 );
@@ -4129,7 +3654,7 @@ sub
 sub
 #line 89 "parser.yp"
 {
-            new LoadConst($_[0],
+            new WAP::wmls::LoadConst($_[0],
                     'TypeDef'           =>  'TYPE_BOOLEAN',
                     'Value'             =>  1
             );
@@ -4140,7 +3665,7 @@ sub
 sub
 #line 96 "parser.yp"
 {
-            new LoadConst($_[0],
+            new WAP::wmls::LoadConst($_[0],
                     'TypeDef'           =>  'TYPE_BOOLEAN',
                     'Value'             =>  0
             );
@@ -4151,7 +3676,7 @@ sub
 sub
 #line 103 "parser.yp"
 {
-            new LoadConst($_[0],
+            new WAP::wmls::LoadConst($_[0],
                     'TypeDef'           =>  'TYPE_INVALID',
             );
         }
@@ -4161,7 +3686,7 @@ sub
 sub
 #line 112 "parser.yp"
 {
-            new LoadConst($_[0],
+            new WAP::wmls::LoadConst($_[0],
                     'TypeDef'           =>  'TYPE_STRING',
                     'Value'             =>  $_[1]
             );
@@ -4172,7 +3697,7 @@ sub
 sub
 #line 119 "parser.yp"
 {
-            new LoadConst($_[0],
+            new WAP::wmls::LoadConst($_[0],
                     'TypeDef'           =>  'TYPE_UTF8_STRING',
                     'Value'             =>  $_[1]
             );
@@ -4184,7 +3709,7 @@ sub
 #line 129 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[1]);
-            new LoadVar($_[0],
+            new WAP::wmls::LoadVar($_[0],
                     'Definition'        =>  $var
             );
         }
@@ -4237,7 +3762,7 @@ sub
 {
             my $nbargs = (defined $_[2]) ? $_[2]->{OpCode}->{Index} : 0;
             my $def = $_[0]->YYData->{symbtab_func}->LookupLocal($_[1]);
-            my $call = new Call($_[0],
+            my $call = new WAP::wmls::Call($_[0],
                     'Definition'        =>  $def,
                     'Index'             =>  $nbargs
             );
@@ -4251,7 +3776,7 @@ sub
 {
             my $nbargs = (defined $_[4]) ? $_[4]->{OpCode}->{Index} : 0;
             my $def = $_[0]->YYData->{symbtab_func}->LookupExternal($_[1], $_[3], $nbargs);
-            my $call = new CallUrl($_[0],
+            my $call = new WAP::wmls::CallUrl($_[0],
                     'Definition'        =>  $def,
                     'Url'               =>  $_[0]->YYData->{symbtab_url}->Lookup($_[1])
             );
@@ -4266,7 +3791,7 @@ sub
             my $nbargs = (defined $_[4]) ? $_[4]->{OpCode}->{Index} : 0;
             my $def = $_[0]->YYData->{symbtab_func}->LookupLibrary($_[1], $_[3], $nbargs)
                     if ($_[0]->YYData->{symbtab_lib}->Lookup($_[1]));
-            my $call = new CallLib($_[0],
+            my $call = new WAP::wmls::CallLib($_[0],
                     'Definition'        =>  $def
             );
             (defined $_[4]) ? $_[4]->concat($call) : $call;
@@ -4345,10 +3870,10 @@ sub
 #line 259 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[1]);
-            my $load = new LoadVar($_[0],
+            my $load = new WAP::wmls::LoadVar($_[0],
                     'Definition'        =>  $var
             );
-            my $incr = new IncrVar($_[0],
+            my $incr = new WAP::wmls::IncrVar($_[0],
                     'Definition'        =>  $var
             );
             $load->concat($incr);
@@ -4360,10 +3885,10 @@ sub
 #line 270 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[1]);
-            my $load = new LoadVar($_[0],
+            my $load = new WAP::wmls::LoadVar($_[0],
                     'Definition'        =>  $var
             );
-            my $decr = new DecrVar($_[0],
+            my $decr = new WAP::wmls::DecrVar($_[0],
                     'Definition'        =>  $var
             );
             $load->concat($decr);
@@ -4394,10 +3919,10 @@ sub
 #line 294 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[2]);
-            my $incr = new IncrVar($_[0],
+            my $incr = new WAP::wmls::IncrVar($_[0],
                     'Definition'        =>  $var
             );
-            my $load = new LoadVar($_[0],
+            my $load = new WAP::wmls::LoadVar($_[0],
                     'Definition'        =>  $var
             );
             $incr->concat($load);
@@ -4409,10 +3934,10 @@ sub
 #line 305 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[2]);
-            my $decr = new DecrVar($_[0],
+            my $decr = new WAP::wmls::DecrVar($_[0],
                     'Definition'        =>  $var
             );
-            my $load = new LoadVar($_[0],
+            my $load = new WAP::wmls::LoadVar($_[0],
                     'Definition'        =>  $var
             );
             $decr->concat($load);
@@ -4626,7 +4151,7 @@ sub
 sub
 #line 449 "parser.yp"
 {
-            BuildLogop($_[0], $_[1], new ScAnd($_[0]), $_[3]);
+            BuildLogop($_[0], $_[1], new WAP::wmls::ScAnd($_[0]), $_[3]);
         }
 	],
 	[#Rule 70
@@ -4637,7 +4162,7 @@ sub
 sub
 #line 458 "parser.yp"
 {
-            BuildLogop($_[0], $_[1], new ScOr($_[0]), $_[3]);
+            BuildLogop($_[0], $_[1], new WAP::wmls::ScOr($_[0]), $_[3]);
         }
 	],
 	[#Rule 72
@@ -4671,34 +4196,34 @@ sub
             my $asg;
             my $var = $_[0]->YYData->{symbtab_var}->Lookup($_[1]);
             if      ($_[2] eq '=') {
-                my $store1 = new StoreVar($_[0],
+                my $store1 = new WAP::wmls::StoreVar($_[0],
                         'Definition'        =>  $var
                 );
                 $asg = $_[3]->concat($store1);
             }
             elsif ($_[2] eq '+=') {
-                my $add = new AddAsg($_[0],
+                my $add = new WAP::wmls::AddAsg($_[0],
                         'Definition'        =>  $var
                 );
                 $asg = $_[3]->concat($add);
             }
             elsif ($_[2] eq '-=') {
-                my $sub = new SubAsg($_[0],
+                my $sub = new WAP::wmls::SubAsg($_[0],
                         'Definition'        =>  $var
                 );
                 $asg = $_[3]->concat($sub);
             }
             else {
-                my $load1 = new LoadVar($_[0],
+                my $load1 = new WAP::wmls::LoadVar($_[0],
                         'Definition'        =>  $var
                 );
                 my $binop = BuildBinop($_[0], $load1, $_[2], $_[3]);
-                my $store2 = new StoreVar($_[0],
+                my $store2 = new WAP::wmls::StoreVar($_[0],
                         'Definition'        =>  $var
                 );
                 $asg = $binop->concat($store2);
             }
-            my $load2 = new LoadVar($_[0],
+            my $load2 = new WAP::wmls::LoadVar($_[0],
                     'Definition'        =>  $var
             );
             $asg->concat($load2);
@@ -4801,7 +4326,7 @@ sub
 sub
 #line 572 "parser.yp"
 {
-            $_[1]->concat(new Pop($_[0]));
+            $_[1]->concat(new WAP::wmls::Pop($_[0]));
             $_[1]->concat($_[3]);
         }
 	],
@@ -4931,7 +4456,7 @@ sub
 #line 672 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->InsertLocal($_[1]);
-            my $store = new StoreVar($_[0],
+            my $store = new WAP::wmls::StoreVar($_[0],
                     'Definition'        =>  $var
             );
             $_[2]->concat($store);
@@ -4967,7 +4492,7 @@ sub
 sub
 #line 702 "parser.yp"
 {
-            $_[1]->concat(new Pop($_[0]));
+            $_[1]->concat(new WAP::wmls::Pop($_[0]));
         }
 	],
 	[#Rule 116
@@ -5068,7 +4593,7 @@ sub
 sub
 #line 769 "parser.yp"
 {
-            $_[3]->concat(new Pop($_[0]));
+            $_[3]->concat(new WAP::wmls::Pop($_[0]));
         }
 	],
 	[#Rule 129
@@ -5137,7 +4662,7 @@ sub
 sub
 #line 809 "parser.yp"
 {
-            my $upd = $_[4]->concat(new Pop($_[0]));
+            my $upd = $_[4]->concat(new WAP::wmls::Pop($_[0]));
             BuildFor($_[0], $_[1], $_[2], $upd, $_[6]);
         }
 	],
@@ -5154,7 +4679,7 @@ sub
 sub
 #line 818 "parser.yp"
 {
-            my $upd = $_[3]->concat(new Pop($_[0]));
+            my $upd = $_[3]->concat(new WAP::wmls::Pop($_[0]));
             BuildFor($_[0], $_[1], undef, $upd, $_[5]);
         }
 	],
@@ -5225,7 +4750,7 @@ sub
 sub
 #line 860 "parser.yp"
 {
-            new Jump($_[0],
+            new WAP::wmls::Jump($_[0],
                     'TypeDef'           =>  'LABEL_CONTINUE'
             );
         }
@@ -5244,7 +4769,7 @@ sub
 sub
 #line 874 "parser.yp"
 {
-            new Jump($_[0],
+            new WAP::wmls::Jump($_[0],
                     'TypeDef'           =>  'LABEL_BREAK'
             );
         }
@@ -5263,7 +4788,7 @@ sub
 sub
 #line 888 "parser.yp"
 {
-            new ReturnES($_[0]);
+            new WAP::wmls::ReturnES($_[0]);
         }
 	],
 	[#Rule 151
@@ -5271,7 +4796,7 @@ sub
 sub
 #line 892 "parser.yp"
 {
-            $_[2]->concat(new Return($_[0]));
+            $_[2]->concat(new WAP::wmls::Return($_[0]));
         }
 	],
 	[#Rule 152
@@ -5358,7 +4883,7 @@ sub
 sub
 #line 945 "parser.yp"
 {
-            new Function($_[0],
+            new WAP::wmls::Function($_[0],
                     'Definition'        =>  $_[1],
                     'Param'             =>  $_[2],
                     'Value'             =>  $_[4]
@@ -5370,7 +4895,7 @@ sub
 sub
 #line 953 "parser.yp"
 {
-            new Function($_[0],
+            new WAP::wmls::Function($_[0],
                     'Definition'        =>  $_[1],
                     'Param'             =>  $_[2],
                     'Value'             =>  $_[4]
@@ -5382,7 +4907,7 @@ sub
 sub
 #line 961 "parser.yp"
 {
-            new Function($_[0],
+            new WAP::wmls::Function($_[0],
                     'Definition'        =>  $_[1],
                     'Value'             =>  $_[3]
             );
@@ -5393,7 +4918,7 @@ sub
 sub
 #line 968 "parser.yp"
 {
-            new Function($_[0],
+            new WAP::wmls::Function($_[0],
                     'Definition'        =>  $_[1],
                     'Value'             =>  $_[3]
             );
@@ -5441,7 +4966,7 @@ sub
 #line 998 "parser.yp"
 {
             my $var = $_[0]->YYData->{symbtab_var}->InsertArg($_[1], 0);
-            new Argument($_[0],
+            new WAP::wmls::Argument($_[0],
                     'Definition'        =>  $var,
                     'Index'             =>  1           # nb args
             );
@@ -5455,7 +4980,7 @@ sub
             my $idx = $_[1]->{OpCode}->{Index};
             $_[1]->{OpCode}->{Index} ++;                # nb args
             my $var = $_[0]->YYData->{symbtab_var}->InsertArg($_[3], $idx);
-            my $arg = new Argument($_[0],
+            my $arg = new WAP::wmls::Argument($_[0],
                     'Definition'        =>  $var,
             );
             $_[1]->concat($arg);
@@ -5563,7 +5088,7 @@ sub
 sub
 #line 1089 "parser.yp"
 {
-            new Url($_[0],
+            new WAP::wmls::Url($_[0],
                     'Value'             =>  $_[3],
                     'Definition'        =>  $_[0]->YYData->{symbtab_url}->Insert($_[2])
             );
@@ -5582,7 +5107,7 @@ sub
 sub
 #line 1106 "parser.yp"
 {
-            new AccessDomain($_[0],
+            new WAP::wmls::AccessDomain($_[0],
                     'Value'             =>  $_[2],
             );
         }
@@ -5592,7 +5117,7 @@ sub
 sub
 #line 1112 "parser.yp"
 {
-            new AccessPath($_[0],
+            new WAP::wmls::AccessPath($_[0],
                     'Value'             =>  $_[2]
             );
         }
@@ -5602,10 +5127,10 @@ sub
 sub
 #line 1118 "parser.yp"
 {
-            my $domain = new AccessDomain($_[0],
+            my $domain = new WAP::wmls::AccessDomain($_[0],
                     'Value'             =>  $_[2],
             );
-            my $path = new AccessPath($_[0],
+            my $path = new WAP::wmls::AccessPath($_[0],
                     'Value'             =>  $_[4],
             );
             $domain->concat($path);
@@ -5633,7 +5158,7 @@ sub
 sub
 #line 1147 "parser.yp"
 {
-            new MetaName($_[0],
+            new WAP::wmls::MetaName($_[0],
                     'Value'             =>  $_[2],
             );
         }
@@ -5643,7 +5168,7 @@ sub
 sub
 #line 1156 "parser.yp"
 {
-            new MetaHttpEquiv($_[0],
+            new WAP::wmls::MetaHttpEquiv($_[0],
                     'Value'             =>  $_[3],
             );
         }
@@ -5653,7 +5178,7 @@ sub
 sub
 #line 1165 "parser.yp"
 {
-            new MetaUserAgent($_[0],
+            new WAP::wmls::MetaUserAgent($_[0],
                     'Value'             =>  $_[3],
             );
         }
@@ -5716,7 +5241,7 @@ use WAP::wmls::node;
 
 sub BuildUnop {
     my ($parser, $op, $expr) = @_;
-    my $unop = new UnaryOp($parser,
+    my $unop = new WAP::wmls::UnaryOp($parser,
             'Operator'                  =>  $op
     );
     return $expr->concat($unop);
@@ -5724,7 +5249,7 @@ sub BuildUnop {
 
 sub BuildBinop {
     my ($parser, $expr1, $op, $expr2) = @_;
-    my $binop = new BinaryOp($parser,
+    my $binop = new WAP::wmls::BinaryOp($parser,
             'Operator'                  =>  $op,
             'Left'                      =>  $expr1->{Last}
     );
@@ -5735,29 +5260,29 @@ sub BuildBinop {
 sub BuildLogop {
     my ($parser, $expr1, $logop, $expr2) = @_;
     my $endif = $parser->YYData->{symbtab_label}->Next();
-    my $label = new Label($parser,
+    my $label = new WAP::wmls::Label($parser,
             'Definition'                =>  $endif
     );
     $endif->{Node} = $label;
-    my $falsejump = new FalseJump($parser,
+    my $falsejump = new WAP::wmls::FalseJump($parser,
             'Definition'                =>  $endif
     );
     $endif->{NbUse} ++;
     $expr1->concat($logop);
     $expr1->concat($falsejump);
     $expr1->concat($expr2);
-    $expr1->concat(new ToBool($parser));
+    $expr1->concat(new WAP::wmls::ToBool($parser));
     return $expr1->concat($label);
 }
 
 sub BuildIf {
     my ($parser, $expr, $stat) = @_;
     my $endif = $parser->YYData->{symbtab_label}->Next();
-    my $label = new Label($parser,
+    my $label = new WAP::wmls::Label($parser,
             'Definition'                =>  $endif
     );
     $endif->{Node} = $label;
-    my $falsejump = new FalseJump($parser,
+    my $falsejump = new WAP::wmls::FalseJump($parser,
             'Definition'                =>  $endif
     );
     $endif->{NbUse} ++;
@@ -5770,19 +5295,19 @@ sub BuildIfElse {
     my ($parser, $expr, $stat1, $stat2) = @_;
     my $else = $parser->YYData->{symbtab_label}->Next();
     my $endif = $parser->YYData->{symbtab_label}->Next();
-    my $label1 = new Label($parser,
+    my $label1 = new WAP::wmls::Label($parser,
             'Definition'                =>  $else
     );
     $else->{Node} = $label1;
-    my $label2 = new Label($parser,
+    my $label2 = new WAP::wmls::Label($parser,
             'Definition'                =>  $endif
     );
     $endif->{Node} = $label2;
-    my $falsejump = new FalseJump($parser,
+    my $falsejump = new WAP::wmls::FalseJump($parser,
             'Definition'                =>  $else
     );
     $else->{NbUse} ++;
-    my $jump = new Jump($parser,
+    my $jump = new WAP::wmls::Jump($parser,
             'Definition'                =>  $endif
     );
     $endif->{NbUse} ++;
@@ -5800,24 +5325,24 @@ sub BuildFor {
     my $loop = $parser->YYData->{symbtab_label}->Next();
     my $continue = $parser->YYData->{symbtab_label}->Next();
     my $break = $parser->YYData->{symbtab_label}->Next();
-    my $label1 = new Label($parser,
+    my $label1 = new WAP::wmls::Label($parser,
             'Definition'                =>  $loop
     );
     $loop->{Node} = $label1;
-    my $label2 = new Label($parser,
+    my $label2 = new WAP::wmls::Label($parser,
             'Definition'                =>  $continue
     );
     $continue->{Node} = $label2;
-    my $label3 = new Label($parser,
+    my $label3 = new WAP::wmls::Label($parser,
             'Definition'                =>  $break
     );
     $break->{Node} = $label3;
     if (defined $cond) {
-        my $falsejump = new FalseJump($parser,
+        my $falsejump = new WAP::wmls::FalseJump($parser,
                 'Definition'                =>  $break
         );
         $break->{NbUse} ++;
-        my $jump = new Jump($parser,
+        my $jump = new WAP::wmls::Jump($parser,
                 'Definition'                =>  $loop
         );
         $loop->{NbUse} ++;
@@ -5831,7 +5356,7 @@ sub BuildFor {
         $for->concat($label3);
     }
     else {
-        my $jump = new Jump($parser,
+        my $jump = new WAP::wmls::Jump($parser,
                 'Definition'                =>  $loop
         );
         $loop->{NbUse} ++;
@@ -5872,17 +5397,17 @@ sub Run {
     open $parser->YYData->{fh}, "<:encoding($enc)", $srcname
         or die "can't open $srcname ($!).\n";
 
-    $parser->_InitLexico();
-    $parser->YYData->{symbtab_var} = new SymbTabVar($parser);
-    $parser->YYData->{symbtab_lib} = new SymbTabLib($parser);
-    $parser->YYData->{symbtab_func} = new SymbTabFunc($parser);
-    $parser->YYData->{symbtab_url} = new SymbTabUrl($parser);
-    $parser->YYData->{symbtab_label} = new SymbTabLabel($parser);
-    $parser->_InitStandardLibrary();
+    WAP::wmls::lexer::InitLexico($parser);
+    $parser->YYData->{symbtab_var} = new WAP::wmls::SymbTabVar($parser);
+    $parser->YYData->{symbtab_lib} = new WAP::wmls::SymbTabLib($parser);
+    $parser->YYData->{symbtab_func} = new WAP::wmls::SymbTabFunc($parser);
+    $parser->YYData->{symbtab_url} = new WAP::wmls::SymbTabUrl($parser);
+    $parser->YYData->{symbtab_label} = new WAP::wmls::SymbTabLabel($parser);
+    $parser->InitStandardLibrary();
     $parser->YYData->{doc} = q{};
     $parser->YYData->{lineno} = 1;
     $parser->YYParse(
-            yylex   => \&_Lexer,
+            yylex   => \&WAP::wmls::lexer::Lexer,
             yyerror => sub { return; }
     );
 
@@ -5893,6 +5418,100 @@ sub Run {
     return;
 }
 
+sub InitStandardLibrary {
+    my $parser = shift;
+    my $cfg = $INC{'WAP/wmls/parser.pm'};
+    $cfg =~ s/parser\.pm$//;
+    $cfg .= 'wmlslibs.cfg';
+    open my $IN, '<', $cfg
+        or warn "can't open $cfg.\n";
+
+    my $lib = undef;
+    my $LibID;
+    while (<$IN>) {
+        if      (/^#.*$/) {
+#           print "Comment $_";
+        }
+        elsif (/^\s*$/) {
+#           print "Empty\n";
+        }
+        elsif (/^\@([A-Z_a-z][0-9A-Z_a-z]*)\s+([0-9]+)\s*$/) {
+#           print "Lib $1 $2\n";
+            $lib = $1;
+            $LibID = $2;
+            $parser->YYData->{symbtab_lib}->Insert($lib, 1);
+        }
+        elsif (/^([A-Z_a-z][0-9A-Z_a-z]*)\s+([0-9]+)\s+([0-9]+)\s*$/) {
+#           print "Fct $1 $2 $3\n";
+            if (defined $lib) {
+                my $symb = $lib . '.' . $1;
+                $parser->YYData->{symbtab_func}->InsertLibrary($symb, $LibID, $2, $3);
+            }
+        }
+        else {
+            print "cfg? $_";
+        }
+    }
+    close $IN;
+    return;
+}
+
+sub Error {
+    my $parser = shift;
+    my ($msg) = @_;
+
+    $msg ||= "Syntax error.\n";
+
+    if (exists $parser->YYData->{nb_error}) {
+        $parser->YYData->{nb_error} ++;
+    }
+    else {
+        $parser->YYData->{nb_error} = 1;
+    }
+
+    print STDOUT '#',$parser->YYData->{filename},':',$parser->YYData->{lineno},'#Error: ',$msg
+            if (        exists $parser->YYData->{verbose_error}
+                    and $parser->YYData->{verbose_error});
+    return;
+}
+
+sub Warning {
+    my $parser = shift;
+    my ($msg) = @_;
+
+    $msg ||= ".\n";
+
+    if (exists $parser->YYData->{nb_warning}) {
+        $parser->YYData->{nb_warning} ++;
+    }
+    else {
+        $parser->YYData->{nb_warning} = 1;
+    }
+
+    print STDOUT '#',$parser->YYData->{filename},':',$parser->YYData->{lineno},'#Warning: ',$msg
+            if (        exists $parser->YYData->{verbose_warning}
+                    and $parser->YYData->{verbose_warning});
+    return;
+}
+
+sub Info {
+    my $parser = shift;
+    my ($msg) = @_;
+
+    $msg ||= ".\n";
+
+    if (exists $parser->YYData->{nb_info}) {
+        $parser->YYData->{nb_info} ++;
+    }
+    else {
+        $parser->YYData->{nb_info} = 1;
+    }
+
+    print STDOUT '#',$parser->YYData->{filename},':',$parser->YYData->{lineno},'#Info: ',$msg
+            if (        exists $parser->YYData->{verbose_info}
+                    and $parser->YYData->{verbose_info});
+    return;
+}
 
 
 1;
