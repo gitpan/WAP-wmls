@@ -1,5 +1,8 @@
 Revision history for Perl extension WAP::wmls.
 
+1.12  Wed Nov 07 12:30:00 2007
+	- add prereq Perl 5.8
+
 1.11  Mon Nov 05 18:30:00 2007
 	- package refactoring
 

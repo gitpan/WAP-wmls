@@ -4,7 +4,7 @@ package WAP::wmls;
 use strict;
 use warnings;
 
-our $VERSION = '1.11';
+our $VERSION = '1.12';
 
 use WAP::wmls::parser;
 use WAP::wmls::optim;
