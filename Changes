@@ -1,5 +1,8 @@
 Revision history for Perl extension WAP::wmls.
 
+1.13  Wed Dec 26 12:30:00 2007
+	- fix Unicode with Perl 5.10
+
 1.12  Wed Nov 07 12:30:00 2007
 	- add prereq Perl 5.8
 

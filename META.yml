@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                WAP-wmls
-version:             1.12
+version:             1.13
 abstract:            WAP WMLScript compiler
 license:             ~
 generated_by:        ExtUtils::MakeMaker version 6.3201

@@ -23,16 +23,9 @@ sub _DoubleStringLexer {
             s/^\"//
                 and return ($type, $str);
 
-            if ($type eq 'UTF8_STRING_LITERAL') {
-                s/^([^"\\]+)//
-                    and $str .= $1,
-                        last;
-            }
-            else {
-                s/^([^"\\]+)//
-                    and $str .= $1,
-                        last;
-            }
+            s/^([^"\\]+)//
+                and $str .= $1,
+                    last;
 
             s/^\\(['"\\\/])//
                 and $str .= $1,     #  single quote, double quote, backslash, slash
@@ -92,13 +85,13 @@ sub _DoubleStringLexer {
             }
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^\\u([0-9A-Fa-f]{4})//
-                    and $str .= chr hex $1,
+                    and $str .= pack('U', hex $1),
                         last;
             }
             else {
                 s/^\\u([0-9A-Fa-f]{4})//
                     and $type = 'UTF8_STRING_LITERAL',
-                    and $str .= chr hex $1,
+                    and $str .= pack('U', hex $1),
                         last;
             }
             s/^\\//
@@ -124,16 +117,9 @@ sub _SingleStringLexer {
             s/^'//
                 and return ($type, $str);
 
-            if ($type eq 'UTF8_STRING_LITERAL') {
-                s/^([^'\\]+)//
-                    and $str .= ucs2($parser->YYData->{map}->to16($1))->utf8(),
-                        last;
-            }
-            else {
-                s/^([^'\\]+)//
-                    and $str .= $1,
-                        last;
-            }
+            s/^([^'\\]+)//
+                and $str .= $1,
+                    last;
 
             s/^\\(['"\\\/])//
                 and $str .= $1,     #  single quote, double quote, backslash, slash
@@ -193,13 +179,13 @@ sub _SingleStringLexer {
             }
             if ($type eq 'UTF8_STRING_LITERAL') {
                 s/^\\u([0-9A-Fa-f]{4})//
-                    and $str .= chr hex $1,
+                    and $str .= pack('U', hex $1),
                         last;
             }
             else {
                 s/^\\u([0-9A-Fa-f]{4})//
                     and $type = 'UTF8_STRING_LITERAL',
-                    and $str .= chr hex $1,
+                    and $str .= pack('U', hex $1),
                         last;
             }
             s/^\\//
